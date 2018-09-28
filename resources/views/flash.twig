@@ -1,41 +1,41 @@
 
 {% if flash.getMessage('signedin') %}
-<div class="alert alert-success">
+<div class="alert alert-success animated shake">
 {{ flash.getMessage('signedin') | first }}
 </div>
 {% endif %}
 
 {% if flash.getMessage('loggedout') %}
-<div class="alert alert-primary">
+<div class="alert alert-primary animated shake">
     {{ flash.getMessage('loggedout') | first }}
 </div>
 {% endif %}
 
 {% if flash.getMessage('signup') %}
-<div class="alert alert-success">
+<div class="alert alert-success animated shake">
     {{ flash.getMessage('signup') | first }}
 </div>
 
 {% endif %}
 {% if flash.getMessage('signupfailed') %}
-<div class="alert alert-warning">
+<div class="alert alert-warning animated shake">
     {{ flash.getMessage('signupfailed') | first }}
 </div>
 
 {% endif %}
 {% if flash.getMessage('signinerror') %}
-<div class="alert alert-warning">
+<div class="alert alert-warning animated shake">
 {{ flash.getMessage('signinerror')| first }}
 </div>
 {% endif %}
 
 {% if flash.getMessage('passwordchange') %}
-<div class="alert alert-success">
+<div class="alert alert-success animated shake">
 {{ flash.getMessage('passwordchange')| first }}
 </div>{% endif %}
 
 {% if flash.getMessage('entryerror') %}
-<div class="alert alert-warning">
+<div class="alert alert-warning animated shake">
 {{ flash.getMessage('entryerror') | first}}
 </div>
 {% endif %}
