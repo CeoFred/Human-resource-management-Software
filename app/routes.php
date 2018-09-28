@@ -21,7 +21,8 @@ $this->post('/auth/signin','AuthController:postSignIn');
 // view controller for signin page,calls the authcontroller
 
 
-// users can access only theses routes
+// if anyone access any of this routes,Authmiddelware checks if you are logged in and refiects you to the signin page if you a
+// are not logged in yet, so all th routes passes through the authcontroller
 $app->group('',function(){
 
 $this->get('/auth/password/change','PasswordController:getchangepass')->setName('change.password');

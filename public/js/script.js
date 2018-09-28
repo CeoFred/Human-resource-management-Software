@@ -1,0 +1,3 @@
+function fetchdata() {
+  alert('okay');
+};

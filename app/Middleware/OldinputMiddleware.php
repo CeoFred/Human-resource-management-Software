@@ -12,8 +12,9 @@ public function __invoke($request, $response, $next)
 
 {
 
-$this->container->view->getEnvironment()->addGlobal('old',$_SESSION['old']);
-$_SESSION['old'] = $request->getParams();
+// user inputs are stored inside the old variable and is accessible in our views
+    $this->container->view->getEnvironment()->addGlobal('old',$_SESSION['old']);
+    $_SESSION['old'] = $request->getParams();
 
 
 

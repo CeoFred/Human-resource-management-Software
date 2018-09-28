@@ -11,7 +11,9 @@ class AuthMiddleware extends Middleware
 
 $this->container->flash->addMessage('entryerror','Log in to continue');
 return  $response->withRedirect($this->container->router->pathFor('auth.signin'));
-       }
+
+   }
+
 $response = $next($request,$response);
 return $response;
 
