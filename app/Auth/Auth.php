@@ -6,6 +6,12 @@ use App\Models\User;
 
 class Auth {
 
+
+    public function mytime(){
+
+    
+
+    }
     public function user(){
         // returns the user details
           return User::find($_SESSION['user']);
