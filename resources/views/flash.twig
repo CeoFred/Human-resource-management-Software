@@ -1,0 +1,41 @@
+
+{% if flash.getMessage('signedin') %}
+<div class="alert alert-success">
+{{ flash.getMessage('signedin') | first }}
+</div>
+{% endif %}
+
+{% if flash.getMessage('loggedout') %}
+<div class="alert alert-primary">
+    {{ flash.getMessage('loggedout') | first }}
+</div>
+{% endif %}
+
+{% if flash.getMessage('signup') %}
+<div class="alert alert-success">
+    {{ flash.getMessage('signup') | first }}
+</div>
+
+{% endif %}
+{% if flash.getMessage('signupfailed') %}
+<div class="alert alert-warning">
+    {{ flash.getMessage('signupfailed') | first }}
+</div>
+
+{% endif %}
+{% if flash.getMessage('signinerror') %}
+<div class="alert alert-warning">
+{{ flash.getMessage('signinerror')| first }}
+</div>
+{% endif %}
+
+{% if flash.getMessage('passwordchange') %}
+<div class="alert alert-success">
+{{ flash.getMessage('passwordchange')| first }}
+</div>{% endif %}
+
+{% if flash.getMessage('entryerror') %}
+<div class="alert alert-warning">
+{{ flash.getMessage('entryerror') | first}}
+</div>
+{% endif %}

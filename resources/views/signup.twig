@@ -1,0 +1,45 @@
+{% extends "app.twig" %}
+
+{%  block content %}
+
+<div class="row">
+<div class="col-md-6 col-md-offset-3">
+    <div class="card">
+        <h5 class="card-header">SignUp Now</h5>
+        <div class="card-body">
+
+            <form action="{{ path_for('auth.signup') }}" method="POST">
+<div class="form-group ">
+<label for="email">Email</label>
+<input type="email" name="email" class="{{errors.email ? 'has-error ': '' }}
+ form-control"  id="email" placeholder="you@domain.com" value={{ old.email }} >
+
+{%  if errors.email %}
+<span class="help-block has-error-p">{{ errors.email | first}}</span>
+{% endif %}
+</div>
+<div class="form-group">
+    <label for="name">Name</label>
+    <input type="text" name="name" class="{{errors.name ? 'has-error ': '' }} form-control" id="name" placeholder="Name" value={{ old.name }} >
+{% if errors.name %}
+<span class="help-block has-error-p">{{ errors.name | first}}</span>
+{% endif %}
+</div>
+<div class="form-group">
+    <label for="pass">Password</label>
+    <input type="password" name="password" class="{{errors.password ? 'has-error ': '' }} form-control" id="pass" placeholder="Password" value={{ old.password }} >
+{% if errors.password %}
+<span class="help-block has-error-p">{{ errors.password | first}}</span>
+{% endif %}
+</div>
+
+<button type="submit" class="btn btn-success">Signup</button>
+
+{{ csrf.field | raw  }}
+</form>
+           </div>
+    </div>
+</div>
+</div>
+
+{% endblock %}
