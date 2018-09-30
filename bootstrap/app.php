@@ -140,4 +140,5 @@ return 'Home';
 
 // setting our personal validation rules
 v::with('App\\Validation\\Rules\\');
+
 require __DIR__ . '\..\app\routes.php';

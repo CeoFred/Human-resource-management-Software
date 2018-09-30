@@ -19,7 +19,9 @@ $this->post('/auth/signin','AuthController:postSignIn');
 
 
 // view controller for signin page,calls the authcontroller
-
+$app->get('/auth/admin/signup','AuthController:getAdminSignUp')->setName('auth.admin.signup');
+$app->post('/auth/admin/signup','AuthController:postAdminSignUp');
+$app->get('/auth/admin/panel','AuthController:RenderAdminPanel')->setName('ControlPanel');
 
 // if anyone access any of this routes,Authmiddelware checks if you are logged in and refiects you to the signin page if you a
 // are not logged in yet, so all th routes passes through the authcontroller

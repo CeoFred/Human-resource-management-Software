@@ -1,0 +1,51 @@
+{% extends "app.twig" %}
+
+{% block content %}
+
+<div class="row">
+    <div class="col-md-6 col-md-offset-3">
+        <div class="card">
+            <h5 class="card-header">Admin Register</h5>
+            <div class="card-body">
+<!-- {{ errors | json_encode }} -->
+                <form action="{{ path_for('auth.admin.signup') }}" method="POST">
+                    <div class="form-group ">
+                        <label for="email">Email</label>
+                        <input type="email" name="adminemail" 
+                         class="{{ errors.adminemail ? 'has-error ' : '' }} form-control" id="email"
+                            placeholder="you@domain.com" value={{ old.adminemail }}>
+                            {% if errors.adminemail %}
+                            <span class="has-error-p">{{ errors.adminemail | first }}</span>
+                            {% endif %}
+</div>
+
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input type="text" name="adminname"  class="{{ errors.adminname ? 'has-error ' : '' }} form-control" id="name"
+                            placeholder="Name" value={{ old.adminname }}>
+                            {% if errors.adminname %}
+                            <span class="has-error-p">{{ errors.adminname | first }}</span>
+                            {% endif %}
+                   </div>
+
+                    <div class="form-group">
+                        <label for="pass">Password</label>
+                        <input type="password" name="adminpassword" class="{{ errors.adminpassword ? 'has-error ' : '' }} form-control"
+                            id="pass" placeholder="Password" value="">
+                            
+{% if errors.adminpassword %}
+                            <span class="has-error-p">{{ errors.adminpassword }}</span>
+                            {% endif %}
+
+                    </div>
+
+                    <button type="submit" class="btn btn-success">Signup</button>
+{{ csrf.field | raw }}
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

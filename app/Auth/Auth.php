@@ -9,7 +9,7 @@ class Auth {
 
     public function mytime(){
 
-    
+
 
     }
     public function user(){
@@ -46,6 +46,7 @@ class Auth {
     public function logout(){
         // logout users
         unset($_SESSION['user']);
+        unset($_SESSION['errors']);
 
     }
 
