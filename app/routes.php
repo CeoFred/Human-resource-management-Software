@@ -7,6 +7,10 @@ use App\Middleware\TobeAdminMiddelWare;
 
 $app->get('/','HomeController:index')->setName('home');
 
+
+$app->get('/auth/my_cv','AuthController:getUserCv')->setName('Usercv');
+
+
 //only guest can access this routes
 $app->group('',function(){
 

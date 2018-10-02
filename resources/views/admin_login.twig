@@ -1,42 +1,68 @@
-{% extends "app.twig" %}
 
-{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<!-- Bootstrap core CSS -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet">
+<!-- Material Design Bootstrap -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.5.11/css/mdb.min.css" rel="stylesheet">
 
+    <title>Login Admin</title>
+</head>
+<body>
+
+    <div class="container" align="center">
 <div class="row">
-    <div class="col-md-6 col-md-offset-3">
-        <div class="card">
-            <h5 class="card-header">Login Now</h5>
-            <div class="card-body">
+<div class="col-md-5 mt-4 ml-4">
+<!-- Material form login -->
+<div class="card">
 
-                <form action="{{ path_for('auth.admin.signin') }}" method="POST">
-                    <div class="form-group ">
+    <h5 class="card-header danger-color white-text text-center py-4">
+        <strong>Admin Login</strong>
+    </h5>
 
-                        <label for="email">Email</label>
-                        <input type="email" name="email" class="{{errors.email ? 'has-error ': '' }}
- form-control" id="email"
-                            placeholder="you@domain.com" value={{ old.email }}>
+    <!--Card content-->
+    <div class="card-body px-lg-5 pt-0">
 
-                        {% if errors.email %}
-                        <span class="help-block has-error-p">{{ errors.email | first}}</span>
-                        {% endif %}
-                    </div>
+        <!-- Form -->
+        <form class="text-center" method="POST" action="{{ path_for('auth.admin.signin') }}" style="color: #757575;">
 
-                    <div class="form-group">
-                        <label for="pass">Password</label>
-                        <input type="password" name="password" class="{{errors.password ? 'has-error ': '' }} form-control"
-                            id="pass" placeholder="Password" value={{ old.password }}>
-                        {% if errors.password %}
-                        <span class="help-block has-error-p">{{ errors.password | first}}</span>
-                        {% endif %}
-                    </div>
-
-                    <button type="submit" class="btn btn-primary">Login</button>
-
-                    {{ csrf.field | raw }}
-                </form>
+            <!-- Email -->
+            <div class="md-form">
+                <input type="email" name="email" id="materialLoginFormEmail" class="form-control" value={{ old.email }}>
+                <label for="materialLoginFormEmail">E-mail</label>
             </div>
-        </div>
-    </div>
-</div>
 
-{% endblock %}
+            <!-- Password -->
+            <div class="md-form">
+                <input type="password" name="password" id="materialLoginFormPassword" class="form-control" value={{ old.password }}>
+                <label for="materialLoginFormPassword">Password</label>
+            </div>
+
+            <div class="d-flex justify-content-around">
+                <div>
+                </div>
+            </div>
+
+            <button class="btn btn-outline-info btn-rounded btn-block my-4 waves-effect z-depth-0" type="submit">Sign
+                in</button>
+
+{{ csrf.field | raw }}
+        </form>
+        <!-- Form -->
+
+    </div>
+
+</div>
+<!-- Material form login -->
+
+</div>
+</div>
+    </div>
+
+</body>
+</html>

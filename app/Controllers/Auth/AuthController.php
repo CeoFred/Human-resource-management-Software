@@ -17,7 +17,9 @@ class AuthController extends Controller
 
  {
 
-
+public function getUserCv($req,$res){
+  return $this->view->render($res,'user_cv.twig');
+}
     public function getAdminSignUp($request,$response)
 
     {

@@ -17,14 +17,16 @@
         <!-- Links -->
         <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
-                <a class="nav-link" href="#">Home
+                <a class="nav-link" href={{ path_for('home')}}>Home
                     <span class="sr-only">(current)</span>
                 </a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Apply</a>
-            </li>
-
+            {# <li class="nav-item">
+                <a class="nav-link" href={{ path_for('apply')}}>Apply</a>
+            </li> #}
+<li class="nav-item">
+    <a class="nav-link" href={{ path_for('Usercv')}}>MyResume</a>
+</li>
 {% if auth.check %}
 <li class="nav-item dropdown right">
     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown"
