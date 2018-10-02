@@ -65,8 +65,10 @@ $view = new \Slim\Views\Twig(__DIR__ . '/../resources/views',[
         // querying the database once and setting it to check global view variable too be used on
         // our views template,to access it in our twig templates, use auth.user.{row}
 'user' => $container->auth->user(),
-'date' => date('Y')
-
+'date' => date('Y'),
+'admincheck' => $container->auth->admincheck(),
+'admindetails' => $container->auth->admindetails(),
+'Allusers' => $container->auth->Allusers()
 // 'welcome' => 'Welcome Back dummy! the time is',
 // 'time' => '17:20pm'
 

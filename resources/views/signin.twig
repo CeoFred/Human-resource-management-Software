@@ -10,6 +10,7 @@
 
             <form action="{{ path_for('auth.signin') }}" method="POST">
 <div class="form-group ">
+    
 <label for="email">Email</label>
 <input type="email" name="email" class="{{errors.email ? 'has-error ': '' }}
  form-control"  id="email" placeholder="you@domain.com" value={{ old.email }} >

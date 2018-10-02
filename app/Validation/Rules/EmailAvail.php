@@ -3,7 +3,7 @@
 
 namespace App\Validation\Rules;
 
-use App\Models\Admin;
+use App\Models\User;
 
 // needs an exception class to rewrite new message,
 // check EmailAvailException class

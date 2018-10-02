@@ -63,14 +63,6 @@ try {
     $mail->addAddress($request->getParam('adminemail'), $request->getParam('adminname'));     // Add a recipient
     // $mail->addAddress('ellen@example.com');               // Name is optional
     $mail->addReplyTo('ogwugopeople@ogwugo.com', 'Information');
-    // $mail->addCC('cc@example.com');
-    // $mail->addBCC('bcc@example.com');
-
-    // //Attachments
-    //  $mail->addAttachment('/public/img/image');         // Add attachments
-    // $mail->addAttachment('/tmp/image.jpg', 'new.jpg');    // Optional name
-
-    //Content
     $mail->isHTML(true);                                  // Set email format to HTML
     $mail->Subject = 'Welcome';
     $mail->Body    = '  Welcome <b>in bold!</b>';
@@ -80,16 +72,31 @@ try {
 $this->flash->addMessage('ConfirmPassword',"Welcome Admin{$request->getParam('adminname')} ");
           return $response->withRedirect($this->router->pathFor('ControlPanel'));
 
-
 } catch (Exception $e) {
     die('Message could not be sent. Mailer Error:'. $mail->ErrorInfo);
 }
 
  }
     }
-public function RenderAdminPanel($req,$res){
-    return  $this->view->render($res,'admindashboard.twig');
+
+
+public function RenderAdminLogin($req,$res){
+return  $this->view->render($res,'admin_login.twig');
+
 }
+
+
+
+public function RenderAdminPanel($req,$res){
+
+    return  $this->view->render($res,'admindashboard.twig');
+
+}
+
+
+
+
+
 public function getlogout($request,$response){
 
     $this->auth->logout();
@@ -115,7 +122,38 @@ public function getSignUp($request,$response){
 
 }
 
-                public function postSignIn($request,$response){
+
+
+public function adminLogout($req,$res){
+      $this->auth->adminlogout();
+$this->flash->addMessage('loggedout','Logged Out!');
+    return $res->withRedirect($this->router->pathFor('auth.admin.signin'));
+
+}
+
+public function postAdminSignIn($request,$response){
+
+    $auth = $this->auth->averify(
+    $request->getParam('email'),
+
+    $request->getParam('password'));
+
+    if($auth){
+
+        $this->flash->addMessage('signedin',"Welcome Back!");
+    return $response->withRedirect($this->router->pathFor('ControlPanel'));
+}
+  else{
+
+        $this->flash->addMessage('signinerror',"Opps! something went wrong");
+        return $response->withRedirect($this->router->pathFor('auth.admin.signin'));
+
+}
+
+                }
+
+
+public function postSignIn($request,$response){
 
     $auth = $this->auth->verify(
     $request->getParam('email'),
@@ -132,14 +170,15 @@ public function getSignUp($request,$response){
 }
   else{
 
-        $this->flash->addMessage('signinerror',"Opps! {$response->getParam('name')} went wrong");
+        $this->flash->addMessage('signinerror',"Opps! something went wrong");
         return $this->view->render($response,'signin.twig');
 }
 
-
                 }
 
+
                 public function postSignUp($request,$response){
+
 //validating input fields
 
 
@@ -161,10 +200,33 @@ public function getSignUp($request,$response){
 //also a method in the respect validator dependency
 if($Validation->failed()){
 
-        $this->flash->addMessage('signupfailed',"Opps! {$response->getParam('name')},something went wrong");
+        $this->flash->addMessage('signupfailed',"Opps!,something went wrong");
     return $response->withRedirect($this->router->pathFor('auth.signup'));
 
 }
+
+$mail = new PHPMailer(true);                              // Passing `true` enables exceptions
+try {
+
+    //Server settings
+    $mail->SMTPDebug = 2;                                 // Enable verbose debug output
+    $mail->isSMTP();                                      // Set mailer to use SMTP
+    $mail->Host = 'smtp.gmail.com';  // Specify main and backup SMTP servers
+    $mail->SMTPAuth = true;                               // Enable SMTP authentication
+    $mail->Username = 'johnsonmessilo19@gmail.com';                 // SMTP username
+    $mail->Password = 'messilo18';                           // SMTP password
+    $mail->SMTPSecure = 'tls';                            // Enable TLS encryption, `ssl` also accepted
+    $mail->Port = 587;                                    // TCP port to connect to
+    //Recipients
+    $mail->setFrom('fredd@ogwugo.com', 'Ogwugo.com');
+    $mail->addAddress($request->getParam('email'), $request->getParam('name'));     // Add a recipient
+    // $mail->addAddress('ellen@example.com');               // Name is optional
+    $mail->addReplyTo('ogwugopeople@ogwugo.com', 'Information');
+    $mail->isHTML(true);                                  // Set email format to HTML
+    $mail->Subject = 'Welcome';
+    $mail->Body    = '  Welcome <b>in bold!</b>';
+    $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
+    $mail->send();
 
 
 // creating a row in databse
@@ -175,37 +237,14 @@ $user = User::create([
  ]);
 // sigining in the user after regiistration by just setting starting a user session
 $this->auth->verify($user->email,$request->getParam('password'));
-$mail = new PHPMailer(true);                              // Passing `true` enables exceptions
-try {
-    //Server settings
-    $mail->SMTPDebug = 2;                                 // Enable verbose debug output
-    $mail->isSMTP();                                      // Set mailer to use SMTP
-    $mail->Host = 'smtp.gmail.com';  // Specify main and backup SMTP servers
-    $mail->SMTPAuth = true;                               // Enable SMTP authentication
-    $mail->Username = 'johnsonmessilo19@gmail.com';                 // SMTP username
-    $mail->Password = 'messilo18';                           // SMTP password
-    $mail->SMTPSecure = 'tls';                            // Enable TLS encryption, `ssl` also accepted
-    $mail->Port = 587;                                    // TCP port to connect to
-
-    //Recipients
-    $mail->setFrom('fredd@ogwugo.com', 'Ogwugo.com');
-    $mail->addAddress($request->getParam('email'), $request->getParam('name'));     // Add a recipient
-    // $mail->addAddress('ellen@example.com');               // Name is optional
-    $mail->addReplyTo('ogwugopeople@ogwugo.com', 'Information');
     // $mail->addCC('cc@example.com');
     // $mail->addBCC('bcc@example.com');
 
     // //Attachments
-     $mail->addAttachment('/public/img/image');         // Add attachments
-    // $mail->addAttachment('/tmp/image.jpg', 'new.jpg');    // Optional name
+    //  $mail->addAttachment('/public/img/image');         // Add attachments
+    // // $mail->addAttachment('/tmp/image.jpg', 'new.jpg');    // Optional name
 
     //Content
-    $mail->isHTML(true);                                  // Set email format to HTML
-    $mail->Subject = 'Welcome';
-    $mail->Body    = '  Welcome <b>in bold!</b>';
-    $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
-
-    $mail->send();
 $this->flash->addMessage('signup',"Welcome to a new World {$request->getParam('name')} ");
  return $response->withRedirect($this->router->pathFor('home'));
 
