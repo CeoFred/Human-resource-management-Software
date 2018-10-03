@@ -1,0 +1,155 @@
+{% extends 'app.twig' %}
+
+{% block content %}
+
+<!-- Default form register -->
+<form class="text-center border border-light p-5">
+    <img src="{{ base_url() }}/img/ogwugo.png" width="400"
+     style="border-radius:50%" class="responsive"
+        alt="ogwugo">
+<h3>EMPLOYMENT BIODATA FORM</h3>
+    <p class="h4 mb-4">(To be filled by all employees of ogwugo)</p>
+<div>
+            <h5><b>PERSONAL INFORMATION</b></h5>
+        </div>
+    <div class="form-row mb-4">
+        
+        <div class="col">
+
+            <!-- First name -->
+            <input type="text" id="defaultRegisterFormFirstName" name="givenname" 
+            class="form-control" placeholder="Given Name">
+        </div>
+        <div class="col">
+            <!-- Last name -->
+            <input type="text" id="defaultRegisterFormLastName" name="familyname" class="form-control" 
+            
+            placeholder="Family name">
+        </div>
+    
+    </div>
+
+    <div class="form-row mb-4">
+
+        <div class="col">
+
+    <!-- Phonenumber -->
+    <input type="text" id="defaultRegisterFormEmail" name="phonenumber" class="form-control mb-4" placeholder="+234 *** *** **" value="">
+        </div>
+        <div class="col">
+
+    <!-- E-mail -->
+    <input type="email" name="email" id="defaultRegisterFormEmail" class="form-control mb-4" placeholder="E-mail">
+        </div>
+    </div>
+
+    <div class="col">
+        <!-- address -->
+                                <textarea class="form-control mb-4" name="address" 
+                                rows="2" placeholder="Home Address"
+                                    value={{ old.workTasks }}></textarea>
+        </div>
+        
+    <div class="form-row mb-4">
+        <div class="col">
+
+    <!-- Position -->
+    <input type="tetx" name="position" class="form-control mb-4" placeholder="Position">
+        </div>
+
+        <div class="col">
+
+    <!-- department -->
+    <input type="text"  name="department" class="form-control mb-4"
+     placeholder="Department">
+        </div>
+    </div>
+
+
+<!-- state of origin -->
+	<div class="form-group">
+							<label class="control-label">State of Origin</label>
+						   <select name="state" onchange="changelga(this.value)" id="state" class="form-control">
+							  <option value="" selected="selected" >- Select -</option>
+							  <option value='Abia'>Abia</option>
+							  <option value='Adamawa'>Adamawa</option>
+							  <option value='AkwaIbom'>AkwaIbom</option>
+							  <option value='Anambra'>Anambra</option>
+							  <option value='Bauchi'>Bauchi</option>
+							  <option value='Bayelsa'>Bayelsa</option>
+							  <option value='Benue'>Benue</option>
+							  <option value='Borno'>Borno</option>
+							  <option value='Cross River'>Cross River</option>
+							  <option value='Delta'>Delta</option>
+							  <option value='Ebonyi'>Ebonyi</option>
+							  <option value='Edo'>Edo</option>
+							  <option value='Ekiti'>Ekiti</option>
+							  <option value='Enugu'>Enugu</option>
+							  <option value='Gombe'>Gombe</option>
+							  <option value='Imo'>Imo</option>
+							  <option value='Jigawa'>Jigawa</option>
+							  <option value='Kaduna'>Kaduna</option>
+							  <option value='Kano'>Kano</option>
+							  <option value='Katsina'>Katsina</option>
+							  <option value='Kebbi'>Kebbi</option>
+							  <option value='Kogi'>Kogi</option>
+							  <option value='Kwara'>Kwara</option>
+							  <option value='Lagos'>Lagos</option>
+							  <option value='Nasarawa'>Nasarawa</option>
+							  <option value='Niger'>Niger</option>
+							  <option value='Ogun'>Ogun</option>
+							  <option value='Ondo'>Ondo</option>
+							  <option value='Osun'>Osun</option>
+							  <option value='Oyo'>Oyo</option>
+							  <option value='Plateau'>Plateau</option>
+							  <option value='Rivers'>Rivers</option>
+							  <option value='Sokoto'>Sokoto</option>
+							  <option value='Taraba'>Taraba</option>
+							  <option value='Yobe'>Yobe</option>
+							  <option value='Zamfara'>Zamafara</option>
+							</select>
+						</div>
+						  
+						<div class="form-group">
+							  <label class="control-label">LGA of Origin</label>
+							  <select name="lga" id="lga" class="form-control" required>
+							  </select>
+						</div>
+
+<!-- end state of origin -->
+
+
+
+
+    <hr>
+
+    <!-- gender -->
+    <label for="gender">Gender</label>
+<div>
+    
+<div class="custom-control custom-radio">
+  <label class="custom-control-label" for="genderf">Female</label>
+  <input type="radio" class="custom-control-input" id="genderf" value="female" name="gender">
+</div>
+<div class="custom-control custom-radio">
+
+    <input type="radio" class="custom-control-input" id="genderm" value="male" name="gender">
+  <label class="custom-control-label" for="genderm">Male</label>
+</div>
+
+</div>
+<!-- endgender -->
+
+<!-- Sign up button -->
+    <button class="btn btn-outline-success my-4 btn-block" type="submit">Submit</button>
+
+</form>
+
+<!-- Default form register -->
+
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script> 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
+  <script src="{{base_url() }}/js/lga.js"></script>
+
+  {%  endblock %}

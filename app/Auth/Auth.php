@@ -4,24 +4,32 @@ namespace App\Auth;
 
 use App\Models\User;
 use App\Models\Admin;
-
+use App\Models\UserCv;
 class Auth {
+    public $userid;
+    public $id;
 
     public $adminName;
 
+    public function cv(){
+$id = User::find($_SESSION['user'])->id;
+        return count(UserCv::where('uploaded_by',$id)->first());
+    }
 
     public function user(){
         // returns the user details
           return User::find($_SESSION['user']);
 
-
-        }
+}
 
         public function admindetails(){
             return Admin::find($_SESSION['admin']);
         }
         public function Allusers(){
-            return count(User::where('id','>','0'));
+            return count(User::where('id','>','0')->get());
+        }
+        public function Allcvs(){
+            return count(UserCv::where('id','>','0')->get());
         }
 
     public function check(){
@@ -52,6 +60,7 @@ return isset($_SESSION['admin']);
         }
         return false;
     }
+
 
 
 

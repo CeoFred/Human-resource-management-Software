@@ -9,6 +9,8 @@ use App\Models\User;
 
 use App\Models\Admin;
 
+use App\Models\UserCv;
+
 use App\Controllers\Controller;
 
 use Respect\Validation\Validator as v;
@@ -16,10 +18,83 @@ use Respect\Validation\Validator as v;
 class AuthController extends Controller
 
  {
+public function getFormdata($req,$res){
+    $this->view->render($res,'workdata.twig');
+}
+public function getUserProfile($req,$res){
 
-public function getUserCv($req,$res){
+    $this->view->render($res,'profile.twig');
+}
+
+public function postUserCv($req,$res){
+
+        $Validation = $this->validator->validate($req,[
+                'email' => v::noWhiteSpace()->notEmpty()->email(),
+                'firstname' => v::noWhiteSpace()->notEmpty()->alpha(),
+                'lastname' => v::noWhiteSpace()->notEmpty()->alpha(),
+                'address' => v::noWhiteSpace()->notEmpty(),
+                'phonenumber' => v::noWhiteSpace()->notEmpty()->numeric(),
+                'gender'=> v::notEmpty(),
+                'worktitle' => v::notEmpty()->alpha(),
+                'company' => v::notEmpty()->alpha(),
+                'cityCounty' => v::notEmpty()->alpha(),
+                'companydescription' => v::alpha(),
+                'workstart' => v::notEmpty()->date(),
+                'workstop' => v::notEmpty()->date(),
+                'workTasks' => v::notEmpty()->alpha(),
+                'skills' => v::alpha(),
+                'studyprogramme' => v::notEmpty()->alpha(),
+                'institution' => v::notEmpty()->alpha(),
+                'schoolstart' => v::date()->notEmpty(),
+                'schoolend' => v::date()->notEmpty(),
+                'course'=> v::notEmpty()->alpha(),
+]);
+
+        // if validation failed ,redirect
+        if($Validation->failed()){
+            return $res->withRedirect($this->router->pathFor('Usercv'));
+        }
+else {
+
+    // upload cv
+      $directory = $this->upload_directory;
+       $uploadedFiles = $req->getUploadedFiles();
+  $uploadedFile = $uploadedFiles['image'];
+    if ($uploadedFile->getError() === UPLOAD_ERR_OK) {
+         $extension = pathinfo($uploadedFile->getClientFilename(), PATHINFO_EXTENSION);
+    $basename = bin2hex(random_bytes(8)); // see http://php.net/manual/en/function.random-bytes.php
+    $filename = sprintf('%s.%0.8s', $basename, $extension);
+    $uploadedFile->moveTo($directory . DIRECTORY_SEPARATOR . $filename);
+    }
+       $cvuploaded = UserCv::create([
+'email' => $req->getParam('email'),
+'firstname' => $req->getParam('firstname'),
+'lastname' => $req->getParam('lastname'),
+'uploaded_by' => $this->auth->user()->id,
+'image' => $filename,
+'phonenumber' => $req->getParam('phonenumber'),
+
+          ]);
+
+          if($cvuploaded){
+
+$this->flash->addMessage('loggedout','Congratualtions! Resume was uploaded successfully');
+              return $res->withRedirect($this->router->pathFor('Usercv'));
+          }
+
+
+}
+
+
+
+}
+
+
+    public function getUserCv($req,$res){
   return $this->view->render($res,'user_cv.twig');
 }
+
+
     public function getAdminSignUp($request,$response)
 
     {
@@ -71,7 +146,7 @@ try {
     $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
 
     $mail->send();
-$this->flash->addMessage('ConfirmPassword',"Welcome Admin{$request->getParam('adminname')} ");
+
           return $response->withRedirect($this->router->pathFor('ControlPanel'));
 
 } catch (Exception $e) {
@@ -230,12 +305,23 @@ try {
     $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
     $mail->send();
 
+$directory = $this->user_upload_directory;
+       $uploadedFiles = $request->getUploadedFiles();
+  $uploadedFile = $uploadedFiles['image'];
+    if ($uploadedFile->getError() === UPLOAD_ERR_OK) {
+         $extension = pathinfo($uploadedFile->getClientFilename(), PATHINFO_EXTENSION);
+    $basename = bin2hex(random_bytes(8)); // see http://php.net/manual/en/function.random-bytes.php
+    $filename = sprintf('%s.%0.8s', $basename, $extension);
+    $uploadedFile->moveTo($directory . DIRECTORY_SEPARATOR . $filename);
 
+    }
 // creating a row in databse
 $user = User::create([
 'email' => $request->getParam('email'),
 'name' => $request->getParam('name'),
-'password' =>password_hash($request->getParam('password'),PASSWORD_DEFAULT)
+'image' => $filename,
+'password' =>password_hash($request->getParam('password'),PASSWORD_DEFAULT),
+
  ]);
 // sigining in the user after regiistration by just setting starting a user session
 $this->auth->verify($user->email,$request->getParam('password'));

@@ -1,85 +1,295 @@
-
 {% extends "app.twig" %}
 
 {% block content %}
 <!-- Material form register -->
 
 <div class="row m-4">
-<div class="col-md-6 col-sm-12 col-xs-12">
-<div class="card">
-<div class="card-body">
-    <div class="alert alert-info">
-<h1 align="center">You have not uploaded any Resume yet!</h1>
-    </div>
-</div>
-</div>
-</div>
-<div class="col-md-6 col-sm-12 col-xs-12">
-<div class="card">
-    <h5 class="card-header info-color white-text text-center py-4">
-        <strong>Upload CV</strong>
-    </h5>
+    <div class="col-md-6 col-sm-12 col-xs-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="alert alert-info">
 
-    <!--Card content-->
-    <div class="card-body px-lg-5 pt-0">
+                  <h6>You have {{ auth.cv }} resume already Uploaded.</h6>
 
-        <!-- Form -->
-        <form class="text-center" style="color: #757575;">
 
-            <div class="form-row">
-                <div class="col">
-                    <!-- First name -->
-                    <div class="md-form">
-                        <input type="text" id="materialRegisterFormFirstName" class="form-control">
-                        <label for="materialRegisterFormFirstName">First name</label>
-                    </div>
                 </div>
-                <div class="col">
-                    <!-- Last name -->
-                    <div class="md-form">
-                        <input type="email" id="materialRegisterFormLastName" class="form-control">
-                        <label for="materialRegisterFormLastName">Last name</label>
+<div>
+<p>View Resume(s)</p>
+</div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 col-sm-12 col-xs-12">
+        <div class="card">
+            <h5 class="card-header info-color white-text text-center py-4">
+                <strong>Upload CV</strong>
+            </h5>
+
+            <!--Card content-->
+            <div class="card-body px-lg-5 pt-0">
+                {# {{ errors | json_encode }} #}
+                <!-- Form -->
+                <form enctype="multipart/form-data" class="text-center" method="POST" action="{{ path_for('Usercv') }}"
+                    style="color: #757575;">
+                    <div>
+                        <h4>Personal</h4>
                     </div>
-                </div>
+
+                    <div class="form-row">
+                        <div class="col">
+
+                            <!-- First name -->
+                            <div class="md-form">
+                                <input type="text" id="materialRegisterFormFirstName" name="firstname" class="form-control"
+                                    value={{ old.firstname }}>
+                                <label for="materialRegisterFormFirstName">First name</label>
+                                {% if errors.firstname %}
+                                <span class="help-block has-error-p" style="float:left;">{{ errors.firstname | first }}</span>
+                                {% endif %}
+                            </div>
+
+                        </div>
+
+                        <div class="col">
+
+                            <!-- Last name -->
+                            <div class="md-form">
+                                <input type="text" id="materialRegisterFormLastName" name="lastname" class="form-control"
+                                    value={{ old.lastname }}>
+                                <label for="materialRegisterFormLastName">Last name</label>
+                                {% if errors.lastname %}
+                                <span class="help-block has-error-p" style="float:left;">{{ errors.lastname | first }}</span>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- E-mail -->
+                    <div class="md-form mt-0">
+                        <input type="email" id="materialRegisterFormEmail" name="email" class="form-control" value={{ old.email }}>
+                        <label for="materialRegisterFormEmail">E-mail</label>
+                        {% if errors.email %}
+                        <span class="help-block has-error-p" style="float:left;">{{ errors.email | first}}</span>
+                        {% endif %}
+                    </div>
+
+
+                    <!-- Phone number -->
+                    <div class="md-form">
+                        <input type="text" id="materialRegisterFormPhone" name="phonenumber" class="form-control"
+                            aria-describedby="materialRegisterFormPhoneHelpBlock" value={{ old.phonenumber }}>
+                        <label for="materialRegisterFormPhone">Phone number</label>
+                        {% if errors.phonenumber %}
+                        <span class="help-block has-error-p" style="float:left;">{{ errors.phonenumber | first }}</span>
+                        {% endif %}
+                    </div>
+
+                    <!-- Address -->
+                    <div class="md-form mt-0">
+                        <input type="text" id="materialRegisterFormAddress" class="form-control" name="address" value={{ old.address }}>
+                        <label for="materialRegisterFormAddress">Address</label>
+                        {% if errors.address %}
+                        <span class="help-block has-error-p" style="float:left;">{{ errors.address | first }}</span>
+                        {% endif %}
+                    </div>
+                    <br>
+
+                    <div class="md-form">
+                        Female:<input type="radio" name="gender" id="" value="female">
+                        Male:<input type="radio" name="gender" id="" value="male">
+                    </div>
+                    {% if errors.gender %}
+                    <span class="help-block has-error-p">{{ errors.gender | first }}</span>
+                    {% endif %}
+                    <div>
+                        <h5>WORK EXPERIENNCE</h5>
+                    </div>
+                    <!-- Work Experience -->
+                    <div class="md-form mt-0">
+                        <button type="button" onclick="show('experience')" class="btn btn-success btn-block">Add
+                            Experience</button>
+
+                        <div id="experience" style="display:none">
+                            <div class="md-form">
+                                <input type="text" class="form-control" name="worktitle" placeholder="Tile/Position" id=""
+                                    value={{ old.worktitle }}>
+                                    {% if errors.worktitle %}
+                                    <span class="help-block has-error-p" style="float:left;">{{ errors.worktitle | first }}</span>
+                                    {% endif %}
+                                <input type="text" name="company" class="form-control" placeholder="Workplace/Company"
+                                    value={{ old.company }}>
+                                    {% if errors.company %}
+                                    <span class="help-block has-error-p" style="float:left;">{{ errors.company | first }}</span>
+                                    {% endif %}
+                                <input type="text" name="cityCounty" placeholder="City, Country" class="form-control"
+                                    value={{ old.cityCountry }}>
+                                    {% if errors.cityCountry %}
+                                    <span class="help-block has-error-p" style="float:left;">{{ errors.cityCountry | first }}</span>
+                                    {% endif %}
+                                <input type="text" name="companydescription" placeholder="Company Description(Optional)"
+                                    class="form-control" value={{ old.companydescription }}>
+                                    {% if errors.companydescription %}
+<span class="help-block has-error-p" style="float:left;">{{ errors.companydescription | first }}</span>
+{% endif %}
+                            </div>
+
+<div class="form-row">
+<div class="col">
+From :<input type="date" name="workstart" id="" class="form-control" value={{ old.workstart }}>
+{% if errors.workstart %}
+<span class="help-block has-error-p" style="float:left;">{{ errors.workstart | first }}</span>
+{% endif %}
+</div>
+<div class="col" id="stopdate">
+- To:<input class="form-control"  type="date" name="workstop" value={{ old.workstop }}>
+{% if errors.workstop %}
+<span class="help-block has-error-p" style="float:left;">{{ errors.workstop | first }}</span>
+{% endif %}
+</div>
+Current:<input onclick="hideWorkstop()" id="workstop" type="radio" class="form-contorl">
+</div>
+
+                            <div class="form-group shadow-textarea">
+
+                                <textarea class="form-control z-depth-1" name="workTasks" rows="3" placeholder="Achievements/Tasks"
+                                    value={{ old.workTasks }}></textarea>
+
+                                    {% if errors.workTasks %}
+                                    <span class="help-block has-error-p" style="float:left;">{{ errors.workTasks | first }}</span>
+                                    {% endif %}
+                            </div>
+
+                        </div>
+                    </div>
+                    {# add skills #}
+                    <div class="md-form mt-0">
+                        <button type="button" onclick="show('skills')" class="btn btn-primary btn-block">Add Skills</button>
+
+                        <div>
+                            <div id="skills" style="display:none" class="md-form">
+
+                                <div class="form-group shadow-textarea">
+                                    <textarea class="form-control z-depth-1" name="skills" rows="3" placeholder="Skills"
+                                        value={{ old.skills }}></textarea>
+                                        {% if errors.skills %}
+                                        <span class="help-block has-error-p" style="float:left;">{{ errors.skills | first }}</span>
+                                        {% endif %}
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    {# add education #}
+                    <div class="md-form mt-0">
+                        <button type="button" onclick="show('education')" class="btn btn-info btn-block">Add Education</button>
+
+                        <div>
+                            <div id="education" style="display:none" class="md-form">
+                                <input type="text" name="studyprogramme" placeholder="Study Programme" class="form-control"
+                                    value={{ old.studyprogramme }}>
+                                    {% if errors.studyprogramme %}
+                                    <span class="help-block has-error-p" style="float:left;">{{ errors.studyprogramme | first }}</span>
+                                    {% endif %}
+                                <input type="text" name="institution" placeholder="Institution/Place of Education"
+                                    class="form-control" value={{ old.institution }}>
+                                    {% if errors.institution %}
+                                    <span class="help-block has-error-p" style="float:left;">{{ errors.institution | first }}</span>
+                                    {% endif %}
+                                <div class="form-row">
+                                    <div class="col">
+                                        Start:<input type="date" name="schoolstart" class="form-control" value={{ old.schoolstart }}>
+                                        {% if errors.schoolstart %}
+                                        <span class="help-block has-error-p" style="float:left;">{{ errors.schoolstart | first }}</span>
+                                        {% endif %}
+                                    </div>
+
+                                    <div class="col">
+                                        End:<input type="date" name="schoolend" class="form-control" value={{ old.schoolend }}>
+                                        {% if errors.schoolend %}
+                                        <span class="help-block has-error-p" style="float:left;">{{ errors.schoolend | first }}</span>
+                                        {% endif %}
+                                    </div>
+                                </div>
+
+                                <input type="text" name="citycountrycgpa" id="" placeholder="City, Country, CGPA(Optional)"
+                                    class="form-control" value={{ old.citycountrycgpa }}>
+                                    {% if errors.citycountrycgpa %}
+                                    <span class="help-block has-error-p" style="float:left;">{{ errors.citycountrycgpa | first }}</span>
+                                    {% endif %}
+                                <div class="form-group shadow-textarea">
+                                    <textarea class="form-control z-depth-1" name="course" rows="2" placeholder="Course(s)"
+                                        value={{ old.course }}></textarea>
+                                        {% if errors.course %}
+                                        <span class="help-block has-error-p" style="float:left;">{{ errors.course | first }}</span>
+                                        {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="inputGroupFileAddon01">Upload</span>
+                        </div>
+                        <div class="custom-file">
+
+                            <input type="file" class="custom-file-input" id="inputGroupFile01" name="image"
+                                aria-describedby="inputGroupFileAddon01">
+                            <label class="custom-file-label" for="inputGroupFile01">Upload an Image</label>
+
+                        </div>
+                        {% if errors.image %}
+                        <span class="help-block has-error-p" style="float:left;">{{ errors.image | first }}</span>
+                        {% endif %}
+                    </div>
+                    {{ csrf.field | raw }}
+
+                    <!-- Submit cv button -->
+                    <button class="btn btn-outline-info btn-rounded btn-block my-4 waves-effect z-depth-0" type="submit">Submit
+                        CV</button>
+
+                    <hr>
+
+                    <!-- Terms of service -->
+                    <p>By clicking
+                        <em>Sign up</em> you agree to our
+                        <a href="" target="_blank">terms of service</a> and
+                        <a href="" target="_blank">terms of service</a>. </p>
+
+                </form>
+                <!-- Form -->
+
             </div>
 
-            <!-- E-mail -->
-            <div class="md-form mt-0">
-                <input type="email" id="materialRegisterFormEmail" class="form-control">
-                <label for="materialRegisterFormEmail">E-mail</label>
-            </div>
-
-
-            <!-- Phone number -->
-            <div class="md-form">
-                <input type="password" id="materialRegisterFormPhone" class="form-control" aria-describedby="materialRegisterFormPhoneHelpBlock">
-                <label for="materialRegisterFormPhone">Phone number</label>
-            </div>
-
-
-            <!-- Sign up button -->
-            <button class="btn btn-outline-info btn-rounded btn-block my-4 waves-effect z-depth-0" type="submit">Submit CV</button>
-
-            <hr>
-
-            <!-- Terms of service -->
-            <p>By clicking
-                <em>Sign up</em> you agree to our
-                <a href="" target="_blank">terms of service</a> and
-                <a href="" target="_blank">terms of service</a>. </p>
-
-        </form>
-        <!-- Form -->
+        </div>
+        <!-- Material form register -->
 
     </div>
 
 </div>
-<!-- Material form register -->
 
-</div>
+<script>
+    function show(option) {
+        var exp = document.getElementById(option);
+        if (exp.style.display == 'none') {
+            document.getElementById(option).style.display = 'block';
+            console.warn(option, 'option triggered');
+        } else {
+            document.getElementById(option).style.display = 'none';
+            console.log(option, 'option closed');
+        }
+    }
+    function hideWorkstop() {
+        var input = document.getElementById('workstop');
 
-</div>
+        if (input.checked == true) {
+            document.getElementById('stopdate').style.display = 'none';
+            console.log('has been checked');
+        }
+
+    }
 
 
+</script>
 
 {% endblock %}

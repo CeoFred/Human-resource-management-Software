@@ -8,7 +8,6 @@ use App\Middleware\TobeAdminMiddelWare;
 $app->get('/','HomeController:index')->setName('home');
 
 
-$app->get('/auth/my_cv','AuthController:getUserCv')->setName('Usercv');
 
 
 //only guest can access this routes
@@ -44,10 +43,14 @@ $app->post('/auth/admin/login','AuthController:postAdminSignIn');
 // if anyone access any of this routes,Authmiddelware checks if you are logged in and refiects you to the signin page if you a
 // are not logged in yet, so all th routes passes through the authcontroller
 $app->group('',function(){
-
-$this->get('/auth/password/change','PasswordController:getchangepass')->setName('change.password');
-$this->post('/auth/password/change','PasswordController:postchangepass');
-$this->get('/auth/logout','AuthController:getlogout')->setName('logout');
+$this->get('/auth/user/my_cv','AuthController:getUserCv')->setName('Usercv');
+$this->post('/auth/user/my_cv','AuthController:postUserCv');
+$this->get('/auth/user/password/change','PasswordController:getchangepass')->setName('change.password');
+$this->post('/auth/user/password/change','PasswordController:postchangepass');
+$this->get('/auth/user/logout','AuthController:getlogout')->setName('logout');
+$this->get('/auth/user/formdata','AuthController:getFormdata')->setName('user.formdata');
+$this->get('/auth/user/profile','AuthController:getUserProfile')->setName('user.profile');
+$this->get('/auth/user/inbox','AuthController:getUserInbox')->setName('user.inbox');
 
 })->add(new AuthMiddleware($container));
 // using twig view

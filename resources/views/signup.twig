@@ -8,7 +8,7 @@
         <h5 class="card-header">SignUp Now</h5>
         <div class="card-body">
 
-            <form action="{{ path_for('auth.signup') }}" method="POST">
+            <form enctype="multipart/form-data" action="{{ path_for('auth.signup') }}" method="POST">
 <div class="form-group ">
 <label for="email">Email</label>
 <input type="email" name="email" class="{{errors.email ? 'has-error ': '' }}
@@ -33,8 +33,12 @@
 <span class="help-block has-error-p">{{ errors.password | first}}</span>
 {% endif %}
 </div>
+<div class="custom-file">
 
-<button type="submit" class="btn btn-success">Signup</button>
+    <input type="file" class="custom-file-input" id="inputGroupFile01" name="image" aria-describedby="inputGroupFileAddon01">
+    <label class="custom-file-label" for="inputGroupFile01">Upload an Image</label>
+
+</div><button type="submit" class="btn btn-success">Signup</button>
 
 {{ csrf.field | raw  }}
 </form>

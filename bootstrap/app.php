@@ -31,6 +31,8 @@ $container = $app->getContainer();
 $container['flash'] = function () {
     return new \Slim\Flash\Messages();
 };
+$container['upload_directory'] = __DIR__ . '\..\public\usercvimage';
+$container['user_upload_directory'] = __DIR__ . '\..\public\img\userprofileimg';
 
 $container['auth'] = function($container){
     //pass view dependecy to Home controller constuctor function
@@ -68,7 +70,9 @@ $view = new \Slim\Views\Twig(__DIR__ . '/../resources/views',[
 'date' => date('Y'),
 'admincheck' => $container->auth->admincheck(),
 'admindetails' => $container->auth->admindetails(),
-'Allusers' => $container->auth->Allusers()
+'Allusers' => $container->auth->Allusers(),
+'cv' => $container->auth->cv(),
+'Allcvs' => $container->auth->Allcvs(),
 // 'welcome' => 'Welcome Back dummy! the time is',
 // 'time' => '17:20pm'
 
