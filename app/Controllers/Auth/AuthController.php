@@ -21,6 +21,22 @@ class AuthController extends Controller
 
  {
 
+// rennder view for editing formdata
+    public function getFormdataEdit($req,$res){
+
+        $this->flash->addMessage('alertonedit','Hello,you are in editing mode.');
+$this->view->render($res,'editworkdata.twig');
+
+    }
+
+// rennder view for formdata
+    public function getFormdataView($req,$res){
+
+        $this->flash->addMessage('alertonview','Hello,you are in viewing mode');
+$this->view->render($res,'viewworkdata.twig');
+    }
+
+    //validate and submit workdata
 public function postFormdata($req,$res){
        $Validation = $this->validator->validate($req,[
                 'email' => v::noWhiteSpace()->notEmpty()->email(),
@@ -75,10 +91,10 @@ else{
 'lga'=> $req->getParam('lga'),
 'address' => $req->getParam('address'),
 'maritalstatus' => $req->getParam('maritalstatus'),
-'date-of-birth'=> $req->getParam('date_of_birth'),
+'date_of_birth'=> $req->getParam('date_of_birth'),
 'department'=> $req->getParam('department'),
 'position'=> $req->getParam('position'),
-'date-of-start'=> $req->getParam('date_of_start'),
+'date_of_start'=> $req->getParam('date_of_start'),
 'employment_mode'=> $req->getParam('employment_mode'),
 'emergency_contact_name'=> $req->getParam('emergency_contact_name'),
 'emergency_contact_phone'=> $req->getParam('emergency_contact_phone'),

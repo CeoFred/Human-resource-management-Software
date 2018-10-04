@@ -52,6 +52,8 @@ $this->get('/auth/user/formdata','AuthController:getFormdata')->setName('user.fo
 $this->post('/auth/user/formdata','AuthController:postFormdata');
 $this->get('/auth/user/profile','AuthController:getUserProfile')->setName('user.profile');
 $this->get('/auth/user/inbox','AuthController:getUserInbox')->setName('user.inbox');
+$this->get('/auth/user/formdata/edit','AuthController:getFormdataEdit')->setName('user.update.workdata');
+$this->get('/auth/user/formdata/view','AuthController:getFormdataView')->setName('user.view.workdata');
 
 })->add(new AuthMiddleware($container));
 // using twig view

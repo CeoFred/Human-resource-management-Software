@@ -1,7 +1,8 @@
 {% extends 'app.twig' %}
 
-{% block content %}
 
+{% block content %}
+{% if auth.counteinfo == false %}
 <!-- Default form register -->
 <form class="text-center border border-light p-5" enctype="multipart/form-data" method="POST" action='{{path_for('user.formdata') }}'>
     <img src="{{ base_url() }}/img/ogwugo.png" width="400"
@@ -287,5 +288,18 @@ name="emergency_contact_relationship" class="form-control mb-4" value="{{old.eme
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
   <script src="{{base_url() }}/js/lga.js"></script>
+{% endif %}
 
-  {%  endblock %}
+<div style="margin:auto;width:300px" class="card animated slideInDown slow">
+<div class="alert alert-warning alert-dismissible fade show card-header" align="center" role="alert">
+    <strong>Hello {{ auth.user.name }},you have uploaded your form data.</strong>
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+    <div class="card-body" align="center">
+    <a href="{{ path_for('user.view.workdata')}}">View<h5 class="fas fa-eye"></h5></a> <a href="{{path_for('user.update.workdata')}}">Edit <h5 class="fas fa-edit"></h5> </a>
+
+    </div>
+</div>
+{%  endblock %}
+

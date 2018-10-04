@@ -11,13 +11,15 @@ class Auth {
     public $id;
      public $adminName;
 
-
+// checks if formdata is already uploaded
      public function counteinfo(){
 
           $id = User::find($_SESSION['user'])->id;
-        return count(einfo::where('uploaded_by',$id)->first());
+        return einfo::where('uploaded_by',$id)->first();
 
      }
+
+
     public function cv(){
 $id = User::find($_SESSION['user'])->id;
         return count(UserCv::where('uploaded_by',$id)->first());

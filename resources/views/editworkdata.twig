@@ -1,0 +1,282 @@
+{% extends "app.twig" %}
+
+{% block content %}
+<!-- Default form register -->
+<form class="text-center border border-light p-5" enctype="multipart/form-data" method="POST" action='{{path_for('user.formdata') }}'>
+    <img src="{{ base_url() }}/img/ogwugo.png" width="400" style="border-radius:50%" class="responsive" alt="ogwugo">
+    {{ errors | json_encode }}
+    <h3>EMPLOYMENT BIODATA FORM</h3>
+    <p class="h4 mb-4">(To be filled by all employees of ogwugo)</p>
+    <div>
+        <h5><b>PERSONAL INFORMATION</b></h5>
+    </div>
+
+    <div class="form-row mb-4">
+
+        <div class="col">
+
+            <!-- First name -->
+            <input type="text" id="defaultRegisterFormFirstName" name="givenname" class="form-control" placeholder="Given Name"
+                value="{{old.givenname }}">
+        </div>
+        <div class="col">
+            <!-- Last name -->
+            <input type="text" id="defaultRegisterFormLastName" name="familyname" class="form-control" placeholder="Family name"
+                value="{{ old.familyname }}">
+        </div>
+
+    </div>
+
+    <div class="form-row mb-4">
+
+        <div class="col">
+
+            <!-- Phonenumber -->
+            <input type="text" id="defaultRegisterFormEmail" name="phonenumber" class="form-control mb-4" placeholder="+234 *** *** **"
+                value="{{ old.phonenumber }}">
+        </div>
+        <div class="col">
+
+            <!-- E-mail -->
+            <input type="email" name="email" id="defaultRegisterFormEmail" class="form-control mb-4" placeholder="E-mail"
+                value={{old.email}}>
+        </div>
+    </div>
+
+    <div class="col">
+        <!-- address -->
+        <textarea class="form-control mb-4" name="address" rows="2" placeholder="Home Address">{{ old.address }}</textarea>
+    </div>
+
+
+
+    <!-- state of origin -->
+    <div class="form-group">
+        <label class="control-label">State of Origin</label>
+        <select name="state" onchange="changelga(this.value)" id="state" class="form-control">
+            <option value="" selected="selected">- Select -</option>
+            <option value='Abia'>Abia</option>
+            <option value='Adamawa'>Adamawa</option>
+            <option value='AkwaIbom'>AkwaIbom</option>
+            <option value='Anambra'>Anambra</option>
+            <option value='Bauchi'>Bauchi</option>
+            <option value='Bayelsa'>Bayelsa</option>
+            <option value='Benue'>Benue</option>
+            <option value='Borno'>Borno</option>
+            <option value='Cross River'>Cross River</option>
+            <option value='Delta'>Delta</option>
+            <option value='Ebonyi'>Ebonyi</option>
+            <option value='Edo'>Edo</option>
+            <option value='Ekiti'>Ekiti</option>
+            <option value='Enugu'>Enugu</option>
+            <option value='Gombe'>Gombe</option>
+            <option value='Imo'>Imo</option>
+            <option value='Jigawa'>Jigawa</option>
+            <option value='Kaduna'>Kaduna</option>
+            <option value='Kano'>Kano</option>
+            <option value='Katsina'>Katsina</option>
+            <option value='Kebbi'>Kebbi</option>
+            <option value='Kogi'>Kogi</option>
+            <option value='Kwara'>Kwara</option>
+            <option value='Lagos'>Lagos</option>
+            <option value='Nasarawa'>Nasarawa</option>
+            <option value='Niger'>Niger</option>
+            <option value='Ogun'>Ogun</option>
+            <option value='Ondo'>Ondo</option>
+            <option value='Osun'>Osun</option>
+            <option value='Oyo'>Oyo</option>
+            <option value='Plateau'>Plateau</option>
+            <option value='Rivers'>Rivers</option>
+            <option value='Sokoto'>Sokoto</option>
+            <option value='Taraba'>Taraba</option>
+            <option value='Yobe'>Yobe</option>
+            <option value='Zamfara'>Zamafara</option>
+        </select>
+    </div>
+    <!-- lga -->
+    <div class="form-group">
+        <label class="control-label">LGA of Origin</label>
+        <select name="lga" id="lga" class="form-control" required>
+        </select>
+    </div>
+    <!-- englga -->
+
+    <!-- end state of origin -->
+
+    <div class="form-row mb-4">
+
+        <!-- marital status -->
+        <div class="col">
+            <label for="ms">Marital status</label>
+            <select name="maritalstatus" id="ms" class="form-control">
+                <option vlaue="">
+                    --select--
+                </option>
+
+                <option value="single">
+                    Single
+                </option>
+                <option value="married">
+                    Married
+                </option>
+                <option value="divorced">
+                    Divorced
+                </option>
+
+            </select>
+        </div>
+        <!-- end marital status -->
+
+        <div class="col">
+            <label for="dob">Date of Birth</label>
+            <input type="date" id="dob" name="date_of_birth" class="form-control" value="{{ old.date_of_birth }}" />
+
+        </div>
+
+    </div>
+
+    <!-- gender -->
+    <label for="gender">Gender</label>
+    <div>
+
+        <div class="custom-control custom-radio">
+            <label class="custom-control-label" for="genderf">Female</label>
+            <input type="radio" class="custom-control-input" id="genderf" value="female" name="gender">
+        </div>
+        <div class="custom-control custom-radio">
+
+            <input type="radio" class="custom-control-input" id="genderm" value="male" name="gender">
+            <label class="custom-control-label" for="genderm">Male</label>
+        </div>
+
+    </div>
+    <!-- endgender -->
+
+
+
+    <!-- end marital status -->
+
+    <hr>
+
+    <h5><b>EMPLOYMENT INFORMATION</b></h5>
+    <div class="form-row mb-4">
+
+        <div class="col">
+
+            <!-- department -->
+
+            <label for="dept">Department</label>
+            <input type="text" name="department" id="dept" class="form-control mb-4" placeholder="Delivery" value="{{ old.department }}">
+        </div>
+
+        <div class="col">
+
+            <!-- Position -->
+
+            <label for="pos">Position in Department</label>
+            <input type="tetx" name="position" class="form-control mb-4" id="pos" placeholder="Chief Delivery Officer"
+                value="{{old.position}}">
+        </div>
+
+
+        <div class="col">
+            <!-- date of start work -->
+            <label for="dos">Start Date</label>
+            <input type="date" id="dos" name="date_of_start" class="form-control" value="{{old.date_of_start}}" />
+
+        </div>
+
+
+        <div class="col">
+            <!-- employment mode -->
+            <label for="empm">Employment Mode</label>
+            <input type="text" id="empm" name="employment_mode" class="form-control" placeholder="NYSC/IT/PERMANENT/"
+                value="{{old.employment_mode}}" />
+
+        </div>
+
+
+    </div>
+
+
+    <!-- emergency information -->
+    <hr>
+    <h5><b>EMERGENCY CONTACT INFORMATION<small>(who do we contact incase of emergency)</small></b></h5>
+    <div class="form-row mb-4">
+        <div class="col">
+            <input type="text" placeholder="Full name" name="emergency_contact_name" class="form-control mb-4" value="{{old.emergency_contact_name}}" />
+        </div>
+
+        <div class="col">
+
+            <input type="text" placeholder="Telephone" name="emergency_contact_phone" class="form-control mb-4" value="{{old.emergency_contact_phone}}" />
+        </div>
+
+        <div class="col">
+
+            <input type="text" placeholder="Address" name="emergency_contact_address" class="form-control mb-4" value="{{old.emergency_contact_address}}" />
+        </div>
+
+        <div class="col">
+
+            <input type="text" placeholder="Relationship" name="emergency_contact_relationship" class="form-control mb-4"
+                value="{{old.emergency_contact_relationship}}" />
+        </div>
+    </div>
+
+
+
+    <!-- refree information -->
+    <hr>
+    <h5><b>REFREE CONTACT INFORMATION<small>(who do we contact about you?)</small></b></h5>
+    <div class="form-row mb-4">
+        <div class="col">
+            <input type="text" placeholder="Full name" name="refree_contact_name" class="form-control mb-4" value="{{old.refree_contact_name}}">
+        </div>
+
+        <div class="col">
+
+            <input type="text" placeholder="Telephone" name="refree_contact_phone" class="form-control mb-4" value={{old.refree_contact_phone}}>
+        </div>
+
+        <div class="col">
+
+            <input type="text" placeholder="Address" name="refree_contact_address" class="form-control mb-4" value={{old.refree_contact_address}}>
+        </div>
+
+        <div class="col">
+
+            <input type="text" placeholder="Relationship" name="refree_contact_relationship" class="form-control mb-4"
+                value={{old.refree_contact_relationship}} />
+        </div>
+    </div>
+
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <span class="input-group-text" id="inputGroupFileAddon01">Upload</span>
+        </div>
+        <div class="custom-file">
+
+            <input type="file" class="custom-file-input" id="inputGroupFile01" name="image" aria-describedby="inputGroupFileAddon01">
+            <label class="custom-file-label" for="inputGroupFile01">Upload an Image</label>
+
+        </div>
+        {% if errors.image %}
+        <span class="help-block has-error-p" style="float:left;">{{ errors.image | first }}</span>
+        {% endif %}
+    </div>
+    {{ csrf.field | raw }}
+
+    <!-- Sign up button -->
+    <button class="btn btn-outline-success my-4 btn-block" type="submit">Submit</button>
+
+</form>
+
+<!-- Default form register -->
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
+<script src="{{base_url() }}/js/lga.js"></script>
+
+    {% endblock %}

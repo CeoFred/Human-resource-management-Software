@@ -1,7 +1,23 @@
 
 {% if flash.getMessage('signedin') %}
-<div class="alert alert-success animated shake">
+<div class="alert alert-success animated shake slow">
 {{ flash.getMessage('signedin') | first }}
+</div>
+{% endif %}
+
+{% if flash.getMessage('alertonedit') %}
+<div class="alert alert-info alert-dismissible show card-header animated slideInDown slow" align="center" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>    {{ flash.getMessage('alertonedit') | first }}
+</div>
+{% endif %}
+
+{% if flash.getMessage('alertonview') %}
+<div class="alert alert-info alert-dismissible show card-header animated slideInDown slow" align="center" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button> {{ flash.getMessage('alertonview') | first }}
 </div>
 {% endif %}
 
