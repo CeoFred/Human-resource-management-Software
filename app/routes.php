@@ -49,6 +49,7 @@ $this->get('/auth/user/password/change','PasswordController:getchangepass')->set
 $this->post('/auth/user/password/change','PasswordController:postchangepass');
 $this->get('/auth/user/logout','AuthController:getlogout')->setName('logout');
 $this->get('/auth/user/formdata','AuthController:getFormdata')->setName('user.formdata');
+$this->post('/auth/user/formdata','AuthController:postFormdata');
 $this->get('/auth/user/profile','AuthController:getUserProfile')->setName('user.profile');
 $this->get('/auth/user/inbox','AuthController:getUserInbox')->setName('user.inbox');
 

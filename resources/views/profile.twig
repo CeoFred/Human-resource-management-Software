@@ -3,7 +3,7 @@
 
 {% block content %}
 <div class="row">
-    <div class="col-md-3">
+    <div class="col-md-3" style="margin-top:10px;">
         <div class="card" style="background:#4caf50;height:700px;">
             <div class="card-body center" style='text-align:center;' align="center">
                 <img class="animated bounceIn" src="{{ base_url() }}/img/userprofileimg/{{ auth.user.image }}"
@@ -18,7 +18,12 @@
              </div>
             </div>
 
-        <div class="col-md-9">
+        <div class="col-md-9" style="margin-top:10px;">
+                                {% if auth.counteinfo > 0 %}
+                                <p class="alert alert-info">
+                                    <i class="fa fa-info"></i> You have submitted your WorkData.
+                                </p>
+                                {% endif %}
 
                 <div class="row">
                     <div class="col-md-4">
@@ -40,7 +45,7 @@ Upload CV
                                 Add WorkData
                             </div>
                             <div class="card-body">
-                                <a href={{ path_for('user.formdata') }}><i <i class="fab fa-wpforms" 
+                                <a href={{ path_for('user.formdata') }}><i <i class="fab fa-wpforms"
 style="font-size:100px;color:#fff;border:2px solid #fff;border-radius:30%;padding:30px;"></i> </a>
                             </div>
                         </div>
@@ -51,8 +56,8 @@ style="font-size:100px;color:#fff;border:2px solid #fff;border-radius:30%;paddin
 Inbox
 </div>
       <div class="card-body">
-<a href={{path_for('user.inbox') }}><i class="far fa-envelope"  
-style="font-size:100px;color:#fff;border:2px solid #fff;border-radius:30%;padding:30px;"></i></a>                      
+<a href={{path_for('user.inbox') }}><i class="far fa-envelope"
+style="font-size:100px;color:#fff;border:2px solid #fff;border-radius:30%;padding:30px;"></i></a>
 </div>
                         </div>
 

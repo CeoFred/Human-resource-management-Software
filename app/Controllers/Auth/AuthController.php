@@ -5,6 +5,8 @@ namespace App\Controllers\Auth;
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
+use App\Models\workdata;
+
 use App\Models\User;
 
 use App\Models\Admin;
@@ -18,9 +20,95 @@ use Respect\Validation\Validator as v;
 class AuthController extends Controller
 
  {
+
+public function postFormdata($req,$res){
+       $Validation = $this->validator->validate($req,[
+                'email' => v::noWhiteSpace()->notEmpty()->email(),
+                'givenname' => v::notEmpty()->alpha(),
+                'familyname' => v::notEmpty()->alpha(),
+                'address' => v::notEmpty(),
+                'phonenumber' => v::noWhiteSpace()->notEmpty()->numeric(),
+                'gender'=> v::notEmpty(),
+                'state' => v::notEmpty()->alpha(),
+                'lga' => v::notEmpty()->alpha(),
+                'maritalstatus' => v::notEmpty()->alpha(),
+                'date_of_birth' => v::date(),
+                'department' => v::notEmpty()->alpha(),
+                'position' => v::notEmpty()->alpha(),
+                'date_of_start' => v::notEmpty()->date(),
+                'employment_mode' => v::alpha(),
+                'emergency_contact_name' => v::notEmpty()->alpha(),
+                'emergency_contact_phone' => v::notEmpty()->numeric(),
+                'emergency_contact_relationship' => v::alpha()->notEmpty(),
+                 'refree_contact_phone' => v::numeric()->notEmpty(),
+                'refree_contact_name' => v::alpha()->notEmpty(),
+                'emergency_contact_address'=> v::notEmpty()->alpha(),
+                'refree_contact_address' => v::notEmpty()->alpha(),
+                'refree_contact_relationship' => v::notEmpty()->alpha(),
+
+]);
+
+// if validation failed ,redirect
+        if($Validation->failed()){
+            return $res->withRedirect($this->router->pathFor('user.formdata'));
+        }
+else{
+         $directory = $this->upload_directory_employees;
+       $uploadedFiles = $req->getUploadedFiles();
+  $uploadedFile = $uploadedFiles['image'];
+    if ($uploadedFile->getError() === UPLOAD_ERR_OK) {
+         $extension = pathinfo($uploadedFile->getClientFilename(), PATHINFO_EXTENSION);
+    $basename = bin2hex(random_bytes(8)); // see http://php.net/manual/en/function.random-bytes.php
+    $filename = sprintf('%s.%0.8s', $basename, $extension);
+    $uploadedFile->moveTo($directory . DIRECTORY_SEPARATOR . $filename);
+    }
+
+       $workdataupload = workdata::create([
+'email' => $req->getParam('email'),
+'givenname' => $req->getParam('givenname'),
+'familyname' => $req->getParam('familyname'),
+'uploaded_by' => $this->auth->user()->id,
+'image' => $filename,
+'phonenumber' => $req->getParam('phonenumber'),
+'gender' => $req->getParam('gender'),
+'state' => $req->getParam('state'),
+'lga'=> $req->getParam('lga'),
+'address' => $req->getParam('address'),
+'maritalstatus' => $req->getParam('maritalstatus'),
+'date-of-birth'=> $req->getParam('date_of_birth'),
+'department'=> $req->getParam('department'),
+'position'=> $req->getParam('position'),
+'date-of-start'=> $req->getParam('date_of_start'),
+'employment_mode'=> $req->getParam('employment_mode'),
+'emergency_contact_name'=> $req->getParam('emergency_contact_name'),
+'emergency_contact_phone'=> $req->getParam('emergency_contact_phone'),
+'emergency_contact_relationship'=> $req->getParam('emergency_contact_relationship'),
+'refree_contact_name'=> $req->getParam('refree_contact_name'),
+'refree_contact_phone'=> $req->getParam('refree_contact_phone'),
+'refree_contact_address'=> $req->getParam('refree_contact_address'),
+'emergency_contact_address'=> $req->getParam('emergency_contact_address'),
+'refree_contact_relationship'=> $req->getParam('refree_contact_relationship'),
+          ]);
+
+          if($workdataupload){
+$this->flash->addMessage('signedin','Congratualtions! Form was submitted successfully');
+              return $res->withRedirect($this->router->pathFor('user.profile'));
+        }else{
+
+$this->flash->addMessage('loggedout','Opps! Sorry, something went wrong,try again');
+             return $res->withRedirect($this->router->pathFor('user.formdata'));
+
+          }
+}
+}
+
 public function getFormdata($req,$res){
     $this->view->render($res,'workdata.twig');
+
+
 }
+
+
 public function getUserProfile($req,$res){
 
     $this->view->render($res,'profile.twig');

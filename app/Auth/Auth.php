@@ -4,17 +4,25 @@ namespace App\Auth;
 
 use App\Models\User;
 use App\Models\Admin;
+use App\Models\einfo;
 use App\Models\UserCv;
 class Auth {
     public $userid;
     public $id;
+     public $adminName;
 
-    public $adminName;
 
+     public function counteinfo(){
+
+          $id = User::find($_SESSION['user'])->id;
+        return count(einfo::where('uploaded_by',$id)->first());
+
+     }
     public function cv(){
 $id = User::find($_SESSION['user'])->id;
         return count(UserCv::where('uploaded_by',$id)->first());
     }
+
 
     public function user(){
         // returns the user details
@@ -25,6 +33,12 @@ $id = User::find($_SESSION['user'])->id;
         public function admindetails(){
             return Admin::find($_SESSION['admin']);
         }
+// returns a count of number of rows on the einfo table
+        public function Allworkdata(){
+            return count(workdata::where('id','>','0')->get());
+
+        }
+
         public function Allusers(){
             return count(User::where('id','>','0')->get());
         }

@@ -33,7 +33,7 @@ $container['flash'] = function () {
 };
 $container['upload_directory'] = __DIR__ . '\..\public\usercvimage';
 $container['user_upload_directory'] = __DIR__ . '\..\public\img\userprofileimg';
-
+$container['upload_directory_employees'] = __DIR__ . '\..\public\img\workdataimg';
 $container['auth'] = function($container){
     //pass view dependecy to Home controller constuctor function
     return new \App\Auth\Auth;
@@ -73,6 +73,7 @@ $view = new \Slim\Views\Twig(__DIR__ . '/../resources/views',[
 'Allusers' => $container->auth->Allusers(),
 'cv' => $container->auth->cv(),
 'Allcvs' => $container->auth->Allcvs(),
+'counteinfo' => $container->auth->counteinfo(),
 // 'welcome' => 'Welcome Back dummy! the time is',
 // 'time' => '17:20pm'
 
