@@ -33,7 +33,7 @@
 <li class="nav-item dropdown right">
     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown"
         aria-haspopup="true" aria-expanded="false">
-        Welcome back, {{ auth.user.name }}
+        Welcome back, {{ auth.user.firstname }}
     </a>
     <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
         <a class="dropdown-item" href={{ path_for('logout') }}>Logout</a>

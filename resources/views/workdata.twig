@@ -3,145 +3,52 @@
 
 {% block content %}
 {% if auth.counteinfo == false %}
-<!-- Default form register -->
-<form class="text-center border border-light p-5" enctype="multipart/form-data" method="POST" action='{{path_for('user.formdata') }}'>
-    <img src="{{ base_url() }}/img/ogwugo.png" width="400"
-     style="border-radius:50%" class="responsive"
-        alt="ogwugo">
-        {{ errors | json_encode }}
+
+{{ errors | json_encode }}
+<div  align="center">
+<img src="{{ base_url() }}/img/ogwugo.png" width="400" style="border-radius:50%" class="responsive" alt="ogwugo">
 <h3>EMPLOYMENT BIODATA FORM</h3>
-    <p class="h4 mb-4">(To be filled by all employees of ogwugo)</p>
-<div>
-            <h5><b>PERSONAL INFORMATION</b></h5>
-        </div>
+<p class="h4 mb-4">(To be filled by all employees of ogwugo)</p>
 
-        <div class="form-row mb-4">
+</div>
 
-        <div class="col">
+<div class="md-form mt-0" style="width:350px;">
+<button onclick="show('pinfo')" class="btn btn-success" style="width:100%">
+    <h5><b><b id="show">SHOW </b> PERSONAL INFORMATION</b></h5>
+</button>
+<div id="pinfo" style="width:100%;border:1px solid lightgrey;padding:10px;z-index:3000;display:none" class="animated slideInLeft fast">
+<form style="color: #757575;">
 
-            <!-- First name -->
-            <input type="text" id="defaultRegisterFormFirstName"
-             name="givenname"
-            class="form-control" placeholder="Given Name" value="{{old.givenname }}">
-        </div>
-        <div class="col">
-            <!-- Last name -->
-            <input type="text" id="defaultRegisterFormLastName"
-            name="familyname" class="form-control"
-
-            placeholder="Family name" value="{{ old.familyname }}">
-        </div>
-
+    <!-- firstname input -->
+    <div class="md-form">
+        <i class="fa fa-user prefix"></i>
+        <input type="text" id="fname" class="form-control">
+        <label for="fname">First Name</label>
     </div>
-
-    <div class="form-row mb-4">
-
-        <div class="col">
-
-    <!-- Phonenumber -->
-    <input type="text" id="defaultRegisterFormEmail"
-     name="phonenumber" class="form-control mb-4" placeholder="+234 *** *** **" value="{{ old.phonenumber }}">
-        </div>
-        <div class="col">
-
-    <!-- E-mail -->
-    <input type="email" name="email" id="defaultRegisterFormEmail" class="form-control mb-4" placeholder="E-mail" value={{old.email}}>
-        </div>
+    <!-- lastname input -->
+    <div class="md-form">
+        <i class="fa fa-user prefix"></i>
+        <input type="text" id="lname" class="form-control">
+        <label for="lname">Last Name</label>
     </div>
-
-    <div class="col">
-        <!-- address -->
-        <textarea class="form-control mb-4" name="address"
-                                rows="2" placeholder="Home Address"
-                                    >{{ old.address }}</textarea>
-        </div>
-
-
-
-<!-- state of origin -->
-	<div class="form-group">
-							<label class="control-label">State of Origin</label>
-						   <select name="state" onchange="changelga(this.value)" id="state" class="form-control">
-							  <option value="" selected="selected" >- Select -</option>
-							  <option value='Abia'>Abia</option>
-							  <option value='Adamawa'>Adamawa</option>
-							  <option value='AkwaIbom'>AkwaIbom</option>
-							  <option value='Anambra'>Anambra</option>
-							  <option value='Bauchi'>Bauchi</option>
-							  <option value='Bayelsa'>Bayelsa</option>
-							  <option value='Benue'>Benue</option>
-							  <option value='Borno'>Borno</option>
-							  <option value='Cross River'>Cross River</option>
-							  <option value='Delta'>Delta</option>
-							  <option value='Ebonyi'>Ebonyi</option>
-							  <option value='Edo'>Edo</option>
-							  <option value='Ekiti'>Ekiti</option>
-							  <option value='Enugu'>Enugu</option>
-							  <option value='Gombe'>Gombe</option>
-							  <option value='Imo'>Imo</option>
-							  <option value='Jigawa'>Jigawa</option>
-							  <option value='Kaduna'>Kaduna</option>
-							  <option value='Kano'>Kano</option>
-							  <option value='Katsina'>Katsina</option>
-							  <option value='Kebbi'>Kebbi</option>
-							  <option value='Kogi'>Kogi</option>
-							  <option value='Kwara'>Kwara</option>
-							  <option value='Lagos'>Lagos</option>
-							  <option value='Nasarawa'>Nasarawa</option>
-							  <option value='Niger'>Niger</option>
-							  <option value='Ogun'>Ogun</option>
-							  <option value='Ondo'>Ondo</option>
-							  <option value='Osun'>Osun</option>
-							  <option value='Oyo'>Oyo</option>
-							  <option value='Plateau'>Plateau</option>
-							  <option value='Rivers'>Rivers</option>
-							  <option value='Sokoto'>Sokoto</option>
-							  <option value='Taraba'>Taraba</option>
-							  <option value='Yobe'>Yobe</option>
-							  <option value='Zamfara'>Zamafara</option>
-							</select>
-						</div>
-						  <!-- lga -->
-						<div class="form-group">
-							  <label class="control-label">LGA of Origin</label>
-							  <select name="lga" id="lga" class="form-control" required>
-							  </select>
-                        </div>
-                        <!-- englga -->
-
-<!-- end state of origin -->
-
-<div class="form-row mb-4">
-
-<!-- marital status -->
-        <div class="col">
-<label for="ms">Marital  status</label>
-            <select name="maritalstatus" id="ms"  class="form-control">
-                <option vlaue="">
-                    --select--
-                </option>
-
-                <option value="single">
-                    Single
-                </option>
-                <option value="married">
-                    Married
-                </option>
-                <option value="divorced">
-                    Divorced
-                </option>
-
-            </select>
-        </div>
-        <!-- end marital status -->
-
-        <div class="col">
-            <label for="dob">Date of Birth</label>
-        <input type="date" id="dob" name="date_of_birth" class="form-control" value="{{ old.date_of_birth }}"/>
-
-        </div>
-
+    <!-- email input -->
+    <div class="md-form">
+        <i class="fa fa-envelope prefix"></i>
+        <input type="text" id="email" class="form-control">
+        <label for="email">E-mail address</label>
     </div>
+<!-- address input -->
+    <div class="md-form">
+        <textarea id="address" class="form-control md-textarea" length="120" rows="3"></textarea>
+        <label for="address">Address</label>
+    </div>
+<button type="button" class="btn btn-default">SUBMIT</button>
+
+</form>
+</div>
+</div>
+
+
 
     <!-- gender -->
     <label for="gender">Gender</label>
@@ -301,5 +208,32 @@ name="emergency_contact_relationship" class="form-control mb-4" value="{{old.eme
 
     </div>
 </div>
+
+<script>
+    function show(option) {
+        var exp = document.getElementById(option);
+        if (exp.style.display == 'none') {
+            document.getElementById(option).style.display = 'block';
+            console.warn(option, 'option triggered');
+            document.getElementById('show').innerHTML = 'HIDE';
+        } else {
+            document.getElementById(option).style.display = 'none';
+            console.log(option, 'option closed');
+
+            document.getElementById('show').innerHTML = 'SHOW';
+        }
+    }
+    function hideWorkstop() {
+        var input = document.getElementById('workstop');
+
+        if (input.checked == true) {
+            document.getElementById('stopdate').style.display = 'none';
+            console.log('has been checked');
+        }
+
+    }
+
+
+</script>
 {%  endblock %}
 

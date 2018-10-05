@@ -11,15 +11,29 @@ class Auth {
     public $id;
      public $adminName;
 
+
+// get all users for admin
+public function adminusers(){
+
+  return $users =   User::where('id','>', '0')
+               ->orderBy('id', 'aesc')
+               ->take(10)
+               ->distinct()
+               ->get();
+
+    }
+
 // checks if formdata is already uploaded
      public function counteinfo(){
 
           $id = User::find($_SESSION['user'])->id;
         return einfo::where('uploaded_by',$id)->first();
-
      }
 
+public function countrealworkdata(){
 
+        return count(einfo::where('id','>','0')->get());
+}
     public function cv(){
 $id = User::find($_SESSION['user'])->id;
         return count(UserCv::where('uploaded_by',$id)->first());

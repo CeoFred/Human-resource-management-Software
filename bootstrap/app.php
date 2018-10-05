@@ -74,6 +74,8 @@ $view = new \Slim\Views\Twig(__DIR__ . '/../resources/views',[
 'cv' => $container->auth->cv(),
 'Allcvs' => $container->auth->Allcvs(),
 'counteinfo' => $container->auth->counteinfo(),
+'countrealworkdata' => $container->auth->countrealworkdata(),
+'adminusers' => $container->auth->adminusers(),
 // 'welcome' => 'Welcome Back dummy! the time is',
 // 'time' => '17:20pm'
 

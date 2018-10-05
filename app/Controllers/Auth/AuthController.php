@@ -5,7 +5,7 @@ namespace App\Controllers\Auth;
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
-use App\Models\workdata;
+use App\Models\einfo;
 
 use App\Models\User;
 
@@ -21,6 +21,11 @@ class AuthController extends Controller
 
  {
 
+// get all users in the admin panel
+public function getAdminUsers($req,$res){
+$this->view->render($res,'allusers.twig');
+}
+
 // rennder view for editing formdata
     public function getFormdataEdit($req,$res){
 
@@ -28,9 +33,98 @@ class AuthController extends Controller
 $this->view->render($res,'editworkdata.twig');
 
     }
+    // update information
+    public function postFormdataEdit($req,$res){
+
+
+        // validate data
+        $Validation = $this->validator->validate($req,[
+                'email' => v::noWhiteSpace()->notEmpty()->email(),
+                'givenname' => v::notEmpty()->alpha(),
+                'familyname' => v::notEmpty()->alpha(),
+                'address' => v::notEmpty(),
+                'phonenumber' => v::noWhiteSpace()->notEmpty()->numeric(),
+                'gender'=> v::notEmpty(),
+                'state' => v::notEmpty()->alpha(),
+                'lga' => v::notEmpty()->alpha(),
+                'maritalstatus' => v::notEmpty()->alpha(),
+                'date_of_birth' => v::date(),
+                'department' => v::notEmpty()->alpha(),
+                'position' => v::notEmpty()->alpha(),
+                'date_of_start' => v::notEmpty()->date(),
+                'employment_mode' => v::alpha(),
+                'emergency_contact_name' => v::notEmpty()->alpha(),
+                'emergency_contact_phone' => v::notEmpty()->numeric(),
+                'emergency_contact_relationship' => v::alpha()->notEmpty(),
+                 'refree_contact_phone' => v::numeric()->notEmpty(),
+                'refree_contact_name' => v::alpha()->notEmpty(),
+                'emergency_contact_address'=> v::notEmpty()->alpha(),
+                'refree_contact_address' => v::notEmpty()->alpha(),
+                'refree_contact_relationship' => v::notEmpty()->alpha(),
+
+]);
+
+if(!$Validation->failed()){
+
+    $directory = $this->upload_directory_employees;
+       $uploadedFiles = $req->getUploadedFiles();
+  $uploadedFile = $uploadedFiles['image'];
+    if ($uploadedFile->getError() === UPLOAD_ERR_OK) {
+         $extension = pathinfo($uploadedFile->getClientFilename(), PATHINFO_EXTENSION);
+    $basename = bin2hex(random_bytes(8)); // see http://php.net/manual/en/function.random-bytes.php
+    $filename = sprintf('%s.%0.8s', $basename, $extension);
+    $uploadedFile->moveTo($directory . DIRECTORY_SEPARATOR . $filename);
+
+    }
+
+                            $update = einfo::where('uploaded_by', $this->auth->user()->id)->update([
+                'givenname' => $req->getParam('givenname'),
+                'familyname' => $req->getParam('familyname'),
+                'uploaded_by' => $this->auth->user()->id,
+                'image' => $filename,
+                'phonenumber' => $req->getParam('phonenumber'),
+                'gender' => $req->getParam('gender'),
+                'state' => $req->getParam('state'),
+                'lga'=> $req->getParam('lga'),
+                'address' => $req->getParam('address'),
+                'maritalstatus' => $req->getParam('maritalstatus'),
+                'date_of_birth'=> $req->getParam('date_of_birth'),
+                'department'=> $req->getParam('department'),
+                'position'=> $req->getParam('position'),
+                'date_of_start'=> $req->getParam('date_of_start'),
+                'employment_mode'=> $req->getParam('employment_mode'),
+                'emergency_contact_name'=> $req->getParam('emergency_contact_name'),
+                'emergency_contact_phone'=> $req->getParam('emergency_contact_phone'),
+                'emergency_contact_relationship'=> $req->getParam('emergency_contact_relationship'),
+                'refree_contact_name'=> $req->getParam('refree_contact_name'),
+                'refree_contact_phone'=> $req->getParam('refree_contact_phone'),
+                'refree_contact_address'=> $req->getParam('refree_contact_address'),
+                'emergency_contact_address'=> $req->getParam('emergency_contact_address'),
+                'refree_contact_relationship'=> $req->getParam('refree_contact_relationship'),]);
+                if($update){
+
+
+$this->flash->addMessage('workupdated','Update was successfull');
+            return $res->withRedirect($this->router->pathFor('user.formdata'));
+
+                    }else{
+$this->flash->addMessage('worknotupdated','Opps! We could not updated your record,try again');
+            return $res->withRedirect($this->router->pathFor('user.update.workdata'));
+
+                }
+
+            }else{
+
+$this->flash->addMessage('worknotupdated','Opps! Validation Failed,try again');
+            return $res->withRedirect($this->router->pathFor('user.update.workdata'));
+
+            }
+
+            }
 
 // rennder view for formdata
     public function getFormdataView($req,$res){
+
 
         $this->flash->addMessage('alertonview','Hello,you are in viewing mode');
 $this->view->render($res,'viewworkdata.twig');
@@ -79,7 +173,7 @@ else{
     $uploadedFile->moveTo($directory . DIRECTORY_SEPARATOR . $filename);
     }
 
-       $workdataupload = workdata::create([
+       $workdataupload = einfo::create([
 'email' => $req->getParam('email'),
 'givenname' => $req->getParam('givenname'),
 'familyname' => $req->getParam('familyname'),
@@ -360,7 +454,7 @@ public function postSignIn($request,$response){
 
                 public function postSignUp($request,$response){
 
-//validating input fields
+//validating input fields for new users
 
 
     $Validation = $this->validator->validate($request,[
@@ -368,8 +462,13 @@ public function postSignIn($request,$response){
 // check EmailAvail class ;
 
 'email' => v::noWhiteSpace()->notEmpty()->email()->EmailAvail(),
-'name' => v::notEmpty()->alpha(),
-'password' => v::noWhiteSpace()->notEmpty()
+'firstname' => v::notEmpty()->alpha(),
+'password' => v::noWhiteSpace()->notEmpty(),
+'gender' => v::notEmpty(),
+'lastname' => v::notEmpty()->alpha(),
+'department' => v::notEmpty(),
+
+
 
 ]);
 
@@ -381,7 +480,7 @@ public function postSignIn($request,$response){
 //also a method in the respect validator dependency
 if($Validation->failed()){
 
-        $this->flash->addMessage('signupfailed',"Opps!,something went wrong");
+        $this->flash->addMessage('signupfailed',"Opps!,something went wro)ng");
     return $response->withRedirect($this->router->pathFor('auth.signup'));
 
 }
@@ -390,17 +489,28 @@ $mail = new PHPMailer(true);                              // Passing `true` enab
 try {
 
     //Server settings
-    $mail->SMTPDebug = 2;                                 // Enable verbose debug output
+    $mail->SMTPDebug = 0;                                 // Enable verbose debug output
     $mail->isSMTP();                                      // Set mailer to use SMTP
-    $mail->Host = 'smtp.gmail.com';  // Specify main and backup SMTP servers
+    $mail->Host = 'sweetpea.hostnownow.com';  // Specify main and backup SMTP servers
     $mail->SMTPAuth = true;                               // Enable SMTP authentication
-    $mail->Username = 'johnsonmessilo19@gmail.com';                 // SMTP username
-    $mail->Password = 'messilo18';                           // SMTP password
-    $mail->SMTPSecure = 'tls';                            // Enable TLS encryption, `ssl` also accepted
-    $mail->Port = 587;                                    // TCP port to connect to
+    $mail->Username = 'activate@yourhomefuto.com.ng';                 // SMTP username
+    $mail->Password = 'messilo18_';                           // SMTP password
+    $mail->SMTPSecure = 'ssl';
+    $mail->SMTPAutoTLS = true;
+    // Enable TLS encryption, `ssl` also accepted
+    $mail->Port = 465;                                    // TCP port to connect to
     //Recipients
+
+    $mail->SMTPOptions = array(
+    'ssl' => array(
+        'verify_peer' => false,
+        'verify_peer_name' => false,
+        'allow_self_signed' => true
+    )
+);
+
     $mail->setFrom('fredd@ogwugo.com', 'Ogwugo.com');
-    $mail->addAddress($request->getParam('email'), $request->getParam('name'));     // Add a recipient
+    $mail->addAddress($request->getParam('email'), $request->getParam('firstname'));     // Add a recipient
     // $mail->addAddress('ellen@example.com');               // Name is optional
     $mail->addReplyTo('ogwugopeople@ogwugo.com', 'Information');
     $mail->isHTML(true);                                  // Set email format to HTML
@@ -422,10 +532,12 @@ $directory = $this->user_upload_directory;
 // creating a row in databse
 $user = User::create([
 'email' => $request->getParam('email'),
-'name' => $request->getParam('name'),
+'firstname' => $request->getParam('firstname'),
 'image' => $filename,
 'password' =>password_hash($request->getParam('password'),PASSWORD_DEFAULT),
-
+'lastname' =>$request->getParam('lastname'),
+'department' =>$request->getParam('department'),
+'gender' =>$request->getParam('gender'),
  ]);
 // sigining in the user after regiistration by just setting starting a user session
 $this->auth->verify($user->email,$request->getParam('password'));

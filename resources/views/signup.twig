@@ -18,14 +18,55 @@
 <span class="help-block has-error-p">{{ errors.email | first}}</span>
 {% endif %}
 </div>
+
 <div class="form-group">
-    <label for="name">Name</label>
-    <input type="text" name="name" class="{{errors.name ? 'has-error ': '' }} form-control" id="name"
-    placeholder="Name" value={{ old.name }} >
-{% if errors.name %}
-<span class="help-block has-error-p">{{ errors.name | first}}</span>
+    <label for="name">First Name</label>
+    <input type="text" name="firstname" class="{{errors.firstname ? 'has-error ': '' }} form-control" id="name"
+    placeholder="Name" value={{ old.firstname }} >
+{% if errors.firstname %}
+<span class="help-block has-error-p">{{ errors.firstname | first}}</span>
 {% endif %}
 </div>
+
+<div class="form-group">
+    <label for="name">Last Name</label>
+    <input type="texfirst" name="lastname" class="{{errors.lastname ? 'has-error ': '' }} form-control" id="name"
+    placeholder="Name" value={{ old.lastname }} >
+{% if errors.lastname %}
+<span class="help-block has-error-p">{{ errors.lastname | first}}</span>
+{% endif %}
+</div>
+<!-- deparment -->
+<div class="form-group">
+    <label for="name">Department</label>
+<select name="department" class="{{errors.department ? 'has-error ': '' }} form-control">
+    <option selected>
+    --DEPARTMENT--
+</option>
+<option value="it">Software</option>
+<option value="delivery">Delivery</option>
+</select>
+    {% if errors.department %}
+<span class="help-block has-error-p">{{ errors.department | first}}</span>
+{% endif %}
+</div>
+<!-- gender -->
+<div class="form-group">
+    <label for="name">Gender</label>
+    <select name="gender" class="{{errors.gender ? 'has-error ': '' }} form-control">
+        <option selected>
+            --GENDER--
+        </option>
+        <option value="male">Male</option>
+        <option value="female">Female</option>
+    </select>
+    {% if errors.gender %}
+    <span class="help-block has-error-p">{{ errors.gender | first}}</span>
+    {% endif %}
+</div>
+
+
+<!-- password -->
 <div class="form-group">
     <label for="pass">Password</label>
     <input type="password" name="password" class="{{errors.password ? 'has-error ': '' }} form-control" id="pass" placeholder="Password" value={{ old.password }} >

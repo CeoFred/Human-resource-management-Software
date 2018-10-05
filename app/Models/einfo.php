@@ -20,6 +20,7 @@ protected $fillable = [
  'gender',
  'state',
  'lga',
+ 'image',
  'address',
  'maritalstatus',
  'date_of_birth',
@@ -35,7 +36,6 @@ protected $fillable = [
  'refree_contact_address',
  'emergency_contact_address',
  'refree_contact_relationship',
- 'image',
  'uploaded_by',
 ];
 

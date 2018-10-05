@@ -22,18 +22,19 @@ $this->post('/auth/signin','AuthController:postSignIn');
 })->add(new GuestMiddleware($container));
 
 
-// view controller for signin page,calls the authcontroller
+// view controller for signin page,calls the authcontroller ... for admins only
 $app->group('',function(){
 
 $this->get('/auth/admin/logout','AuthController:adminLogout')->setName('admin_logout');
 $this->get('/auth/admin/panel','AuthController:RenderAdminPanel')->setName('ControlPanel');
+$this->get('/auth/admin/signup','AuthController:getAdminSignUp')->setName('auth.admin.signup');
+$this->get('/auth/admin/allusers','AuthController:getAdminUsers')->setName('auth.admin.view.users');
+$this->post('/auth/admin/signup','AuthController:postAdminSignUp');
 
 })->add(new AdminMiddleWare($container));
 
 
 $app->group('',function() use ($app) {
-$app->get('/auth/admin/signup','AuthController:getAdminSignUp')->setName('auth.admin.signup');
-$app->post('/auth/admin/signup','AuthController:postAdminSignUp');
 $app->get('/auth/admin/login','AuthController:RenderAdminLogin')->setName('auth.admin.signin');
 $app->post('/auth/admin/login','AuthController:postAdminSignIn');
 
@@ -53,6 +54,7 @@ $this->post('/auth/user/formdata','AuthController:postFormdata');
 $this->get('/auth/user/profile','AuthController:getUserProfile')->setName('user.profile');
 $this->get('/auth/user/inbox','AuthController:getUserInbox')->setName('user.inbox');
 $this->get('/auth/user/formdata/edit','AuthController:getFormdataEdit')->setName('user.update.workdata');
+$this->post('/auth/user/formdata/edit','AuthController:postFormdataEdit');
 $this->get('/auth/user/formdata/view','AuthController:getFormdataView')->setName('user.view.workdata');
 
 })->add(new AuthMiddleware($container));

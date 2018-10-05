@@ -2,9 +2,37 @@
 
 {% block content %}
 <!-- Default form register -->
-<form class="text-center border border-light p-5" enctype="multipart/form-data" method="POST" action='{{path_for('user.formdata') }}'>
+<form class="text-center border border-light p-5" enctype="multipart/form-data" method="POST" action='{{path_for('user.update.workdata') }}'>
     <img src="{{ base_url() }}/img/ogwugo.png" width="400" style="border-radius:50%" class="responsive" alt="ogwugo">
-    {{ errors | json_encode }}
+{% if errors %}
+    <div class="alert alert-danger">
+        <b>
+{{ errors.givenname | first }}
+<br>
+    {{ errors.familyname | first }}
+    {{ errors.email | first }}
+    {{ errors.address | first }}
+    {{ errors.gender | first }}
+    {{ errors.phonenumber | first }}
+    {{ errors.state | first }}
+    {{ errors.lga | first }}
+    {{ errors.maritalstatus | first }}
+    {{ errors.date_of_birth | first }}
+    {{ errors.department | first }}
+    {{ errors.position | first }}
+    {{ errors.date_of_start | first }}
+    {{ errors.employment_mode | first }}
+    {{ errors.emergency_contact_name | first }}
+    {{ errors.emergency_contact_phone | first }}
+    {{ errors.emergency_contact_relationship | first }}
+    {{ errors.refree_contact_name | first }}
+{{ errors.refree_contact_phone | first }}
+{{ errors.refree_contact_address | first }}
+{{ errors.emergency_contact_address | first }}
+{{ errors.refree_contact_relationship | first }}
+</b>
+</div>
+{% endif %}
     <h3>EMPLOYMENT BIODATA FORM</h3>
     <p class="h4 mb-4">(To be filled by all employees of ogwugo)</p>
     <div>
@@ -17,12 +45,12 @@
 
             <!-- First name -->
             <input type="text" id="defaultRegisterFormFirstName" name="givenname" class="form-control" placeholder="Given Name"
-                value="{{old.givenname }}">
+                value="{{auth.counteinfo.givenname }}">
         </div>
         <div class="col">
             <!-- Last name -->
             <input type="text" id="defaultRegisterFormLastName" name="familyname" class="form-control" placeholder="Family name"
-                value="{{ old.familyname }}">
+                value="{{ auth.counteinfo.familyname }}">
         </div>
 
     </div>
@@ -33,19 +61,19 @@
 
             <!-- Phonenumber -->
             <input type="text" id="defaultRegisterFormEmail" name="phonenumber" class="form-control mb-4" placeholder="+234 *** *** **"
-                value="{{ old.phonenumber }}">
+                value="{{ auth.counteinfo.phonenumber }}">
         </div>
         <div class="col">
 
             <!-- E-mail -->
             <input type="email" name="email" id="defaultRegisterFormEmail" class="form-control mb-4" placeholder="E-mail"
-                value={{old.email}}>
+                value={{auth.counteinfo.email}}>
         </div>
     </div>
 
     <div class="col">
         <!-- address -->
-        <textarea class="form-control mb-4" name="address" rows="2" placeholder="Home Address">{{ old.address }}</textarea>
+        <textarea class="form-control mb-4" name="address" rows="2" placeholder="Home Address">{{ auth.counteinfo.address }}</textarea>
     </div>
 
 
@@ -53,8 +81,8 @@
     <!-- state of origin -->
     <div class="form-group">
         <label class="control-label">State of Origin</label>
-        <select name="state" onchange="changelga(this.value)" id="state" class="form-control">
-            <option value="" selected="selected">- Select -</option>
+        <select name="state" onchange="changelga(this.value)" id="state" class="form-control" selected="{{auth.counteinfo.state}}">
+            <!-- <option value="" selected="selected">- Select -</option> -->
             <option value='Abia'>Abia</option>
             <option value='Adamawa'>Adamawa</option>
             <option value='AkwaIbom'>AkwaIbom</option>
@@ -96,7 +124,8 @@
     <!-- lga -->
     <div class="form-group">
         <label class="control-label">LGA of Origin</label>
-        <select name="lga" id="lga" class="form-control" required>
+        <select name="lga" id="lga" class="form-control" aria-selected="{{auth.counteinfo.lga}}">
+            <option value="{{auth.counteinfo.lga}}">{{aut.counteinfo.lga}}</option>
         </select>
     </div>
     <!-- englga -->
@@ -108,10 +137,7 @@
         <!-- marital status -->
         <div class="col">
             <label for="ms">Marital status</label>
-            <select name="maritalstatus" id="ms" class="form-control">
-                <option vlaue="">
-                    --select--
-                </option>
+            <select name="maritalstatus" id="ms" class="form-control" selected="{{auth.counteinfo.maritalstatus}}">
 
                 <option value="single">
                     Single
@@ -129,7 +155,7 @@
 
         <div class="col">
             <label for="dob">Date of Birth</label>
-            <input type="date" id="dob" name="date_of_birth" class="form-control" value="{{ old.date_of_birth }}" />
+            <input type="date" id="dob" name="date_of_birth" class="form-control" value="{{ auth.counteinfo.date_of_birth }}" />
 
         </div>
 
@@ -141,11 +167,13 @@
 
         <div class="custom-control custom-radio">
             <label class="custom-control-label" for="genderf">Female</label>
-            <input type="radio" class="custom-control-input" id="genderf" value="female" name="gender">
+            <input type="radio" class="custom-control-input" id="genderf"
+             value="female" name="gender" {%  if auth.counteinfo.gender == 'female'  %} return checked {% endif %} >
         </div>
         <div class="custom-control custom-radio">
 
-            <input type="radio" class="custom-control-input" id="genderm" value="male" name="gender">
+            <input type="radio" class="custom-control-input" id="genderm" value="male"
+             name="gender" {% if auth.counteinfo.gender == 'male' %} return checked {% endif %}>
             <label class="custom-control-label" for="genderm">Male</label>
         </div>
 
@@ -166,7 +194,7 @@
             <!-- department -->
 
             <label for="dept">Department</label>
-            <input type="text" name="department" id="dept" class="form-control mb-4" placeholder="Delivery" value="{{ old.department }}">
+            <input type="text" name="department" id="dept" class="form-control mb-4" placeholder="Delivery" value="{{ auth.counteinfo.department }}">
         </div>
 
         <div class="col">
@@ -175,14 +203,14 @@
 
             <label for="pos">Position in Department</label>
             <input type="tetx" name="position" class="form-control mb-4" id="pos" placeholder="Chief Delivery Officer"
-                value="{{old.position}}">
+                value="{{auth.counteinfo.position}}">
         </div>
 
 
         <div class="col">
             <!-- date of start work -->
             <label for="dos">Start Date</label>
-            <input type="date" id="dos" name="date_of_start" class="form-control" value="{{old.date_of_start}}" />
+            <input type="date" id="dos" name="date_of_start" class="form-control" value="{{auth.counteinfo.date_of_start}}" />
 
         </div>
 
@@ -191,7 +219,7 @@
             <!-- employment mode -->
             <label for="empm">Employment Mode</label>
             <input type="text" id="empm" name="employment_mode" class="form-control" placeholder="NYSC/IT/PERMANENT/"
-                value="{{old.employment_mode}}" />
+                value="{{auth.counteinfo.employment_mode}}" />
 
         </div>
 
@@ -204,23 +232,23 @@
     <h5><b>EMERGENCY CONTACT INFORMATION<small>(who do we contact incase of emergency)</small></b></h5>
     <div class="form-row mb-4">
         <div class="col">
-            <input type="text" placeholder="Full name" name="emergency_contact_name" class="form-control mb-4" value="{{old.emergency_contact_name}}" />
+            <input type="text" placeholder="Full name" name="emergency_contact_name" class="form-control mb-4" value="{{auth.counteinfo.emergency_contact_name}}" />
         </div>
 
         <div class="col">
 
-            <input type="text" placeholder="Telephone" name="emergency_contact_phone" class="form-control mb-4" value="{{old.emergency_contact_phone}}" />
+            <input type="text" placeholder="Telephone" name="emergency_contact_phone" class="form-control mb-4" value="{{auth.counteinfo.emergency_contact_phone}}" />
         </div>
 
         <div class="col">
 
-            <input type="text" placeholder="Address" name="emergency_contact_address" class="form-control mb-4" value="{{old.emergency_contact_address}}" />
+            <input type="text" placeholder="Address" name="emergency_contact_address" class="form-control mb-4" value="{{auth.counteinfo.emergency_contact_address}}" />
         </div>
 
         <div class="col">
 
             <input type="text" placeholder="Relationship" name="emergency_contact_relationship" class="form-control mb-4"
-                value="{{old.emergency_contact_relationship}}" />
+                value="{{auth.counteinfo.emergency_contact_relationship}}" />
         </div>
     </div>
 
@@ -231,33 +259,32 @@
     <h5><b>REFREE CONTACT INFORMATION<small>(who do we contact about you?)</small></b></h5>
     <div class="form-row mb-4">
         <div class="col">
-            <input type="text" placeholder="Full name" name="refree_contact_name" class="form-control mb-4" value="{{old.refree_contact_name}}">
+            <input type="text" placeholder="Full name" name="refree_contact_name" class="form-control mb-4" value="{{auth.counteinfo.refree_contact_name}}">
         </div>
 
         <div class="col">
 
-            <input type="text" placeholder="Telephone" name="refree_contact_phone" class="form-control mb-4" value={{old.refree_contact_phone}}>
+            <input type="text" placeholder="Telephone" name="refree_contact_phone" class="form-control mb-4" value={{auth.counteinfo.refree_contact_phone}}>
         </div>
 
         <div class="col">
 
-            <input type="text" placeholder="Address" name="refree_contact_address" class="form-control mb-4" value={{old.refree_contact_address}}>
+            <input type="text" placeholder="Address" name="refree_contact_address" class="form-control mb-4" value={{auth.counteinfo.refree_contact_address}}>
         </div>
 
         <div class="col">
 
             <input type="text" placeholder="Relationship" name="refree_contact_relationship" class="form-control mb-4"
-                value={{old.refree_contact_relationship}} />
+                value={{auth.counteinfo.refree_contact_relationship}} >
         </div>
     </div>
-
+<b class="alert alert-info">Ensure to upload a photo</b>
     <div class="input-group mb-3">
         <div class="input-group-prepend">
             <span class="input-group-text" id="inputGroupFileAddon01">Upload</span>
         </div>
         <div class="custom-file">
-
-            <input type="file" class="custom-file-input" id="inputGroupFile01" name="image" aria-describedby="inputGroupFileAddon01">
+            <input   type="file" class="custom-file-input" id="inputGroupFile01" name="image" aria-describedby="inputGroupFileAddon01">
             <label class="custom-file-label" for="inputGroupFile01">Upload an Image</label>
 
         </div>
@@ -268,7 +295,7 @@
     {{ csrf.field | raw }}
 
     <!-- Sign up button -->
-    <button class="btn btn-outline-success my-4 btn-block" type="submit">Submit</button>
+    <button class="btn btn-outline-success my-4 btn-block" type="submit">Update</button>
 
 </form>
 

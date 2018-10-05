@@ -13,10 +13,13 @@ namespace App\Models;
 protected $fillable = [
 
     'email',
-    'name',
+    'lastname',
+ 'firstname',
     'password',
  'image',
- 
+ 'department',
+ 'gender'
+
 ];
 
 

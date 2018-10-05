@@ -1,6 +1,9 @@
 
 {% if flash.getMessage('signedin') %}
-<div class="alert alert-success animated shake slow">
+<div class="alert alert-success alert-dismissible show card-header animated slideInDown slow" align="center" role="alert">
+<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+</button>
 {{ flash.getMessage('signedin') | first }}
 </div>
 {% endif %}
@@ -22,36 +25,71 @@
 {% endif %}
 
 {% if flash.getMessage('loggedout') %}
-<div class="alert alert-primary animated shake">
+<div class="alert alert-primary alert-dismissible show card-header animated slideInDown slow" align="center" role="alert">
+<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+</button>
     {{ flash.getMessage('loggedout') | first }}
 </div>
 {% endif %}
 
 {% if flash.getMessage('signup') %}
-<div class="alert alert-success animated shake">
+<div class="alert alert-success alert-dismissible show card-header animated slideInDown slow" align="center" role="alert">
+<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+</button>
     {{ flash.getMessage('signup') | first }}
 </div>
 
 {% endif %}
 {% if flash.getMessage('signupfailed') %}
-<div class="alert alert-warning animated shake">
+<div class="alert alert-warning alert-dismissible show card-header animated slideInDown slow" align="center" role="alert">
+<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+</button>
     {{ flash.getMessage('signupfailed') | first }}
 </div>
 
 {% endif %}
 {% if flash.getMessage('signinerror') %}
-<div class="alert alert-warning animated shake">
+<div class="alert alert-warning alert-dismissible show card-header animated slideInDown slow" align="center" role="alert">
+<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+</button>
 {{ flash.getMessage('signinerror')| first }}
 </div>
 {% endif %}
 
 {% if flash.getMessage('passwordchange') %}
-<div class="alert alert-success animated shake">
+<div class="alert alert-success alert-dismissible show card-header animated slideInDown slow" align="center" role="alert">
+<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+</button>
 {{ flash.getMessage('passwordchange')| first }}
 </div>{% endif %}
 
 {% if flash.getMessage('entryerror') %}
-<div class="alert alert-warning animated shake">
+<div class="alert alert-warning alert-dismissible show card-header animated slideInDown slow" align="center" role="alert">
+<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+</button>
 {{ flash.getMessage('entryerror') | first}}
+</div>
+{% endif %}
+
+
+{% if flash.getMessage('worknotupdated') %}
+<div class="alert alert-warning alert-dismissible show card-header animated slideInDown slow" align="center" role="alert">
+<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+</button>  {{ flash.getMessage('worknotupdated') | first}}
+</div>
+{% endif %}
+
+{% if flash.getMessage('workupdated') %}
+<div class="alert alert-success alert-dismissible show card-header animated slideInDown slow" align="center" role="alert">
+<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+</button>{{ flash.getMessage('workupdated') | first}}
 </div>
 {% endif %}
