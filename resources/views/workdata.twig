@@ -12,184 +12,630 @@
 
 </div>
 
-<div class="md-form mt-0" style="width:350px;">
+<!-- start row -->
+<div class="row">
+
+
+
+
+    <!--first comun -->
+    <div class="col-md-3">
+
+    <div class="card">
+
+        <!-- Card content -->
+        <div class="card-body"  >
 <button onclick="show('pinfo')" class="btn btn-success" style="width:100%">
-    <h5><b><b id="show">SHOW </b> PERSONAL INFORMATION</b></h5>
+    <h5><b> PERSONAL INFORMATION</b></h5>
 </button>
-<div id="pinfo" style="width:100%;border:1px solid lightgrey;padding:10px;z-index:3000;display:none" class="animated slideInLeft fast">
-<form style="color: #757575;">
 
-    <!-- firstname input -->
-    <div class="md-form">
-        <i class="fa fa-user prefix"></i>
-        <input type="text" id="fname" class="form-control">
-        <label for="fname">First Name</label>
-    </div>
-    <!-- lastname input -->
-    <div class="md-form">
-        <i class="fa fa-user prefix"></i>
-        <input type="text" id="lname" class="form-control">
-        <label for="lname">Last Name</label>
-    </div>
-    <!-- email input -->
-    <div class="md-form">
-        <i class="fa fa-envelope prefix"></i>
-        <input type="text" id="email" class="form-control">
-        <label for="email">E-mail address</label>
-    </div>
+            <!-- content -->
+            <div id="pinfo">
+<!-- firstname input -->
+<div class="md-form" style="display:none" >
+    <i class="fa fa-user prefix"></i>
+    <input type="text" id="fname" class="form-control" value={{ auth.user.firstname }} disabled>
+    <label for="fname">First Name</label>
+</div>
+<!-- lastname input -->
+<div class="md-form">
+    <i class="fa fa-user prefix"></i>
+    <input type="text" id="lname" class="form-control" value={{ auth.user.lastname }} disabled>
+    <label for="lname">Last Name</label>
+</div>
+<!-- email input -->
+<div class="md-form">
+    <i class="fa fa-envelope prefix"></i>
+    <input type="text" id="email" class="form-control" value={{ auth.user.email }} disabled>
+    <label for="email">E-mail address</label>
+</div>
 <!-- address input -->
-    <div class="md-form">
-        <textarea id="address" class="form-control md-textarea" length="120" rows="3"></textarea>
-        <label for="address">Address</label>
-    </div>
-<button type="button" class="btn btn-default">SUBMIT</button>
-
-</form>
-</div>
+<div class="md-form">
+    <textarea id="address" class="form-control md-textarea" length="120" rows="3" disabled></textarea>
+    <label for="address">Home Address</label>
 </div>
 
+<!-- date of birth input -->
+
+        <p>Date of birth</p>
+<div class="md-form">
+    <i class="fas fa-calendar prefix"></i>
+    <input type="date" id="cal" class="form-control">
+
+</div>
 
 
-    <!-- gender -->
-    <label for="gender">Gender</label>
+
+<!-- state of origin -->
+<div class="md-form">
+    <select name="state" onchange="changelga(this.value)" id="state" class="form-control" disabled>
+        <option value="" selected="selected">SELECT STATE OF ORIGIN</option>
+        <option value='Abia'>Abia</option>
+        <option value='Adamawa'>Adamawa</option>
+        <option value='AkwaIbom'>AkwaIbom</option>
+        <option value='Anambra'>Anambra</option>
+        <option value='Bauchi'>Bauchi</option>
+        <option value='Bayelsa'>Bayelsa</option>
+        <option value='Benue'>Benue</option>
+        <option value='Borno'>Borno</option>
+        <option value='Cross River'>Cross River</option>
+        <option value='Delta'>Delta</option>
+        <option value='Ebonyi'>Ebonyi</option>
+        <option value='Edo'>Edo</option>
+        <option value='Ekiti'>Ekiti</option>
+        <option value='Enugu'>Enugu</option>
+        <option value='Gombe'>Gombe</option>
+        <option value='Imo'>Imo</option>
+        <option value='Jigawa'>Jigawa</option>
+        <option value='Kaduna'>Kaduna</option>
+        <option value='Kano'>Kano</option>
+        <option value='Katsina'>Katsina</option>
+        <option value='Kebbi'>Kebbi</option>
+        <option value='Kogi'>Kogi</option>
+        <option value='Kwara'>Kwara</option>
+        <option value='Lagos'>Lagos</option>
+        <option value='Nasarawa'>Nasarawa</option>
+        <option value='Niger'>Niger</option>
+        <option value='Ogun'>Ogun</option>
+        <option value='Ondo'>Ondo</option>
+        <option value='Osun'>Osun</option>
+        <option value='Oyo'>Oyo</option>
+        <option value='Plateau'>Plateau</option>
+        <option value='Rivers'>Rivers</option>
+        <option value='Sokoto'>Sokoto</option>
+        <option value='Taraba'>Taraba</option>
+        <option value='Yobe'>Yobe</option>
+        <option value='Zamfara'>Zamafara</option>
+    </select>
+</div>
+<!-- lga -->
+<div class="md-form">
+    <label class="control-label" for="lga">LGA</label>
+    <select name="lga" id="lga" class="form-control" disabled>
+    </select>
+</div>
+<!-- englga -->
+</div>
+<!-- end content -->
+
+
 <div>
-
-<div class="custom-control custom-radio">
-  <label class="custom-control-label" for="genderf">Female</label>
-  <input type="radio" class="custom-control-input"
-   id="genderf" value="female" name="gender">
-</div>
-<div class="custom-control custom-radio">
-
-    <input type="radio" class="custom-control-input"
-    id="genderm" value="male" name="gender">
-  <label class="custom-control-label" for="genderm">Male</label>
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#basicExampleModal">edit</button>
 </div>
 
+        </div>
+<!-- end cardcontent -->
+    </div>
+
+
+
+
+<!-- modal -->
+<div class="modal fade" id="basicExampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Personal Information</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+
+<!-- content -->
+
+<!-- firstname input -->
+<div class="md-form">
+    <i class="fa fa-user prefix"></i>
+    <input type="text" id="fname" class="form-control" value={{ auth.user.firstname }} disabled>
+    <label for="fname">First Name</label>
 </div>
-<!-- endgender -->
+<!-- lastname input -->
+<div class="md-form">
+    <i class="fa fa-user prefix"></i>
+    <input type="text" id="lname" class="form-control" value={{ auth.user.lastname }} disabled>
+    <label for="lname">Last Name</label>
+</div>
+<!-- email input -->
+<div class="md-form">
+    <i class="fa fa-envelope prefix"></i>
+    <input type="text" id="email" class="form-control" value={{ auth.user.email }} disabled>
+    <label for="email">E-mail address</label>
+</div>
+<!-- address input -->
+<div class="md-form">
+    <textarea id="address" class="form-control md-textarea" length="120" rows="3" disabled></textarea>
+    <label for="address">Home Address</label>
+</div>
+
+<!-- date of birth input -->
+<p>Date of birth</p>
+<div class="md-form">
+    <i class="fas fa-calendar prefix"></i>
+    <input type="date" id="cal" class="form-control">
+
+</div>
 
 
 
-<!-- end marital status -->
+<!-- state of origin -->
+<div class="md-form">
+    <select name="state" onchange="changelga(this.value)" id="state" class="form-control" disabled>
+        <option value="" selected="selected">SELECT STATE OF ORIGIN</option>
+        <option value='Abia'>Abia</option>
+        <option value='Adamawa'>Adamawa</option>
+        <option value='AkwaIbom'>AkwaIbom</option>
+        <option value='Anambra'>Anambra</option>
+        <option value='Bauchi'>Bauchi</option>
+        <option value='Bayelsa'>Bayelsa</option>
+        <option value='Benue'>Benue</option>
+        <option value='Borno'>Borno</option>
+        <option value='Cross River'>Cross River</option>
+        <option value='Delta'>Delta</option>
+        <option value='Ebonyi'>Ebonyi</option>
+        <option value='Edo'>Edo</option>
+        <option value='Ekiti'>Ekiti</option>
+        <option value='Enugu'>Enugu</option>
+        <option value='Gombe'>Gombe</option>
+        <option value='Imo'>Imo</option>
+        <option value='Jigawa'>Jigawa</option>
+        <option value='Kaduna'>Kaduna</option>
+        <option value='Kano'>Kano</option>
+        <option value='Katsina'>Katsina</option>
+        <option value='Kebbi'>Kebbi</option>
+        <option value='Kogi'>Kogi</option>
+        <option value='Kwara'>Kwara</option>
+        <option value='Lagos'>Lagos</option>
+        <option value='Nasarawa'>Nasarawa</option>
+        <option value='Niger'>Niger</option>
+        <option value='Ogun'>Ogun</option>
+        <option value='Ondo'>Ondo</option>
+        <option value='Osun'>Osun</option>
+        <option value='Oyo'>Oyo</option>
+        <option value='Plateau'>Plateau</option>
+        <option value='Rivers'>Rivers</option>
+        <option value='Sokoto'>Sokoto</option>
+        <option value='Taraba'>Taraba</option>
+        <option value='Yobe'>Yobe</option>
+        <option value='Zamfara'>Zamafara</option>
+    </select>
+</div>
+<!-- lga -->
+<div class="md-form">
+    <label class="control-label" for="lga">LGA</label>
+    <select name="lga" id="lga" class="form-control" disabled>
+    </select>
+</div>
+<!-- englga -->
+<!-- content -->
+<!-- end contetn -->
+            </div>
 
-<hr>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
 
-<h5><b>EMPLOYMENT INFORMATION</b></h5>
-  <div class="form-row mb-4">
+        </div>
+    </div>
+</div>
 
-        <div class="col">
+<!-- modal end -->
+    </div>
+
+    <!-- end first coolum -->
+
+
+    <!-- second column -->
+
+<div class="col-md-3">
+
+    <div class="card">
+<div class="card-body">
+<!-- content -->
+<button onclick="show('winfo')" class="btn btn-info" style="width:100%">
+    <h5><b> WORK INFORMATION</b></h5>
+</button>
+
+<div id="winfo">
+    <!-- content -->
 
     <!-- department -->
+    <div class="md-form">
+        <label for="dept">Department</label>
+        <input type="text" name="department" id="dept" class="form-control mb-4" placeholder="eg. Delivery" value="{{ old.department }}">
 
-    <label for="dept">Department</label>
-    <input type="text"  name="department" id="dept" class="form-control mb-4"
-     placeholder="Delivery" value="{{ old.department }}">
-        </div>
+    </div>
+    <!-- end ddepartment -->
 
-        <div class="col">
-
-    <!-- Position -->
-
-    <label for="pos">Position in Department</label>
-    <input type="tetx" name="position" class="form-control mb-4"
-     id="pos" placeholder="Chief Delivery Officer" value="{{old.position}}">
-        </div>
-
-
-        <div class="col">
-            <!-- date of start work -->
-    <label for="dos">Start Date</label>
-        <input type="date" id="dos" name="date_of_start" class="form-control" value="{{old.date_of_start}}"/>
-
-        </div>
-
-
-        <div class="col">
-            <!-- employment mode -->
-    <label for="empm">Employment Mode</label>
-        <input type="text" id="empm" name="employment_mode" class="form-control" placeholder="NYSC/IT/PERMANENT/" value="{{old.employment_mode}}"/>
-
-        </div>
-
+    <!-- positon in departemnt -->
+    <div class="md-form">
+        <label for="dept">Position</label>
+        <input type="text" name="pindept" id="dept" class="form-control mb-4" placeholder="eg. Boss" value="{{ old.pindept }}">
 
     </div>
 
+<!-- end position in department -->
 
-<!-- emergency information -->
-    <hr>
-<h5><b>EMERGENCY CONTACT INFORMATION<small>(who do we contact incase of emergency)</small></b></h5>
-<div class="form-row mb-4">
-<div class="col">
-<input type="text" placeholder="Full name" name="emergency_contact_name" class="form-control mb-4" value="{{old.emergency_contact_name}}"/>
+<!-- start date -->
+    <p>Date of resumption</p>
+<div class="md-form">
+    <i class="fas fa-calendar prefix"></i>
+    <input type="date" id="dos" name="date_of_start" class="form-control" value="{{old.date_of_start}}" />
 </div>
+<!-- end start date -->
 
-<div class="col">
 
-<input type="text" placeholder="Telephone" name="emergency_contact_phone" class="form-control mb-4" value="{{old.emergency_contact_phone}}"/>
+    <!-- employment mode -->
+<div class="md-form">
+<label for="empm">Employment Mode</label>
+<input type="text" id="empm" name="employment_mode" class="form-control" placeholder="NYSC/IT/PERMANENT/" value="{{old.employment_mode}}" />
+
 </div>
+<!-- end employmrnt mode -->
 
-<div class="col">
 
-<input type="text" placeholder="Address" name="emergency_contact_address" class="form-control mb-4" value="{{old.emergency_contact_address}}"/>
-</div>
-
-<div class="col">
-
-<input type="text" placeholder="Relationship"
-name="emergency_contact_relationship" class="form-control mb-4" value="{{old.emergency_contact_relationship}}"/>
-</div>
 </div>
 
 
 
-<!-- refree information -->
-    <hr>
-<h5><b>REFREE CONTACT INFORMATION<small>(who do we contact about you?)</small></b></h5>
-<div class="form-row mb-4">
-<div class="col">
-<input type="text" placeholder="Full name" name="refree_contact_name" class="form-control mb-4" value="{{old.refree_contact_name}}">
+</div>
+<!-- content -->
+
+
+
+<!-- edit button -->
+<div>
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#emergencyinformation">edit</button>
+</div>
+<!-- end edit button -->
+
+
+<!-- modal -->
+<div class="modal fade" id="emergencyinformation" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Work Information</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+      <form action="">
+                    <!-- department -->
+                    <div class="md-form">
+                        <label for="dept">Department</label>
+                        <input type="text" name="department" id="dept" class="form-control mb-4" placeholder="eg. Delivery" value="{{ old.department }}">
+
+                    </div>
+                    <!-- end ddepartment -->
+
+                    <!-- positon in departemnt -->
+                    <div class="md-form">
+                        <label for="dept">Position</label>
+                        <input type="text" name="pindept" id="dept" class="form-control mb-4" placeholder="eg. Boss" value="{{ old.pindept }}">
+
+                    </div>
+
+                    <!-- end position in department -->
+
+                    <!-- start date -->
+                    <p>Date of resumption</p>
+                    <div class="md-form">
+                        <i class="fas fa-calendar prefix"></i>
+                        <input type="date" id="dos" name="date_of_start" class="form-control" value="{{old.date_of_start}}" />
+                    </div>
+                    <!-- end start date -->
+
+
+                    <!-- employment mode -->
+                    <div class="md-form">
+                        <label for="empm">Employment Mode</label>
+                        <input type="text" id="empm" name="employment_mode" class="form-control" placeholder="NYSC/IT/PERMANENT/" value="{{old.employment_mode}}" />
+
+                    </div>
+                    <!-- end employmrnt mode -->
+<div class="modal-footer">
+    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+    <button type="button" class="btn btn-primary">Save changes</button>
+</div>
+            </form>
+
+            </div>
+            </div>
+            </div>
+            </div>
+
 </div>
 
-<div class="col">
-
-<input type="text" placeholder="Telephone" name="refree_contact_phone" class="form-control mb-4" value={{old.refree_contact_phone}}>
-</div>
-
-<div class="col">
-
-<input type="text" placeholder="Address" name="refree_contact_address" class="form-control mb-4" value={{old.refree_contact_address}}>
-</div>
-
-<div class="col">
-
-<input type="text" placeholder="Relationship" name="refree_contact_relationship" class="form-control mb-4" value={{old.refree_contact_relationship}}/>
+<br>
+<div class="card">
+<div class="card-body">
+<button class="btn btn-block btn-default" type="button">
+    Upload Passport
+</button>
 </div>
 </div>
 
 <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" id="inputGroupFileAddon01">Upload</span>
-                        </div>
-                        <div class="custom-file">
+    <div class="input-group-prepend">
+        <span class="input-group-text" id="inputGroupFileAddon01">Upload</span>
+    </div>
+    <div class="custom-file">
 
-                            <input type="file" class="custom-file-input" id="inputGroupFile01" name="image"
-                                aria-describedby="inputGroupFileAddon01">
-                            <label class="custom-file-label" for="inputGroupFile01">Upload an Image</label>
+        <input type="file" class="custom-file-input" id="inputGroupFile01" name="image" aria-describedby="inputGroupFileAddon01">
+        <label class="custom-file-label" for="inputGroupFile01">Upload an Image</label>
 
-                        </div>
-                        {% if errors.image %}
-                        <span class="help-block has-error-p" style="float:left;">{{ errors.image | first }}</span>
-                        {% endif %}
-                    </div>
-                    {{ csrf.field | raw }}
+    </div>
+    {% if errors.image %}
+    <span class="help-block has-error-p" style="float:left;">{{ errors.image | first }}</span>
+    {% endif %}
+</div>
+{{ csrf.field | raw }}
 
-<!-- Sign up button -->
-    <button class="btn btn-outline-success my-4 btn-block" type="submit">Submit</button>
+
+    </div>
+<!-- end second column -->
+
+<!-- third row -->
+<div class="col-md-6">
+  <div class="card">
+<div class="card-body">
+
+            <div class="row">
+                <!-- first colum -->
+                            <div class="col-6">
+                            <div class="card">
+                                <button onclick="show('einfo')" class="btn btn-danger" style="width:100%">
+                                    <h5><b> EMERGENCY INFORMATION</b></h5>
+                                </button>
+
+                            <div class="card-body" id="einfo">
+                                <!-- conent -->
+<div class="mb-4">
+<div class="md-form">
+<label>Full name</label>
+<input type="text" placeholder="Full name" name="emergency_contact_name" class="form-control mb-4" value="{{old.emergency_contact_name}}"/>
+</div>
+
+<div class="md-form">
+
+<label>Telephone</label>
+<input type="text" placeholder="Telephone" name="emergency_contact_phone" class="form-control mb-4" value="{{old.emergency_contact_phone}}"/>
+</div>
+
+<div class="md-form">
+
+<label>Address</label>
+<input type="text" placeholder="Address" name="emergency_contact_address" class="form-control mb-4" value="{{old.emergency_contact_address}}"/>
+</div>
+
+<div class="md-form">
+
+<label>Relationship</label>
+<input type="text" placeholder="Relationship"
+name="emergency_contact_relationship" class="form-control mb-4" value="{{old.emergency_contact_relationship}}"/>
+</div>
+
+</div>
+<!-- end content -->
+
+                            </div>
+
+
+<!-- edit button -->
+<div>
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#emrgency">edit</button>
+</div>
+<!-- end edit button -->
+
+                            <!-- modal -->
+<div class="modal fade" id="emrgency" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Emergency Information</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+
+            <!-- modal content -->
+<form action="">
+    <div class="form-row mb-4">
+<div class="md-form">
+<label>Full name</label>
+<input type="text" placeholder="Full name" name="emergency_contact_name" class="form-control mb-4" value="{{old.emergency_contact_name}}"/>
+</div>
+
+<div class="md-form">
+
+<label>Telephone</label>
+<input type="text" placeholder="Telephone" name="emergency_contact_phone" class="form-control mb-4" value="{{old.emergency_contact_phone}}"/>
+</div>
+
+<div class="md-form">
+
+<label>Address</label>
+<input type="text" placeholder="Address" name="emergency_contact_address" class="form-control mb-4" value="{{old.emergency_contact_address}}"/>
+</div>
+
+<div class="md-form">
+
+<label>Relationship</label>
+<input type="text" placeholder="Relationship"
+name="emergency_contact_relationship" class="form-control mb-4" value="{{old.emergency_contact_relationship}}"/>
+</div>
+
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+    <button type="submit" class="btn btn-primary">Save changes</button>
+</div>
 
 </form>
 
-<!-- Default form register -->
+
+<!-- modal content -->
+            </div>
+                </div>
+                </div>
+                </div>
+
+
+                            <!-- end modal -->
+
+                            </div>
+
+                                            </div>
+                                            <!-- end first column -->
+
+
+                <!-- second colm -->
+                <div class="col-6">
+                <div class="card">
+                                <button onclick="show('rinfo')" class="btn btn-warning" style="width:100%">
+                                    <h5><b> REFREE INFORMATION</b></h5>
+                                </button>
+
+                    <div class="card-body">
+<div class="mb-4">
+    <div class="md-form">
+        <label for="">Fullname</label>
+        <input type="text" placeholder="Full name" name="refree_contact_name" class="form-control mb-4" value="{{old.refree_contact_name}}">
+    </div>
+
+    <div class="md-form">
+
+        <label for="">Telephone</label>
+        <input type="text" placeholder="Telephone" name="refree_contact_phone" class="form-control mb-4" value={{old.refree_contact_phone}}>
+    </div>
+
+    <div class="md-form">
+
+        <label for="">Home Address</label>
+        <input type="text" placeholder="Address" name="refree_contact_address" class="form-control mb-4" value={{old.refree_contact_address}}>
+    </div>
+
+    <div class="md-form">
+
+        <label for="">Relationship</label>
+        <input type="text" placeholder="Relationship" name="refree_contact_relationship" class="form-control mb-4"
+            value={{old.refree_contact_relationship}} >
+    </div>
+</div>
+
+<!-- edit button -->
+<div>
+    <button type="button" class="btn btn-primary" data-toggle="modal"  data-target="#rinfo">edit</button>
+</div>
+<!-- end edit button -->
+
+                            <!-- modal -->
+<div class="modal fade" id="rinfo" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Refree Information</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+
+<form action="">
+    <div class="mb-4">
+    <div class="md-form">
+
+        <label for="">Fullname</label>
+        <input type="text" placeholder="Full name" name="refree_contact_name" class="form-control mb-4" value="{{old.refree_contact_name}}">
+    </div>
+
+    <div class="md-form">
+
+        <label for="">Telephone</label>
+        <input type="text" placeholder="Telephone" name="refree_contact_phone" class="form-control mb-4" value={{old.refree_contact_phone}}>
+    </div>
+
+    <div class="md-form">
+
+        <input type="text" placeholder="Address" name="refree_contact_address" class="form-control mb-4" value={{old.refree_contact_address}}>
+    </div>
+
+    <div class="md-form">
+
+        <input type="text" placeholder="Relationship" name="refree_contact_relationship" class="form-control mb-4"
+            value={{old.refree_contact_relationship}} >
+
+        </div>
+</div>
+
+
+<div class="modal-footer">
+    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+    <button type="submit" class="btn btn-primary">Save changes</button>
+</div>
+</form>
+
+            </div>
+</div>
+</div>
+</div>
+
+
+                    </div>
+                </div>
+
+            </div>
+                <!-- end second colum -->
+                    </div>
+
+</div>
+</div>
+
+</div>
+<!-- end third row -->
+
+</div>
+
+<!-- end row -->
+
+
+
+
+
+
+
 
  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
@@ -219,8 +665,6 @@ name="emergency_contact_relationship" class="form-control mb-4" value="{{old.eme
         } else {
             document.getElementById(option).style.display = 'none';
             console.log(option, 'option closed');
-
-            document.getElementById('show').innerHTML = 'SHOW';
         }
     }
     function hideWorkstop() {
