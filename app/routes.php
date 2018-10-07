@@ -37,7 +37,6 @@ $this->post('/auth/admin/signup','AuthController:postAdminSignUp');
 $app->group('',function() use ($app) {
 $app->get('/auth/admin/login','AuthController:RenderAdminLogin')->setName('auth.admin.signin');
 $app->post('/auth/admin/login','AuthController:postAdminSignIn');
-
 })->add(new TobeAdminMiddelWare($container));
 
 

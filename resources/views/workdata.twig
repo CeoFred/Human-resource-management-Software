@@ -32,87 +32,33 @@
             <!-- content -->
             <div id="pinfo">
 <!-- firstname input -->
-<div class="md-form" style="display:none" >
-    <i class="fa fa-user prefix"></i>
-    <input type="text" id="fname" class="form-control" value={{ auth.user.firstname }} disabled>
-    <label for="fname">First Name</label>
+<div class="md-form">
+<p>First Name : {{ auth.user.firstname }}</p>
 </div>
 <!-- lastname input -->
 <div class="md-form">
-    <i class="fa fa-user prefix"></i>
-    <input type="text" id="lname" class="form-control" value={{ auth.user.lastname }} disabled>
-    <label for="lname">Last Name</label>
+    <p>Last Name:{{ auth.user.lastname }}</p>
 </div>
 <!-- email input -->
 <div class="md-form">
-    <i class="fa fa-envelope prefix"></i>
-    <input type="text" id="email" class="form-control" value={{ auth.user.email }} disabled>
-    <label for="email">E-mail address</label>
+
+    <p>E-mail:{{ auth.user.email }}</p>
 </div>
 <!-- address input -->
 <div class="md-form">
-    <textarea id="address" class="form-control md-textarea" length="120" rows="3" disabled></textarea>
-    <label for="address">Home Address</label>
+    <p>Home Address:</p>
 </div>
-
 <!-- date of birth input -->
-
-        <p>Date of birth</p>
 <div class="md-form">
-    <i class="fas fa-calendar prefix"></i>
-    <input type="date" id="cal" class="form-control">
-
+        <p>Date of birth</p>
 </div>
-
-
-
 <!-- state of origin -->
 <div class="md-form">
-    <select name="state" onchange="changelga(this.value)" id="state" class="form-control" disabled>
-        <option value="" selected="selected">SELECT STATE OF ORIGIN</option>
-        <option value='Abia'>Abia</option>
-        <option value='Adamawa'>Adamawa</option>
-        <option value='AkwaIbom'>AkwaIbom</option>
-        <option value='Anambra'>Anambra</option>
-        <option value='Bauchi'>Bauchi</option>
-        <option value='Bayelsa'>Bayelsa</option>
-        <option value='Benue'>Benue</option>
-        <option value='Borno'>Borno</option>
-        <option value='Cross River'>Cross River</option>
-        <option value='Delta'>Delta</option>
-        <option value='Ebonyi'>Ebonyi</option>
-        <option value='Edo'>Edo</option>
-        <option value='Ekiti'>Ekiti</option>
-        <option value='Enugu'>Enugu</option>
-        <option value='Gombe'>Gombe</option>
-        <option value='Imo'>Imo</option>
-        <option value='Jigawa'>Jigawa</option>
-        <option value='Kaduna'>Kaduna</option>
-        <option value='Kano'>Kano</option>
-        <option value='Katsina'>Katsina</option>
-        <option value='Kebbi'>Kebbi</option>
-        <option value='Kogi'>Kogi</option>
-        <option value='Kwara'>Kwara</option>
-        <option value='Lagos'>Lagos</option>
-        <option value='Nasarawa'>Nasarawa</option>
-        <option value='Niger'>Niger</option>
-        <option value='Ogun'>Ogun</option>
-        <option value='Ondo'>Ondo</option>
-        <option value='Osun'>Osun</option>
-        <option value='Oyo'>Oyo</option>
-        <option value='Plateau'>Plateau</option>
-        <option value='Rivers'>Rivers</option>
-        <option value='Sokoto'>Sokoto</option>
-        <option value='Taraba'>Taraba</option>
-        <option value='Yobe'>Yobe</option>
-        <option value='Zamfara'>Zamafara</option>
-    </select>
+    <p>State:</p>
 </div>
 <!-- lga -->
 <div class="md-form">
-    <label class="control-label" for="lga">LGA</label>
-    <select name="lga" id="lga" class="form-control" disabled>
-    </select>
+  <p>LGA:</p>
 </div>
 <!-- englga -->
 </div>
@@ -145,28 +91,32 @@
             <div class="modal-body">
 
 <!-- content -->
+<script>
 
+</script>
+
+<form action="" method="post">
 <!-- firstname input -->
 <div class="md-form">
     <i class="fa fa-user prefix"></i>
-    <input type="text" id="fname" class="form-control" value={{ auth.user.firstname }} disabled>
+    <input type="text" id="fname" class="form-control" value={{ auth.user.firstname }}>
     <label for="fname">First Name</label>
 </div>
 <!-- lastname input -->
 <div class="md-form">
     <i class="fa fa-user prefix"></i>
-    <input type="text" id="lname" class="form-control" value={{ auth.user.lastname }} disabled>
+    <input type="text" id="lname" class="form-control" value={{ auth.user.lastname }}>
     <label for="lname">Last Name</label>
 </div>
 <!-- email input -->
 <div class="md-form">
     <i class="fa fa-envelope prefix"></i>
-    <input type="text" id="email" class="form-control" value={{ auth.user.email }} disabled>
+    <input type="text" id="email" class="form-control" value={{ auth.user.email }}>
     <label for="email">E-mail address</label>
 </div>
 <!-- address input -->
 <div class="md-form">
-    <textarea id="address" class="form-control md-textarea" length="120" rows="3" disabled></textarea>
+    <textarea id="address" class="form-control md-textarea" length="120" rows="3"></textarea>
     <label for="address">Home Address</label>
 </div>
 
@@ -177,12 +127,9 @@
     <input type="date" id="cal" class="form-control">
 
 </div>
-
-
-
 <!-- state of origin -->
 <div class="md-form">
-    <select name="state" onchange="changelga(this.value)" id="state" class="form-control" disabled>
+    <select name="state" onchange="changelga(this.value)" id="state" class="form-control">
         <option value="" selected="selected">SELECT STATE OF ORIGIN</option>
         <option value='Abia'>Abia</option>
         <option value='Adamawa'>Adamawa</option>
@@ -225,18 +172,24 @@
 <!-- lga -->
 <div class="md-form">
     <label class="control-label" for="lga">LGA</label>
-    <select name="lga" id="lga" class="form-control" disabled>
+    <select name="lga" id="lga" class="form-control">
     </select>
 </div>
 <!-- englga -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+<button id="submit" type="button" class="btn btn-primary">Save changes</button>
+            </div>
+
+        {{ csrf.field | raw  }}
+
+
+</form>
+
 <!-- content -->
 <!-- end contetn -->
             </div>
 
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
-            </div>
 
         </div>
     </div>
@@ -630,7 +583,19 @@ name="emergency_contact_relationship" class="form-control mb-4" value="{{old.eme
 
 <!-- end row -->
 
+{% else %}
+<div style="margin:auto;width:300px" class="card animated slideInDown slow">
+    <div class="alert alert-warning alert-dismissible fade show card-header" align="center" role="alert">
+        <strong>Hello {{ auth.user.name }},you have uploaded your form data.</strong>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        <div class="card-body" align="center">
+            <a href="{{ path_for('user.view.workdata')}}">View<h5 class="fas fa-eye"></h5></a> <a href="{{path_for('user.update.workdata')}}">Edit
+                <h5 class="fas fa-edit"></h5> </a>
 
+        </div>
+    </div>
 
 
 
@@ -643,19 +608,10 @@ name="emergency_contact_relationship" class="form-control mb-4" value="{{old.eme
   <script src="{{base_url() }}/js/lga.js"></script>
 {% endif %}
 
-<div style="margin:auto;width:300px" class="card animated slideInDown slow">
-<div class="alert alert-warning alert-dismissible fade show card-header" align="center" role="alert">
-    <strong>Hello {{ auth.user.name }},you have uploaded your form data.</strong>
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-    </button>
-    <div class="card-body" align="center">
-    <a href="{{ path_for('user.view.workdata')}}">View<h5 class="fas fa-eye"></h5></a> <a href="{{path_for('user.update.workdata')}}">Edit <h5 class="fas fa-edit"></h5> </a>
-
-    </div>
-</div>
-
+<script src="{{ base_url()}}/js/global.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 <script>
+
     function show(option) {
         var exp = document.getElementById(option);
         if (exp.style.display == 'none') {
@@ -677,7 +633,17 @@ name="emergency_contact_relationship" class="form-control mb-4" value="{{old.eme
 
     }
 
-
+function passcheck2(val) {
+var xhttp;
+xhttp = new XMLHttpRequest();
+xhttp.onreadystatechange = function() {
+if (this.readyState == 4 && this.status == 200) {
+document.getElementById("passwordresponse2").innerHTML = this.responseText;
+}
+};
+xhttp.open("GET", "ajax.php?pass2="+val, true);
+xhttp.send();
+}
 </script>
 {%  endblock %}
 
