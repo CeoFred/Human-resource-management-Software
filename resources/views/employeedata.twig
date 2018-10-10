@@ -86,7 +86,7 @@ width: 100%;
             </div>
 
             <div class="modal-body">
-<form action="{{ path_for('form') }}" id='pform' method="post">
+<form action="{{ path_for('form') }}?employee_id={{employeedata.company_id}}" id='pform' method="post">
     <!-- firstname input -->
     <div class="md-form">
         <i class="fa fa-user prefix"></i>
@@ -182,7 +182,7 @@ width: 100%;
     <!-- englga -->
     <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button id="submit" type="button" class="btn btn-primary">Save changes
+        <button id="submit" type="submit" class="btn btn-primary">Save changes
 
             <img style="display:none;height:30px;width:30px;"
              src="{{base_url()}}/img/lg.rotating-balls-spinner.gif" id='gif'>

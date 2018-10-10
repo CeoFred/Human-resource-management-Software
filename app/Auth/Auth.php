@@ -70,6 +70,7 @@ $id = User::find($_SESSION['user'])->id;
     }
 
     public function admincheck()
+
     {
 return isset($_SESSION['admin']);
     }
@@ -86,6 +87,7 @@ return isset($_SESSION['admin']);
             $_SESSION['admin'] = $admin->id;
 
        return true;
+       
               } else return false;
 
         }
@@ -120,7 +122,9 @@ return isset($_SESSION['admin']);
     }
 
     public function adminlogout(){
+
         unset($_SESSION['admin']);
+
     }
 
 }

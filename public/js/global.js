@@ -139,8 +139,8 @@ $.ajax({
 
 });
 
-    $("#submit").click(function (event) {
-
+    $("#pform").on('submit',function (event) {
+        event.preventDefault();
         document.getElementById('alert').style.display = 'none';
         var email =   $("#email").val();
       var  actionurl = $('#pform').attr('action');
@@ -154,14 +154,14 @@ $.ajax({
     //   var dateofbirth = $('#cal');
     console.log(email,actionurl,firstname,lastname
         ,address,state,lga,phonenumber,maritalstatus)
-        event.preventDefault();
+
         $.ajax({
             type: "POST",
             url: actionurl,
             data: { email:email,state:state,
                 lga:lga,address:address ,
-            lastname:lastname,
-        firstname:firstname,
+            familyname:lastname,
+        givenname:firstname,
     maritalstatus: maritalstatus,
     phonenumber:phonenumber
     },
@@ -172,9 +172,9 @@ $.ajax({
                 $('#gif').hide();
             },
             success: function (data, textStatus, jqXHR) {
-                console.log(data,textStatus);
+                console.log(textStatus);
                 document.getElementById('alert').style.display = 'block';
-
+                document.getElementById('alert').innerHTML = data;
                 //data - response from server
             },
             error: function (jqXHR, textStatus, errorThrown) {

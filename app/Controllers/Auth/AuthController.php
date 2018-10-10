@@ -25,7 +25,9 @@ class AuthController extends Controller
         $userid = $req->getParam('id');
 $userprofile = einfo::where('company_id',$userid)->first();
 $this->view->getEnvironment()->addGlobal('employeedata', $userprofile);
+$_SESSION['currentemployeeid'] = employeedata.company_id;
 return $this->view->render($res,'employeedata.twig');
+
     }
 
 
@@ -78,21 +80,28 @@ return $this->view->render($res,'employeedata.twig');
 public function update_pinfo($req,$res) {
 
 
+$employeeid = $req->getParam('employee_id');
+            $update = einfo::where('company_id', $employeeid)->update([
 
-            $update = einfo::where('company_id', employeedata.comapny_id)->update([
                 'email' => $req->getParam('email'),
                 'givenname' => $req->getParam('givenname'),
                 'familyname' => $req->getParam('familyname'),
                 'address' => $req->getParam('address'),
                 'state' => $req->getParam('state'),
                 'lga' => $req->getParam('lga'),
+                'phonenumber' => $req->getParam('phonenumber'),
                 // 'date_of_birth' => $req->getParam('dateofbirth'),
                 'maritalstatus' => $req->getParam('maritalstatus')
             ]);
 
+    var_dump($req->getParams());
             if ($update) {
                 return 'success';
+
+            var_dump($req->getParams());
             } else {
+
+            var_dump($req->getParams());
                 return 'failed';
             }
 
@@ -477,8 +486,9 @@ public function addEmployee($request,$response){
 
 
 public function adminLogout($req,$res){
+
       $this->auth->adminlogout();
-$this->flash->addMessage('loggedout','Logged Out!');
+// $this->flash->addMessage('loggedout','Logged Out!');
     return $res->withRedirect($this->router->pathFor('auth.admin.signin'));
 
 }

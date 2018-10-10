@@ -4,6 +4,5 @@
 # CUSTOM APP WITH PHP'S SLIM FRAMEWORK #
 
 # TOO CASE SENSITIVE FOR BOTH FILE NAMES, VARIABLES, FUNCTIONS, CLASSES, EVERYTHING !!!! ARGGGGGGhHHHHH!!! #
-   ![OWGUGO](/public/img/ogwugoss.png)
 
-   ![OWGUGO](/public/img/ogwugo.png)
+   ![OWGUGO](/public/img/Screenshot(236).png)
