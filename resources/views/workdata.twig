@@ -2,7 +2,7 @@
 
 
 {% block content %}
-{% if auth.counteinfo == false %}
+{% if auth.counteinfo == true %}
 
 {{ errors | json_encode }}
 <div  align="center">
@@ -30,35 +30,42 @@
 </button>
 
             <!-- content -->
-            <div id="pinfo">
+            <div id="pinfo" style="display:none">
 <!-- firstname input -->
 <div class="md-form">
-<p>First Name : {{ auth.user.firstname }}</p>
+<p>First Name : {{ auth.counteinfo.givenname }}</p>
 </div>
 <!-- lastname input -->
 <div class="md-form">
-    <p>Last Name:{{ auth.user.lastname }}</p>
+<p>Last Name: {{ auth.counteinfo.familyname }}</p>
 </div>
 <!-- email input -->
 <div class="md-form">
 
-    <p>E-mail:{{ auth.user.email }}</p>
+<p>E-mail:{{ auth.counteinfo.email}}</p>
 </div>
 <!-- address input -->
 <div class="md-form">
-    <p>Home Address:</p>
+<p>Home Address: {{auth.counteinfo.address}}</p>
 </div>
 <!-- date of birth input -->
-<div class="md-form">
-        <p>Date of birth</p>
-</div>
+<!-- <div class="md-form">
+<p>Date of birth:{{auth.counteinfo.date_of_birth}} </p>
+</div> -->
 <!-- state of origin -->
 <div class="md-form">
-    <p>State:</p>
+<p>State:{{auth.counteinfo.state}}</p>
 </div>
+
+<!-- marital status -->
+<div class="md-form">
+    <p>MaritalStatus:{{ auth.counteinfo.maritalstatus }}</p>
+
+</div>
+<!-- end marital statuss -->
 <!-- lga -->
 <div class="md-form">
-  <p>LGA:</p>
+<p>LGA:{{auth.counteinfo.lga}}</p>
 </div>
 <!-- englga -->
 </div>
@@ -79,8 +86,13 @@
 <!-- modal -->
 <div class="modal fade" id="basicExampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
     aria-hidden="true">
+<div class="alert alert-success animated jello" id="alert" style="display:none;float:right;position:fixed">
+        Update was successfull!
+    </div>
     <div class="modal-dialog" role="document">
+
         <div class="modal-content">
+
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">Personal Information</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -91,27 +103,24 @@
             <div class="modal-body">
 
 <!-- content -->
-<script>
 
-</script>
-
-<form action="" method="post">
+<form action="{{ path_for('form') }}" id='pform'  method="post">
 <!-- firstname input -->
 <div class="md-form">
     <i class="fa fa-user prefix"></i>
-    <input type="text" id="fname" class="form-control" value={{ auth.user.firstname }}>
+    <input type="text" id="fname" class="form-control" value={{ auth.counteinfo.givenname }}>
     <label for="fname">First Name</label>
 </div>
 <!-- lastname input -->
 <div class="md-form">
     <i class="fa fa-user prefix"></i>
-    <input type="text" id="lname" class="form-control" value={{ auth.user.lastname }}>
+    <input type="text" id="lname" class="form-control" value={{ auth.counteinfo.familyname }}>
     <label for="lname">Last Name</label>
 </div>
 <!-- email input -->
 <div class="md-form">
     <i class="fa fa-envelope prefix"></i>
-    <input type="text" id="email" class="form-control" value={{ auth.user.email }}>
+    <input type="text" id="email" class="form-control" value={{ auth.counteinfo.email }}>
     <label for="email">E-mail address</label>
 </div>
 <!-- address input -->
@@ -120,13 +129,12 @@
     <label for="address">Home Address</label>
 </div>
 
-<!-- date of birth input -->
-<p>Date of birth</p>
+<!-- marital status -->
 <div class="md-form">
-    <i class="fas fa-calendar prefix"></i>
-    <input type="date" id="cal" class="form-control">
-
+    <input type="text" value="{{ auth.counteinfo.maritalstatus }}" placeholder="single,married,divorced,searching.." id="maritalstatus" class="form-control">
+<label for="maritalstatus"> Marital Status </label>
 </div>
+<!-- end marital status -->
 <!-- state of origin -->
 <div class="md-form">
     <select name="state" onchange="changelga(this.value)" id="state" class="form-control">
@@ -178,11 +186,12 @@
 <!-- englga -->
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-<button id="submit" type="button" class="btn btn-primary">Save changes</button>
+<button id="submit" type="button" class="btn btn-primary">Save changes
+
+    <img  style="display:none;height:30px;width:30px;"
+     src="{{base_url()}}/img/lg.rotating-balls-spinner.gif" id='gif'>
+    </button>
             </div>
-
-        {{ csrf.field | raw  }}
-
 
 </form>
 
@@ -208,43 +217,41 @@
     <div class="card">
 <div class="card-body">
 <!-- content -->
-<button onclick="show('winfo')" class="btn btn-info" style="width:100%">
+<button onclick="show('winfo')" class="btn btn-info"
+style="width:100%">
     <h5><b> WORK INFORMATION</b></h5>
 </button>
 
-<div id="winfo">
+<div id="winfo" style="display: none">
     <!-- content -->
 
     <!-- department -->
     <div class="md-form">
-        <label for="dept">Department</label>
-        <input type="text" name="department" id="dept" class="form-control mb-4" placeholder="eg. Delivery" value="{{ old.department }}">
+
+<p>Department:{{ auth.counteinfo.department }}</p>
 
     </div>
     <!-- end ddepartment -->
 
     <!-- positon in departemnt -->
     <div class="md-form">
-        <label for="dept">Position</label>
-        <input type="text" name="pindept" id="dept" class="form-control mb-4" placeholder="eg. Boss" value="{{ old.pindept }}">
+        <p>Position:{{ auth.counteinfo.position }}</p>
 
     </div>
 
 <!-- end position in department -->
 
 <!-- start date -->
-    <p>Date of resumption</p>
+
 <div class="md-form">
-    <i class="fas fa-calendar prefix"></i>
-    <input type="date" id="dos" name="date_of_start" class="form-control" value="{{old.date_of_start}}" />
+    <p>Date of resumption:{{ auth.counteinfo.date_of_start}} </p>
 </div>
 <!-- end start date -->
 
 
     <!-- employment mode -->
 <div class="md-form">
-<label for="empm">Employment Mode</label>
-<input type="text" id="empm" name="employment_mode" class="form-control" placeholder="NYSC/IT/PERMANENT/" value="{{old.employment_mode}}" />
+<p >Employment Mode:{{ auth.counteinfo.employment_mode}}</p>
 
 </div>
 <!-- end employmrnt mode -->
@@ -269,6 +276,11 @@
 <!-- modal -->
 <div class="modal fade" id="emergencyinformation" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
     aria-hidden="true">
+<div class="alert alert-success animated jello" id="alert2"
+style="display:none;float:right;position:fixed">
+    Update was successfull!
+</div>
+
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -279,11 +291,12 @@
             </div>
 
             <div class="modal-body">
-      <form action="">
+<form id="wform" action="{{path_for('update.workinfo')}}" method="POST">
                     <!-- department -->
                     <div class="md-form">
                         <label for="dept">Department</label>
-                        <input type="text" name="department" id="dept" class="form-control mb-4" placeholder="eg. Delivery" value="{{ old.department }}">
+                        <input type="text" name="department"
+id="department" class="form-control mb-4" placeholder="eg. Delivery" value="{{ auth.counteinfo.department }}">
 
                     </div>
                     <!-- end ddepartment -->
@@ -291,7 +304,8 @@
                     <!-- positon in departemnt -->
                     <div class="md-form">
                         <label for="dept">Position</label>
-                        <input type="text" name="pindept" id="dept" class="form-control mb-4" placeholder="eg. Boss" value="{{ old.pindept }}">
+                        <input type="text" name="pindept" id="position" class="form-control mb-4"
+                        placeholder="eg. Boss" value="{{ auth.counteinfo.position }}">
 
                     </div>
 
@@ -301,7 +315,8 @@
                     <p>Date of resumption</p>
                     <div class="md-form">
                         <i class="fas fa-calendar prefix"></i>
-                        <input type="date" id="dos" name="date_of_start" class="form-control" value="{{old.date_of_start}}" />
+                        <input type="date" id="dos" name="date_of_start" class="form-control"
+                        value="{{auth.counteinfo.date_of_start}}" />
                     </div>
                     <!-- end start date -->
 
@@ -309,13 +324,17 @@
                     <!-- employment mode -->
                     <div class="md-form">
                         <label for="empm">Employment Mode</label>
-                        <input type="text" id="empm" name="employment_mode" class="form-control" placeholder="NYSC/IT/PERMANENT/" value="{{old.employment_mode}}" />
+                        <input type="text" id="empm" name="employment_mode"
+                        class="form-control" placeholder="NYSC/IT/PERMANENT/" value="{{auth.counteinfo.employment_mode}}" />
 
                     </div>
                     <!-- end employmrnt mode -->
 <div class="modal-footer">
     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-    <button type="button" class="btn btn-primary">Save changes</button>
+    <button type="submit" id="wsubmit" class="btn btn-primary">Save changes
+<img style="display:none;height:30px;width:30px;" src="{{base_url()}}/img/lg.rotating-balls-spinner.gif" id='gif2'>
+    </button>
+
 </div>
             </form>
 
@@ -329,27 +348,60 @@
 <br>
 <div class="card">
 <div class="card-body">
-<button class="btn btn-block btn-default" type="button">
+<button class="btn btn-block btn-default" type="button" data-toggle="modal" data-target="#image">
     Upload Passport
 </button>
 </div>
 </div>
 
+<!-- image modal -->
+<div class="modal fade" id="image" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="alert alert-success animated jello" id="alert3" style="display:none;float:right;position:fixed">
+    Update was successfull!
+</div>
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Upload Passport</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+
+<div id="dropzone" class="dropzone" align="center">Drag and drop files to upload
+
+    </div>
+
+    <h5>OR</h5>
+
+
+<form enctype="multipart/form-data" name="image"
+ action="{{ path_for('uploadimg') }}" id="iform" method="post">
 <div class="input-group mb-3">
     <div class="input-group-prepend">
         <span class="input-group-text" id="inputGroupFileAddon01">Upload</span>
     </div>
     <div class="custom-file">
 
-        <input type="file" class="custom-file-input" id="inputGroupFile01" name="image" aria-describedby="inputGroupFileAddon01">
+        <input type="file" class="custom-file-input"
+        id="image" name="passport" aria-describedby="inputGroupFileAddon01">
         <label class="custom-file-label" for="inputGroupFile01">Upload an Image</label>
+   </div>
 
-    </div>
-    {% if errors.image %}
-    <span class="help-block has-error-p" style="float:left;">{{ errors.image | first }}</span>
-    {% endif %}
+
 </div>
-{{ csrf.field | raw }}
+<img style="display:none;height:30px;width:30px;"
+ src="{{base_url()}}/img/lg.rotating-balls-spinner.gif" id='gif3'>
+
+<input type="submit" class="btn btn-success" value="submit" id="isubmit" />
+
+</form>
+</div>
+</div>
+</div>
+</div>
 
 
     </div>
@@ -372,33 +424,29 @@
                                 <!-- conent -->
 <div class="mb-4">
 <div class="md-form">
-<label>Full name</label>
-<input type="text" placeholder="Full name" name="emergency_contact_name" class="form-control mb-4" value="{{old.emergency_contact_name}}"/>
+<p>Full name:{{auth.counteinfo.emergency_contact_name}}</p>
 </div>
 
 <div class="md-form">
 
-<label>Telephone</label>
-<input type="text" placeholder="Telephone" name="emergency_contact_phone" class="form-control mb-4" value="{{old.emergency_contact_phone}}"/>
+<p>Telephone:{{auth.counteinfo.emergency_contact_phone}}</p>
 </div>
 
 <div class="md-form">
 
-<label>Address</label>
-<input type="text" placeholder="Address" name="emergency_contact_address" class="form-control mb-4" value="{{old.emergency_contact_address}}"/>
+<p>Address:{{auth.counteinfo.emergency_contact_address}}</p>
 </div>
 
 <div class="md-form">
 
-<label>Relationship</label>
-<input type="text" placeholder="Relationship"
-name="emergency_contact_relationship" class="form-control mb-4" value="{{old.emergency_contact_relationship}}"/>
+<p>Relationship:{{auth.counteinfo.emergency_contact_relationship}}</p>
+
 </div>
 
 </div>
 <!-- end content -->
 
-                            </div>
+            </div>
 
 
 <!-- edit button -->
@@ -426,26 +474,30 @@ name="emergency_contact_relationship" class="form-control mb-4" value="{{old.eme
     <div class="form-row mb-4">
 <div class="md-form">
 <label>Full name</label>
-<input type="text" placeholder="Full name" name="emergency_contact_name" class="form-control mb-4" value="{{old.emergency_contact_name}}"/>
+<input type="text" placeholder="Full name" name="emergency_contact_name"
+class="form-control mb-4" value="{{ auth.counteinfo.emergency_contact_name}}"/>
 </div>
 
 <div class="md-form">
 
 <label>Telephone</label>
-<input type="text" placeholder="Telephone" name="emergency_contact_phone" class="form-control mb-4" value="{{old.emergency_contact_phone}}"/>
+<input type="text" placeholder="Telephone" name="emergency_contact_phone" class="form-control mb-4"
+value="{{auth.counteinfo.emergency_contact_phone}}"/>
 </div>
 
 <div class="md-form">
 
 <label>Address</label>
-<input type="text" placeholder="Address" name="emergency_contact_address" class="form-control mb-4" value="{{old.emergency_contact_address}}"/>
+<input type="text" placeholder="Address"
+name="emergency_contact_address" class="form-control mb-4" value="{{auth.counteinfo.emergency_contact_address}}"/>
 </div>
 
 <div class="md-form">
 
 <label>Relationship</label>
 <input type="text" placeholder="Relationship"
-name="emergency_contact_relationship" class="form-control mb-4" value="{{old.emergency_contact_relationship}}"/>
+name="emergency_contact_relationship"
+class="form-control mb-4" value="{{auth.counteinfo.emergency_contact_relationship}}"/>
 </div>
 
 </div>
@@ -479,39 +531,35 @@ name="emergency_contact_relationship" class="form-control mb-4" value="{{old.eme
                                     <h5><b> REFREE INFORMATION</b></h5>
                                 </button>
 
-                    <div class="card-body">
+                    <div class="card-body" id="rinfo">
 <div class="mb-4">
     <div class="md-form">
-        <label for="">Fullname</label>
-        <input type="text" placeholder="Full name" name="refree_contact_name" class="form-control mb-4" value="{{old.refree_contact_name}}">
+        <p>Fullname:</p>
     </div>
 
     <div class="md-form">
 
-        <label for="">Telephone</label>
-        <input type="text" placeholder="Telephone" name="refree_contact_phone" class="form-control mb-4" value={{old.refree_contact_phone}}>
+        <p>Telephone:</p>
     </div>
 
     <div class="md-form">
 
-        <label for="">Home Address</label>
-        <input type="text" placeholder="Address" name="refree_contact_address" class="form-control mb-4" value={{old.refree_contact_address}}>
+        <p >Home Address:</p>
     </div>
 
     <div class="md-form">
 
-        <label for="">Relationship</label>
-        <input type="text" placeholder="Relationship" name="refree_contact_relationship" class="form-control mb-4"
-            value={{old.refree_contact_relationship}} >
+        <p >Relationship:</p>
     </div>
 </div>
-
+</div>
 <!-- edit button -->
 <div>
-    <button type="button" class="btn btn-primary" data-toggle="modal"  data-target="#rinfo">edit</button>
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#rinfo">edit</button>
 </div>
 <!-- end edit button -->
 
+</div>
                             <!-- modal -->
 <div class="modal fade" id="rinfo" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
     aria-hidden="true">
@@ -566,8 +614,6 @@ name="emergency_contact_relationship" class="form-control mb-4" value="{{old.eme
 </div>
 
 
-                    </div>
-                </div>
 
             </div>
                 <!-- end second colum -->
@@ -617,12 +663,12 @@ name="emergency_contact_relationship" class="form-control mb-4" value="{{old.eme
         if (exp.style.display == 'none') {
             document.getElementById(option).style.display = 'block';
             console.warn(option, 'option triggered');
-            document.getElementById('show').innerHTML = 'HIDE';
         } else {
             document.getElementById(option).style.display = 'none';
             console.log(option, 'option closed');
         }
     }
+
     function hideWorkstop() {
         var input = document.getElementById('workstop');
 
@@ -632,18 +678,6 @@ name="emergency_contact_relationship" class="form-control mb-4" value="{{old.eme
         }
 
     }
-
-function passcheck2(val) {
-var xhttp;
-xhttp = new XMLHttpRequest();
-xhttp.onreadystatechange = function() {
-if (this.readyState == 4 && this.status == 200) {
-document.getElementById("passwordresponse2").innerHTML = this.responseText;
-}
-};
-xhttp.open("GET", "ajax.php?pass2="+val, true);
-xhttp.send();
-}
 </script>
 {%  endblock %}
 

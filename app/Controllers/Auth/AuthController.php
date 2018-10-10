@@ -3,6 +3,7 @@
 namespace App\Controllers\Auth;
 //  import view
 use PHPMailer\PHPMailer\PHPMailer;
+
 use PHPMailer\PHPMailer\Exception;
 
 use App\Models\einfo;
@@ -18,12 +19,91 @@ use App\Controllers\Controller;
 use Respect\Validation\Validator as v;
 
 class AuthController extends Controller
-
  {
+     public function viewEmployee($req,$res){
+    //  var_dump($req->getParam('id'));
+        $userid = $req->getParam('id');
+$userprofile = einfo::where('company_id',$userid)->first();
+$this->view->getEnvironment()->addGlobal('employeedata', $userprofile);
+return $this->view->render($res,'employeedata.twig');
+    }
 
-// get all users in the admin panel
-public function getAdminUsers($req,$res){
-$this->view->render($res,'allusers.twig');
+
+     public function update_img($req,$res){
+
+        $directory = $this->upload_directory_employees;
+        $uploadedFiles = $req->getUploadedFiles();
+        $uploadedFile = $uploadedFiles['passport'];
+        if ($uploadedFile->getError() === UPLOAD_ERR_OK) {
+            $extension = pathinfo($uploadedFile->getClientFilename(), PATHINFO_EXTENSION);
+            $basename = bin2hex(random_bytes(8)); // see http://php.net/manual/en/function.random-bytes.php
+            $filename = sprintf('%s.%0.8s', $basename, $extension);
+            $uploadedFile->moveTo($directory . DIRECTORY_SEPARATOR . $filename);
+
+        $update = einfo::where('uploaded_by', $this->auth->user()->id)->update([
+'image' => $filename
+
+        ]);
+        if($update){
+            return 'update from controller';
+        }else{
+            return 'failed from controller';
+        }
+
+     }
+    }
+
+    // UPDATE USER WORK INFO
+    public function update_winfo($req,$res){
+
+        $update = einfo::where('uploaded_by', $this->auth->user()->id)->update([
+
+            'department' => $req->getParam('department'),
+            'position' => $req->getParam('position'),
+            'date_of_start' => $req->getParam('dateOfEmployment'),
+            'employment_mode' => $req->getParam('employmenMode'),
+
+            ]);
+
+        if ($update) {
+            return 'success from controller';
+        } else {
+            return 'failedfrom controller';
+        }
+
+
+    }
+
+// update user persona info
+public function update_pinfo($req,$res) {
+
+
+
+            $update = einfo::where('company_id', employeedata.comapny_id)->update([
+                'email' => $req->getParam('email'),
+                'givenname' => $req->getParam('givenname'),
+                'familyname' => $req->getParam('familyname'),
+                'address' => $req->getParam('address'),
+                'state' => $req->getParam('state'),
+                'lga' => $req->getParam('lga'),
+                // 'date_of_birth' => $req->getParam('dateofbirth'),
+                'maritalstatus' => $req->getParam('maritalstatus')
+            ]);
+
+            if ($update) {
+                return 'success';
+            } else {
+                return 'failed';
+            }
+
+
+
+}
+    // get all users in the admin panel
+public function getEmployees($req,$res){
+
+$this->view->render($res,'allemployees.twig');
+
 }
 
 // rennder view for editing formdata
@@ -364,7 +444,7 @@ return  $this->view->render($res,'admin_login.twig');
 
 public function RenderAdminPanel($req,$res){
 
-    return  $this->view->render($res,'admindashboard.twig');
+    return  $this->view->render($res,'home.twig');
 
 }
 
@@ -381,12 +461,9 @@ $this->flash->addMessage('loggedout','Logged Out!');
 
 }
 
-public function getSignUp($request,$response){
+public function addEmployee($request,$response){
 
-    // renders the signup page with the view dependency
-// var_dump($request->getAttribute('csrf_value'));
-
-    return $this->view->render($response,'signup.twig');
+    return $this->view->render($response, 'addEmployee.twig');
 
 }
 
@@ -452,108 +529,96 @@ public function postSignIn($request,$response){
                 }
 
 
-                public function postSignUp($request,$response){
+
+                public function postAddEmployee($request,$response){
 
 //validating input fields for new users
 
 
-    $Validation = $this->validator->validate($request,[
-// for  email, i set a custom validation called emailAvail()
-// check EmailAvail class ;
+// //     $Validation = $this->validator->validate($request,[
 
-'email' => v::noWhiteSpace()->notEmpty()->email()->EmailAvail(),
-'firstname' => v::notEmpty()->alpha(),
-'password' => v::noWhiteSpace()->notEmpty(),
-'gender' => v::notEmpty(),
-'lastname' => v::notEmpty()->alpha(),
-'department' => v::notEmpty(),
+// // 'email' => v::noWhiteSpace()->notEmpty()->email()->EmailAvail(),
+// // 'givenname' => v::notEmpty()->alpha(),
+// // 'familyname' => v::alpha()->notEmpty(),
+// // 'gender' => v::alpha()->notEmpty(),
+// // 'department' => v::alpha()->notEmpty(),
 
+// // ]);
 
 
-]);
+// // // if valiation failed redirect to the signup page,$Validation->failed() returns true or false,its
+// // //also a method in the respect validator dependency
+// // if($Validation->failed()){
 
+// //     return 'failed validation' ;
 
+// // }else{
 
-
-
-// if valiation failed redirect to the signup page,$Validation->failed() returns true or false,its
-//also a method in the respect validator dependency
-if($Validation->failed()){
-
-        $this->flash->addMessage('signupfailed',"Opps!,something went wro)ng");
-    return $response->withRedirect($this->router->pathFor('auth.signup'));
-
-}
+// //     return 'all validated';
+// }
 
 $mail = new PHPMailer(true);                              // Passing `true` enables exceptions
 try {
 
     //Server settings
-    $mail->SMTPDebug = 0;                                 // Enable verbose debug output
-    $mail->isSMTP();                                      // Set mailer to use SMTP
-    $mail->Host = 'sweetpea.hostnownow.com';  // Specify main and backup SMTP servers
-    $mail->SMTPAuth = true;                               // Enable SMTP authentication
-    $mail->Username = 'activate@yourhomefuto.com.ng';                 // SMTP username
-    $mail->Password = 'messilo18_';                           // SMTP password
-    $mail->SMTPSecure = 'ssl';
-    $mail->SMTPAutoTLS = true;
-    // Enable TLS encryption, `ssl` also accepted
-    $mail->Port = 465;                                    // TCP port to connect to
-    //Recipients
+//     $mail->SMTPDebug = 0;                                 // Enable verbose debug output
+//     $mail->isSMTP();                                      // Set mailer to use SMTP
+//     $mail->Host = 'sweetpea.hostnownow.com';  // Specify main and backup SMTP servers
+//     $mail->SMTPAuth = true;                               // Enable SMTP authentication
+//     $mail->Username = 'activate@yourhomefuto.com.ng';                 // SMTP username
+//     $mail->Password = 'messilo18_';                           // SMTP password
+//     $mail->SMTPSecure = 'ssl';
+//     $mail->SMTPAutoTLS = true;
+//     // Enable TLS encryption, `ssl` also accepted
+//     $mail->Port = 465;                                    // TCP port to connect to
+//     //Recipients
 
-    $mail->SMTPOptions = array(
-    'ssl' => array(
-        'verify_peer' => false,
-        'verify_peer_name' => false,
-        'allow_self_signed' => true
-    )
-);
+//     $mail->SMTPOptions = array(
+//     'ssl' => array(
+//         'verify_peer' => false,
+//         'verify_peer_name' => false,
+//         'allow_self_signed' => true
+//     )
+// );
 
-    $mail->setFrom('fredd@ogwugo.com', 'Ogwugo.com');
-    $mail->addAddress($request->getParam('email'), $request->getParam('firstname'));     // Add a recipient
-    // $mail->addAddress('ellen@example.com');               // Name is optional
-    $mail->addReplyTo('ogwugopeople@ogwugo.com', 'Information');
-    $mail->isHTML(true);                                  // Set email format to HTML
-    $mail->Subject = 'Welcome';
-    $mail->Body    = '  Welcome <b>in bold!</b>';
-    $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
-    $mail->send();
+//     $mail->setFrom('fredd@ogwugo.com', 'Ogwugo.com');
+//     $mail->addAddress($request->getParam('email'), $request->getParam('firstname'));     // Add a recipient
+//     // $mail->addAddress('ellen@example.com');               // Name is optional
+//     $mail->addReplyTo('ogwugopeople@ogwugo.com', 'Information');
+//     $mail->isHTML(true);                                  // Set email format to HTML
+//     $mail->Subject = 'Welcome';
+//     $mail->Body    = '  Welcome <b>in bold!</b>';
+//     $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
+//     $mail->send();
 
-$directory = $this->user_upload_directory;
-       $uploadedFiles = $request->getUploadedFiles();
-  $uploadedFile = $uploadedFiles['image'];
-    if ($uploadedFile->getError() === UPLOAD_ERR_OK) {
-         $extension = pathinfo($uploadedFile->getClientFilename(), PATHINFO_EXTENSION);
-    $basename = bin2hex(random_bytes(8)); // see http://php.net/manual/en/function.random-bytes.php
-    $filename = sprintf('%s.%0.8s', $basename, $extension);
-    $uploadedFile->moveTo($directory . DIRECTORY_SEPARATOR . $filename);
-
-    }
 // creating a row in databse
+$company_id = 'OGWUGO' . str_shuffle('123456789');
 $user = User::create([
 'email' => $request->getParam('email'),
-'firstname' => $request->getParam('firstname'),
-'image' => $filename,
-'password' =>password_hash($request->getParam('password'),PASSWORD_DEFAULT),
-'lastname' =>$request->getParam('lastname'),
+'firstname' => $request->getParam('givenname'),
+'lastname' =>$request->getParam('familyname'),
 'department' =>$request->getParam('department'),
 'gender' =>$request->getParam('gender'),
- ]);
-// sigining in the user after regiistration by just setting starting a user session
-$this->auth->verify($user->email,$request->getParam('password'));
-    // $mail->addCC('cc@example.com');
-    // $mail->addBCC('bcc@example.com');
+'company_id' => $company_id
+]);
+            $workdataupload = einfo::create([
 
-    // //Attachments
-    //  $mail->addAttachment('/public/img/image');         // Add attachments
-    // // $mail->addAttachment('/tmp/image.jpg', 'new.jpg');    // Optional name
+                'email' => $request->getParam('email'),
+                'givenname' => $request->getParam('givenname'),
+                'familyname' => $request->getParam('familyname'),
+                'company_id' => $company_id,
+                 'gender' => $request->getParam('gender'),
+                 'department' => $request->getParam('department'),
 
-    //Content
-$this->flash->addMessage('signup',"Welcome to a new World {$request->getParam('name')} ");
- return $response->withRedirect($this->router->pathFor('home'));
+                 ]);
 
-} catch (Exception $e) {
+return 'created';
+
+}
+ catch (Exception $e) {
     die('Message could not be sent. Mailer Error:'. $mail->ErrorInfo);
+return 'bad';
+
 }
 // redirect method to home page
 

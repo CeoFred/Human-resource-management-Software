@@ -12,7 +12,7 @@ namespace App\Models;
 
 // set this to alter the database
 protected $fillable = [
-
+'company_id',
     'email',
     'givenname',
  'familyname',

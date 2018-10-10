@@ -9,7 +9,7 @@ require  __DIR__ . '\..\vendor\autoload.php';
 $app = new \Slim\App([
     'setting' => [
 
-        'displayErrorDetails'=>true,
+        'displayErrorDetails'=>false,
         // database connection
         'db' => [
             'driver' => 'mysql',
@@ -104,17 +104,17 @@ $container['Auth'] = function($container){
     return new \App\Auth\Auth($container);
 };
 
-$container['csrf'] = function ($container) {
-    return new \Slim\Csrf\Guard;
-};
+// $container['csrf'] = function ($container) {
+//     return new \Slim\Csrf\Guard;
+// };
 
 // add all middlewares
 $app->add(new \App\Middleware\ValidationErrorsMiddleware($container));
 $app->add(new \App\Middleware\OldinputMiddleware($container));
-$app->add(new \App\Middleware\CsrfViewMiddleware($container));
+// $app->add(new \App\Middleware\CsrfViewMiddleware($container));
 
 
-$app->add($container->csrf);
+// $app->add($container->csrf);
 
 
 // start eloquent

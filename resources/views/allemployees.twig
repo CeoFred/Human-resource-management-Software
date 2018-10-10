@@ -1,0 +1,40 @@
+{% extends 'admindashboard.twig' %}
+
+{% block content %}
+
+<div class="card">
+<div class="card-header">All Employees({{ auth.Allusers }})
+
+</div>
+<table class="table">
+    <tr>
+        <th></th>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Actions</th>
+        <th>Department</th>
+    </tr>
+
+        {% for user in auth.adminusers  %}
+
+        <tr>
+            <td> {% if user.image == '' %}
+      <img src="{{base_url()}}/img/ogwugo.png" height="60" width="60" style="border-radius:50%">
+    {% else %}
+<img src="{{base_url()}}/img/userprofileimg/{{user.image}}" height="60" width="60" style="border-radius:50%">
+{% endif %}
+
+</td>
+
+      <td>{{ user.firstname }}</td>
+<td>{{ user.lastname }}</td>
+<td><a href="{{path_for('view.employee')}}?id={{user.company_id}}"><button class="btn btn-warning">View</button></a></td>
+<td>{{ user.department }}</td>
+        {% else %}
+<td>Empty</td>
+    </tr>
+
+    {% endfor %}
+</table>
+</div>
+{% endblock %}

@@ -34,7 +34,8 @@ public function countrealworkdata(){
 
         return count(einfo::where('id','>','0')->get());
 }
-    public function cv(){
+
+public function cv(){
 $id = User::find($_SESSION['user'])->id;
         return count(UserCv::where('uploaded_by',$id)->first());
     }

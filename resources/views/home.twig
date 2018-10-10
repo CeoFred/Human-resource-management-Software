@@ -1,20 +1,188 @@
-{% extends "app.twig" %}
+{% extends "admindashboard.twig" %}
 
 {% block content %}
+<div class="card">
+<div class="card-body">
+    <div class="row">
+        <div class="col-md-4">
+<!-- birthday alert -->
+<div class="card">
+    <div class="card-header">
+<h5>Birthday</h5>
+    </div>
+<div class="card-body menu-body">
 
-{% if auth.check %}
-<div class="alert alert-primary">
+    No birthday Buddies Found
+<div align="center" style="padding:auto;margin-top:10px;">
 
-{{ auth.date }}
+    <img src="{{ base_url() }}/img/ogwugo.png" height="50" width="120" style="border-radius:50%" alt="ogwugo">
 
-    <h1>Welcome</h1>
 </div>
-{% else %}
-<div class="alert alert-default">
-    {% include 'latestinfo.twig' %}
+    </div>
+</div>
+<!-- end birthday alert -->
+        </div>
 
-   </div>
+        <!-- new hires -->
+<div class="col-md-4">
+<div class="card">
+    <div class="card-header">
+        <h5>New Hires</h5>
+    </div>
+    <div class="card-body menu-body">
+No New Joinees Found
+<div align="center" style="padding:auto;margin-top:10px;">
 
-{% endif %}
+    <img src="{{ base_url() }}/img/ogwugo.png" height="50" width="120" style="border-radius:50%" alt="ogwugo">
+
+</div>
+    </div>
+</div>
+
+</div>
+<!-- end new hires -->
+
+
+<!-- favourites -->
+<div class="col-md-4">
+<div class="card">
+    <div class="card-header">
+        <h5>Favourites</h5>
+    </div>
+<div class="card-body menu-body">
+No Favourites Found
+<div align="center" style="padding:auto;margin-top:10px;">
+
+    <img src="{{ base_url() }}/img/ogwugo.png" height="50" width="120" style="border-radius:50%" alt="ogwugo">
+
+</div>
+    </div>
+</div>
+
+</div>
+<!-- end favourites -->
+    </div>
+
+    <br>
+
+    <!-- second row -->
+    <div class="row">
+<div class="col-md-4">
+    <div class="card">
+        <div class="card-header">
+            <h5>Messages</h5>
+        </div>
+        <div class="card-body menu-body">
+            No Direct Message Found
+            <div align="center" style="padding:auto;margin-top:10px;">
+
+                <img src="{{ base_url() }}/img/ogwugo.png" height="50" width="120" style="border-radius:50%" alt="ogwugo">
+
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+<div class="col-md-4">
+    <div class="card">
+        <div class="card-header">
+            <h5>Department Members</h5>
+        </div>
+        <div class="card-body menu-body">
+            No soul Found
+            <div align="center" style="padding:auto;margin-top:10px;">
+
+                <img src="{{ base_url() }}/img/ogwugo.png" height="50" width="120" style="border-radius:50%" alt="ogwugo">
+
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+<!-- pending approvalas -->
+<div class="col-md-4">
+    <div class="card">
+        <div class="card-header">
+            <h5>Request Pending Approval</h5>
+        </div>
+        <div class="card-body menu-body">
+            No Records Found
+            <div align="center" style="padding:auto;margin-top:10px;">
+
+                <img src="{{ base_url() }}/img/ogwugo.png" height="50" width="120" style="border-radius:50%" alt="ogwugo">
+
+            </div>
+        </div>
+    </div>
+
+</div>
+<!-- end pending approvals -->
+    </div>
+
+    <!-- end second row -->
+
+<br>
+    <!-- third row -->
+<div class="row">
+
+<div class="col-md-4">
+    <div class="card">
+        <div class="card-header">
+            <h5>Upcoming Holidays</h5>
+        </div>
+        <div class="card-body menu-body">
+            No Records Found
+            <div align="center" style="padding:auto;margin-top:10px;">
+
+                <img src="{{ base_url() }}/img/ogwugo.png" height="50" width="120" style="border-radius:50%" alt="ogwugo">
+
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div class="col-md-4">
+    <div class="card">
+        <div class="card-header">
+            <h5>Announcement</h5>
+        </div>
+        <div class="card-body menu-body">
+            No Records Found
+            <div align="center" style="padding:auto;margin-top:10px;">
+
+                <img src="{{ base_url() }}/img/ogwugo.png" height="50" width="120" style="border-radius:50%" alt="ogwugo">
+
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div class="col-md-4">
+    <div class="card">
+        <div class="card-header">
+            <h5>Attendance</h5>
+        </div>
+        <div class="card-body menu-body">
+            Nobody has arrived
+            <div align="center" style="padding:auto;margin-top:10px;">
+
+                <img src="{{ base_url() }}/img/ogwugo.png" height="50" width="120" style="border-radius:50%" alt="ogwugo">
+
+            </div>
+        </div>
+    </div>
+
+</div>
+
+</div>
+    <!-- end thrid row -->
+</div>
+</div>
 
 {% endblock %}

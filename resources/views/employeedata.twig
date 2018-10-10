@@ -1,0 +1,411 @@
+{% extends 'admindashboard.twig' %}
+{% block content %}
+
+
+
+<style>
+    .actionbutton{
+width: 100%;
+    }
+    i{
+        color:#996666;
+    }
+</style>
+{# modal for emergency information update #}
+<div class="modal fade" id="emergencyinformation" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="alert alert-success animated jello" id="alert2" style="display:none;float:right;position:fixed">
+        Update was successfull!
+    </div>
+
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Update Emergency Information</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <form id="wform" action="{{path_for('update.workinfo')}}" method="POST">
+<div class="form-row mb-4">
+    <div class="md-form">
+        <label>Full name</label>
+        <input type="text" placeholder="Full name" name="emergency_contact_name" class="form-control mb-4" value="{{ auth.counteinfo.emergency_contact_name}}" />
+    </div>
+
+    <div class="md-form">
+
+        <label>Telephone</label>
+        <input type="text" placeholder="Telephone" name="emergency_contact_phone" class="form-control mb-4" value="{{auth.counteinfo.emergency_contact_phone}}" />
+    </div>
+
+    <div class="md-form">
+
+        <label>Address</label>
+        <input type="text" placeholder="Address" name="emergency_contact_address" class="form-control mb-4" value="{{auth.counteinfo.emergency_contact_address}}" />
+    </div>
+
+    <div class="md-form">
+
+        <label>Relationship</label>
+        <input type="text" placeholder="Relationship" name="emergency_contact_relationship" class="form-control mb-4"
+            value="{{auth.counteinfo.emergency_contact_relationship}}" />
+    </div>
+
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+    <button type="submit" class="btn btn-primary">Save changes</button>
+</div>
+
+
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{# modal for emergency information update #}
+
+{# modal for personal information update #}
+<div class="modal fade" id="personalinformation" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="alert alert-success animated jello" id="alert" style="display:none;float:right;position:fixed">
+        Update was successfull!
+    </div>
+
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Update Personal Information</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+<form action="{{ path_for('form') }}" id='pform' method="post">
+    <!-- firstname input -->
+    <div class="md-form">
+        <i class="fa fa-user prefix"></i>
+        <input type="text" id="fname" class="form-control" value={{ employeedata.givenname }}>
+        <label for="fname">First Name</label>
+    </div>
+
+    <!-- lastname input -->
+    <div class="md-form">
+        <i class="fa fa-user prefix"></i>
+<input type="text" id="lname" class="form-control" value={{ employeedata.familyname }}>
+        <label for="lname">Last Name</label>
+    </div>
+
+    <!-- email input -->
+    <div class="md-form">
+        <i class="fa fa-envelope prefix"></i>
+<input type="text" id="email" class="form-control" value={{ employeedata.email }}>
+        <label for="email">E-mail address</label>
+    </div>
+    <!-- address input -->
+    <div class="md-form">
+<textarea id="address" class="form-control md-textarea" length="120" rows="3">{{employeedata.address}}</textarea>
+        <label for="address">Home Address</label>
+    </div>
+
+    <!-- marital status -->
+    <div class="md-form">
+<input type="text" value="{{ employeedata.maritalstatus }}" placeholder="single,married,divorced,searching.."
+            id="maritalstatus" class="form-control">
+        <label for="maritalstatus"> Marital Status </label>
+    </div>
+    <!-- end marital status -->
+
+<!-- marital status -->
+<div class="md-form">
+    <input type="text" value="{{ employeedata.phonenumber }}"
+     placeholder="+234 *** *** **" id="phone"
+        class="form-control">
+    <label for="maritalstatus">Telephone </label>
+</div>
+<!-- end marital status -->
+
+
+    <!-- state of origin -->
+    <div class="md-form">
+        <select name="state" onchange="changelga(this.value)" id="state" class="form-control">
+            <option value="" selected="selected">SELECT STATE OF ORIGIN</option>
+            <option value='Abia'>Abia</option>
+            <option value='Adamawa'>Adamawa</option>
+            <option value='AkwaIbom'>AkwaIbom</option>
+            <option value='Anambra'>Anambra</option>
+            <option value='Bauchi'>Bauchi</option>
+            <option value='Bayelsa'>Bayelsa</option>
+            <option value='Benue'>Benue</option>
+            <option value='Borno'>Borno</option>
+            <option value='Cross River'>Cross River</option>
+            <option value='Delta'>Delta</option>
+            <option value='Ebonyi'>Ebonyi</option>
+            <option value='Edo'>Edo</option>
+            <option value='Ekiti'>Ekiti</option>
+            <option value='Enugu'>Enugu</option>
+            <option value='Gombe'>Gombe</option>
+            <option value='Imo'>Imo</option>
+            <option value='Jigawa'>Jigawa</option>
+            <option value='Kaduna'>Kaduna</option>
+            <option value='Kano'>Kano</option>
+            <option value='Katsina'>Katsina</option>
+            <option value='Kebbi'>Kebbi</option>
+            <option value='Kogi'>Kogi</option>
+            <option value='Kwara'>Kwara</option>
+            <option value='Lagos'>Lagos</option>
+            <option value='Nasarawa'>Nasarawa</option>
+            <option value='Niger'>Niger</option>
+            <option value='Ogun'>Ogun</option>
+            <option value='Ondo'>Ondo</option>
+            <option value='Osun'>Osun</option>
+            <option value='Oyo'>Oyo</option>
+            <option value='Plateau'>Plateau</option>
+            <option value='Rivers'>Rivers</option>
+            <option value='Sokoto'>Sokoto</option>
+            <option value='Taraba'>Taraba</option>
+            <option value='Yobe'>Yobe</option>
+            <option value='Zamfara'>Zamafara</option>
+        </select>
+    </div>
+    <!-- lga -->
+    <div class="md-form">
+        <label class="control-label" for="lga">LGA</label>
+        <select name="lga" id="lga" class="form-control">
+        </select>
+    </div>
+    <!-- englga -->
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button id="submit" type="button" class="btn btn-primary">Save changes
+
+            <img style="display:none;height:30px;width:30px;"
+             src="{{base_url()}}/img/lg.rotating-balls-spinner.gif" id='gif'>
+        </button>
+    </div>
+
+</form>
+
+            </div>
+        </div>
+    </div>
+</div>
+{# modal for personal innformation update end #}
+
+{# modal for companyinformation #}
+<div class="modal fade" id="companyinformation" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="alert alert-success animated jello" id="alert2" style="display:none;float:right;position:fixed">
+        Update was successfull!
+    </div>
+
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Update company Information</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+<form id="wform" action="{{path_for('update.workinfo')}}" method="POST">
+    <!-- department -->
+    <div class="md-form">
+        <label for="dept">Department</label>
+        <input type="text" name="department" id="department" class="form-control mb-4" placeholder="eg. Delivery" value="{{ auth.counteinfo.department }}">
+
+    </div>
+    <!-- end ddepartment -->
+
+    <!-- positon in departemnt -->
+    <div class="md-form">
+        <label for="dept">Position</label>
+        <input type="text" name="pindept" id="position" class="form-control mb-4" placeholder="eg. Boss" value="{{ auth.counteinfo.position }}">
+
+    </div>
+
+    <!-- end position in department -->
+
+    <!-- start date -->
+    <p>Date of resumption</p>
+    <div class="md-form">
+        <i class="fas fa-calendar prefix"></i>
+        <input type="date" id="dos" name="date_of_start" class="form-control" value="{{auth.counteinfo.date_of_start}}" />
+    </div>
+    <!-- end start date -->
+
+
+    <!-- employment mode -->
+    <div class="md-form">
+        <label for="empm">Employment Mode</label>
+        <input type="text" id="empm" name="employment_mode" class="form-control" placeholder="NYSC/IT/PERMANENT/" value="{{auth.counteinfo.employment_mode}}" />
+
+    </div>
+    <!-- end employmrnt mode -->
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="submit" id="wsubmit" class="btn btn-primary">Save changes
+            <img style="display:none;height:30px;width:30px;" src="{{base_url()}}/img/lg.rotating-balls-spinner.gif" id='gif2'>
+        </button>
+
+    </div>
+</form>
+
+            </div>
+        </div>
+    </div>
+</div>
+{# modal for comapny information end #}
+
+{# modal for refree information #}
+<div class="modal fade" id="refreeinformation" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="alert alert-success animated jello" id="alert2" style="display:none;float:right;position:fixed">
+        Update was successfull!
+    </div>
+
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Update Refree Information</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <form id="wform" action="{{path_for('update.workinfo')}}" method="POST">
+<div class="mb-4">
+    <div class="md-form">
+
+        <label for="">Fullname</label>
+        <input type="text" placeholder="Full name" name="refree_contact_name" class="form-control mb-4" value="{{old.refree_contact_name}}">
+    </div>
+
+    <div class="md-form">
+
+        <label for="">Telephone</label>
+        <input type="text" placeholder="Telephone" name="refree_contact_phone" class="form-control mb-4" value={{old.refree_contact_phone}}>
+    </div>
+
+    <div class="md-form">
+
+        <input type="text" placeholder="Address" name="refree_contact_address" class="form-control mb-4" value={{old.refree_contact_address}}>
+    </div>
+
+    <div class="md-form">
+
+        <input type="text" placeholder="Relationship" name="refree_contact_relationship" class="form-control mb-4"
+            value={{old.refree_contact_relationship}}>
+
+    </div>
+</div>
+
+
+<div class="modal-footer">
+    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+    <button type="submit" class="btn btn-primary">Save changes</button>
+</div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{# modal for refree information end #}
+<div class="card">
+    <div class="card-header">
+        <i class="fas fa-id"></i> {{ employeedata.company_id}}
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-3" align="center">
+                <img src="{{base_url()}}/img/unnamed.png" height="160" width="160" style="border-radius:50%;border:5px solid #996666">
+                <br>
+                <br>
+                <div class="card">
+                    <div class="card-header" align="center">
+                        ACTIONS
+                    </div>
+                    <div class="card-body">
+                        <div class="actionbutton">
+                            <a class="btn btn-outline">FAVOURITE <i class="fa fa-heart"></i> </a>
+                            <a class="btn btn-outlline">EMAIL <i class="fa fa-envelope"></i> </a>
+                            <a class="btn btn-outline">DELETE <i class="fa fa-trash"></i> </a>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="col-md-9" style="border-left:2px solid #996666">
+
+                <div class="card">
+                    <div class="card-header">
+                        PERSONAL INFORMATION <button type="button" class="btn btn-outline-primary" data-toggle="modal"
+                            style="float:right" data-target="#personalinformation">edit</button>
+                    </div>
+                    <div class="card-body">
+                        <p><i class="fa fa-user"></i> Firstname: {{ employeedata.givenname }}</p>
+                        <p><i class="fa fa-user"></i>Lastname: {{ employeedata.familyname }}</p>
+                        <p><i class="fa fa-gender"></i>Gender:{{ employeedata.gender}}</p>
+                        <p><i class="fa fa-phone"></i> Telephone:{{employeedata.phonenumber}}</p>
+                        <p><i class="fa fa-aadress"></i> Address:{{employeedata.address}}</p>
+                        <p>State:{{employeedata.state}}</p>
+                        <p>L.G.A:{{employeedata.lga}}</p>
+                    </div>
+                </div>
+
+                <br>
+                <div class="card">
+                    <div class="card-header">
+                        COMPANY INFORMATION <button type="button" class="btn btn-outline-primary" data-toggle="modal"
+                            style="float:right" data-target="#companyinformation">edit</button>
+                    </div>
+                    <div class="card-body">
+                        <p>Position: {{ employeedata.position }}</p>
+                        <p>Department: {{ employeedata.department }}
+                            <p>Date of Employment: {{employeedata.dateOfEmployment}}</p>
+                            <p>CurrentStatus: </p>
+                            <p>EmploymentMode:</p>
+                    </div>
+                </div>
+                <br>
+                <div class="card">
+                    <div class="card-header">
+                        EMERGENCY INFORMATION <button style="float:right" type="button" class="btn btn-outline-primary"
+                            data-toggle="modal" data-target="#emergencyinformation">edit</button>
+                    </div>
+                    <div class="card-body">
+                        <p><i class="fa fa-user"></i> Firstname: {{ employeedata.emergency }}</p>
+                        <p><i class="fa fa-user"></i> Lastname: {{ employeedata.emergency }}</p>
+                        <p><i class="fa fa-home"></i>Address:</p>
+                        <p><i class="fa fa-phone"></i>Telephone:</p>
+                    </div>
+                </div>
+                <br>
+                <div class="card">
+                    <div class="card-header">
+                        REFREE INFORMATION <button type="button" class="btn btn-outline-primary" data-toggle="modal"
+                            style="float:right" data-target="#refreeinformation">edit</button>
+                    </div>
+                    <div class="card-body">
+                        <p> <i class="fa fa-user"></i>Firstname: {{ employeedata.refree }}</p>
+                        <p> <i class="fa fa-user"></i>Lastname: {{ employeedata.refree }}</p>
+                        <p> <i class="fa fa-home"></i>Address:</p>
+                        <p> <i class="fa fa-phone"></i> Telephone:</p>
+                    </div>
+                </div>
+
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
