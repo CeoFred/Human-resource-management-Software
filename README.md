@@ -1,8 +1,6 @@
-* use composer install to install all dependencies
-** using php server, if you cant do this use this command to start a server php -S localhost:200 and listen on localhost:200/public/
 
-# CUSTOM APP WITH PHP'S SLIM FRAMEWORK #
-
-# TOO CASE SENSITIVE FOR BOTH FILE NAMES, VARIABLES, FUNCTIONS, CLASSES, EVERYTHING !!!! ARGGGGGGhHHHHH!!! #
+#  A human resource management system for ogwugo.com #
+## Api based based built with silm 
+# Please do not commit to this project after cloning#
 
    ![OWGUGO](/public/img/Screenshot(236).png)
