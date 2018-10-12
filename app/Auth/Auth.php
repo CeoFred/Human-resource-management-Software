@@ -2,20 +2,56 @@
 
 namespace App\Auth;
 
-use App\Models\User;
+// use App\Models\User;
 use App\Models\Admin;
 use App\Models\einfo;
 use App\Models\UserCv;
+use App\Models\department;
+
 class Auth {
     public $userid;
     public $id;
      public $adminName;
+// get departments
+public function getDepartments(){
 
+    return department::where('id','>','0')->get();
+}
+
+public function countSoftwareMemebers(){
+    return count(einfo::where('department','Software')->get());
+}
+
+    public function getSoftwareMembers()
+    {
+        return einfo::where('department', 'Software')->orderBy('id', 'aesc')
+            ->distinct()->get();
+    }
+
+
+
+    public function countMarketingDepartment()
+    {
+        return count(einfo::where('department', 'Marketing')->get());
+    }
+
+    public function getMarketingDepartment()
+    {
+        return einfo::where('department', 'Marketing')->orderBy('id', 'aesc')
+            ->distinct()->get();
+    }
+
+
+     public function getNewHires()
+{
+  return  einfo::where('id','>','0')->orderBy('id','desc')->take(3)->get();     // track new employess
+
+}
 
 // get all users for admin
 public function adminusers(){
 
-  return $users =   User::where('id','>', '0')
+  return $users =   einfo::where('id','>', '0')
                ->orderBy('id', 'aesc')
                ->take(10)
                ->distinct()
@@ -24,28 +60,28 @@ public function adminusers(){
     }
 
 // checks if formdata is already uploaded
-     public function counteinfo(){
+    //  public function counteinfo(){
 
-          $id = User::find($_SESSION['user'])->id;
-        return einfo::where('uploaded_by',$id)->first();
-     }
+    //       $id = User::find($_SESSION['user'])->id;
+    //     return einfo::where('uploaded_by',$id)->first();
+    //  }
 
 public function countrealworkdata(){
 
         return count(einfo::where('id','>','0')->get());
 }
 
-public function cv(){
-$id = User::find($_SESSION['user'])->id;
-        return count(UserCv::where('uploaded_by',$id)->first());
-    }
+// public function cv(){
+// // $id = User::find($_SESSION['user'])->id;
+//         return count(UserCv::where('uploaded_by',$id)->first());
+//     }
 
 
-    public function user(){
-        // returns the user details
-          return User::find($_SESSION['user']);
+//     public function user(){
+//         // returns the user details
+//           return User::find($_SESSION['user']);
 
-}
+// }
 
         public function admindetails(){
             return Admin::find($_SESSION['admin']);
@@ -57,17 +93,17 @@ $id = User::find($_SESSION['user'])->id;
         }
 
         public function Allusers(){
-            return count(User::where('id','>','0')->get());
+            return count(einfo::where('id','>','0')->get());
         }
         public function Allcvs(){
             return count(UserCv::where('id','>','0')->get());
         }
 
-    public function check(){
+//     public function check(){
 
- return isset($_SESSION['user']);
-//  returns true or false
-    }
+//  return isset($_SESSION['user']);
+// //  returns true or false
+//     }
 
     public function admincheck()
 
@@ -87,7 +123,7 @@ return isset($_SESSION['admin']);
             $_SESSION['admin'] = $admin->id;
 
        return true;
-       
+
               } else return false;
 
         }
@@ -97,29 +133,29 @@ return isset($_SESSION['admin']);
 
 
 
-    public function verify($email,$password){
-// returns the first row and returns true
-        $user = User::where('email',$email)->first();
+//     public function verify($email,$password){
+// // returns the first row and returns true
+//         $user = User::where('email',$email)->first();
 
-   if($user){
+//    if($user){
 
-        if(password_verify($password,$user->password)){
+//         if(password_verify($password,$user->password)){
 
-            $_SESSION['user'] = $user->id;
+//             $_SESSION['user'] = $user->id;
 
-       return true;
-              } else return false;
+//        return true;
+//               } else return false;
 
-        }
-        return false;
-    }
+//         }
+//         return false;
+//     }
 
-    public function logout(){
-        // logout users
-        unset($_SESSION['user']);
-        unset($_SESSION['errors']);
+    // public function logout(){
+    //     // logout users
+    //     unset($_SESSION['user']);
+    //     unset($_SESSION['errors']);
 
-    }
+    // }
 
     public function adminlogout(){
 

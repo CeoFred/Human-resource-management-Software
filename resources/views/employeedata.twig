@@ -8,17 +8,74 @@
 width: 100%;
     }
     i{
-        color:#996666;
+color:#003b46;
+font-size:21px;
     }
 </style>
+
+<!-- modal for passport upload -->
+<!-- image modal -->
+<div class="modal fade" id="image" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="alert alert-success animated jello" id="alert3" style="display:none;float:right;position:fixed">
+        Update was successfull!
+    </div>
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Upload Passport</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+
+                <div id="dropzone" class="dropzone" align="center">Drag and drop files to upload
+
+                </div>
+
+                <h5>OR</h5>
+
+
+                <form enctype="multipart/form-data"
+name="image" action="{{path_for('uploadEmployeePassport')}}?company_id={{employeedata.company_id}}" id="employeePassport" method="post">
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="inputGroupFileAddon01">Upload</span>
+                        </div>
+                        <div class="custom-file">
+
+                            <input type="file" class="custom-file-input" id="image" name="passport" aria-describedby="inputGroupFileAddon01">
+                            <label class="custom-file-label" for="inputGroupFile01">Upload an Image</label>
+                        </div>
+
+
+                    </div>
+                    <img style="display:none;height:30px;width:30px;" src="{{base_url()}}/img/lg.rotating-balls-spinner.gif"
+                        id='gif5'>
+
+                    <button type="submit" class="btn btn-success btn-block" >Upload</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- end modal for passport upload -->
+
 {# modal for emergency information update #}
 <div class="modal fade" id="emergencyinformation" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
     aria-hidden="true">
-    <div class="alert alert-success animated jello" id="alert2" style="display:none;float:right;position:fixed">
-        Update was successfull!
+
+<div class="alert alert-warning animated jello" id="alertforerror2" style="display:none;float:right;position:fixed">
+        Opps! Something went wrong,check console.
     </div>
 
     <div class="modal-dialog" role="document">
+        <div class="alert alert-success"
+style="display: none;float:right" id="alertforemmergency">
+            Update was successful!
+        </div>
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">Update Emergency Information</h5>
@@ -28,36 +85,49 @@ width: 100%;
             </div>
 
             <div class="modal-body">
-                <form id="wform" action="{{path_for('update.workinfo')}}" method="POST">
+<form id="emergencyInfo"
+action="{{path_for('updateEmployeeEmergencyInfo')}}?company_id={{employeedata.company_id}}" method="POST">
 <div class="form-row mb-4">
     <div class="md-form">
         <label>Full name</label>
-        <input type="text" placeholder="Full name" name="emergency_contact_name" class="form-control mb-4" value="{{ auth.counteinfo.emergency_contact_name}}" />
+        <input type="text"  placeholder="Full name" name="emergency_contact_name"
+         class="form-control mb-4" id="emergencyFullnameEmployee" value="{{ employee.emergency_contact_name}}" />
     </div>
 
     <div class="md-form">
 
         <label>Telephone</label>
-        <input type="text" placeholder="Telephone" name="emergency_contact_phone" class="form-control mb-4" value="{{auth.counteinfo.emergency_contact_phone}}" />
+        <input type="number"
+         placeholder="Telephone"
+         name="emergency_contact_phone"
+          class="form-control mb-4"
+          id="emergencyTelelphoneEmployee"
+           value="{{employeedata.emergency_contact_phone}}" />
     </div>
 
     <div class="md-form">
 
         <label>Address</label>
-        <input type="text" placeholder="Address" name="emergency_contact_address" class="form-control mb-4" value="{{auth.counteinfo.emergency_contact_address}}" />
+        <input type="text"
+         id="emergencyAddressEmployee"
+          placeholder="Address"
+          name="emergency_contact_address"
+           class="form-control mb-4" value="{{employeedata.emergency_contact_address}}" />
     </div>
 
     <div class="md-form">
 
         <label>Relationship</label>
         <input type="text" placeholder="Relationship" name="emergency_contact_relationship" class="form-control mb-4"
-            value="{{auth.counteinfo.emergency_contact_relationship}}" />
+           id="emergencyRelationshipEmployee"  value="{{employeedata.emergency_contact_relationship}}" />
     </div>
 
 </div>
 <div class="modal-footer">
     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-    <button type="submit" class="btn btn-primary">Save changes</button>
+    <button type="submit" class="btn btn-primary">Save changes
+<img src="{{base_url()}}/img/lg.rotating-balls-spinner.gif" id='gif3' style="display:none;" height="30" width="30">
+    </button>
 </div>
 
 
@@ -200,10 +270,12 @@ width: 100%;
 {# modal for companyinformation #}
 <div class="modal fade" id="companyinformation" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
     aria-hidden="true">
-    <div class="alert alert-success animated jello" id="alert2" style="display:none;float:right;position:fixed">
+<div class="alert alert-success animated jello" id="alertforcompany" style="display:none;float:right;position:fixed">
         Update was successfull!
     </div>
-
+<div class="alert alert-success animated jello" id="alertforerror" style="display:none;float:right;position:fixed">
+    Something went wrong,check console!
+</div>
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -214,19 +286,25 @@ width: 100%;
             </div>
 
             <div class="modal-body">
-<form id="wform" action="{{path_for('update.workinfo')}}" method="POST">
+<form id="companyFormUpdate"
+action="{{path_for('updateEmployeeWorkInfo')}}?employee_id={{employeedata.company_id}}" method="POST">
     <!-- department -->
+<label for="department">Department</label>
     <div class="md-form">
-        <label for="dept">Department</label>
-        <input type="text" name="department" id="department" class="form-control mb-4" placeholder="eg. Delivery" value="{{ auth.counteinfo.department }}">
+<select name="department" id="department" class="{{errors.department ? 'has-error ': '' }} form-control">
+    {% for department in auth.getDepartments%}
 
+    <option value="{{department.department}}">{{department.department}}</option>
+
+    {% endfor %}
+</select>
     </div>
     <!-- end ddepartment -->
 
     <!-- positon in departemnt -->
     <div class="md-form">
         <label for="dept">Position</label>
-        <input type="text" name="pindept" id="position" class="form-control mb-4" placeholder="eg. Boss" value="{{ auth.counteinfo.position }}">
+        <input type="text" name="pindept" id="position" class="form-control mb-4" placeholder="eg. Boss" value="{{ employeedata.position }}">
 
     </div>
 
@@ -236,21 +314,29 @@ width: 100%;
     <p>Date of resumption</p>
     <div class="md-form">
         <i class="fas fa-calendar prefix"></i>
-        <input type="date" id="dos" name="date_of_start" class="form-control" value="{{auth.counteinfo.date_of_start}}" />
+        <input type="date" id="dos" name="date_of_start" class="form-control" value="{{employeedata.date_of_start}}" />
     </div>
     <!-- end start date -->
+<!-- employment mode -->
+<div class="md-form">
+    <label for="empm">CurrentStatus</label>
+    <input type="text" id="currenStatus" name="CurrentStatus" class="form-control" placeholder="Active"
+     value="{{employeedata.currentStatus}}" />
 
+</div>
+<!-- end employmrnt mode -->
 
     <!-- employment mode -->
     <div class="md-form">
         <label for="empm">Employment Mode</label>
-        <input type="text" id="empm" name="employment_mode" class="form-control" placeholder="NYSC/IT/PERMANENT/" value="{{auth.counteinfo.employment_mode}}" />
+        <input type="text" id="employmentMode"
+        name="employment_mode" class="form-control" placeholder="NYSC/IT/PERMANENT/" value="{{employeedata.employment_mode}}" />
 
     </div>
     <!-- end employmrnt mode -->
     <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="submit" id="wsubmit" class="btn btn-primary">Save changes
+        <button type="submit"  class="btn btn-primary">Save changes
             <img style="display:none;height:30px;width:30px;" src="{{base_url()}}/img/lg.rotating-balls-spinner.gif" id='gif2'>
         </button>
 
@@ -266,7 +352,7 @@ width: 100%;
 {# modal for refree information #}
 <div class="modal fade" id="refreeinformation" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
     aria-hidden="true">
-    <div class="alert alert-success animated jello" id="alert2" style="display:none;float:right;position:fixed">
+<div class="alert alert-success animated jello" id="alertforRefreeInfo" style="display:none;float:right;position:fixed">
         Update was successfull!
     </div>
 
@@ -280,29 +366,37 @@ width: 100%;
             </div>
 
             <div class="modal-body">
-                <form id="wform" action="{{path_for('update.workinfo')}}" method="POST">
+<form id="employeeRefreeInformation" action="{{path_for('updateEmployeeRefreenInformation')}}?company_id={{employeedata.company_id}}"
+    method="POST">
 <div class="mb-4">
     <div class="md-form">
 
-        <label for="">Fullname</label>
-        <input type="text" placeholder="Full name" name="refree_contact_name" class="form-control mb-4" value="{{old.refree_contact_name}}">
+<label for="employeeRefreeFullname">Fullname</label>
+        <input type="text"
+        id="employeeRefreeFullname"
+         placeholder="Full name" name="refree_contact_name"
+         class="form-control mb-4" value="{{employeedata.refree_contact_name}}">
     </div>
 
     <div class="md-form">
 
-        <label for="">Telephone</label>
-        <input type="text" placeholder="Telephone" name="refree_contact_phone" class="form-control mb-4" value={{old.refree_contact_phone}}>
+<label for="employeeRefreePhone">Telephone</label>
+        <input id="employeeRefreePhone" type="text"
+        placeholder="Telephone" name="refree_contact_phone"
+        class="form-control mb-4" value={{employeedata.refree_contact_phone}}>
     </div>
 
     <div class="md-form">
-
-        <input type="text" placeholder="Address" name="refree_contact_address" class="form-control mb-4" value={{old.refree_contact_address}}>
+<label for="empoyeeRefreeAddress">Address</label>
+        <input type="text" id="empoyeeRefreeAddress"
+         placeholder="Address" name="refree_contact_address" class="form-control mb-4" value={{employeedata.refree_contact_address}}>
     </div>
 
     <div class="md-form">
-
-        <input type="text" placeholder="Relationship" name="refree_contact_relationship" class="form-control mb-4"
-            value={{old.refree_contact_relationship}}>
+<label for="employeeRefreeRelationship">Relatioshiop</label>
+        <input type="text"
+        id="employeeRefreeRelationship" placeholder="Relationship" name="refree_contact_relationship" class="form-control mb-4"
+            value={{employeedata.refree_contact_relationship}}>
 
     </div>
 </div>
@@ -310,7 +404,11 @@ width: 100%;
 
 <div class="modal-footer">
     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-    <button type="submit" class="btn btn-primary">Save changes</button>
+    <button type="submit" class="btn btn-primary">
+Save changes <img style="display:none;height:30px;width:30px;" src="{{base_url()}}/img/lg.rotating-balls-spinner.gif"
+    id='gif4'>
+</button>
+
 </div>
                 </form>
             </div>
@@ -325,9 +423,10 @@ width: 100%;
     <div class="card-body">
         <div class="row">
             <div class="col-md-3" align="center">
-                <img src="{{base_url()}}/img/unnamed.png" height="160" width="160" style="border-radius:50%;border:5px solid #996666">
+<img src="{{base_url()}}/img/workdataimg/{{employeedata.image}}" height="160" width="160" style="border-radius:50%;border:6px solid #003b46">
                 <br>
                 <br>
+<button type="button" class="btn btn-outline-default" data-toggle="modal" data-target="#image">edit</button>
                 <div class="card">
                     <div class="card-header" align="center">
                         ACTIONS
@@ -371,9 +470,9 @@ width: 100%;
                     <div class="card-body">
                         <p>Position: {{ employeedata.position }}</p>
                         <p>Department: {{ employeedata.department }}
-                            <p>Date of Employment: {{employeedata.dateOfEmployment}}</p>
-                            <p>CurrentStatus: </p>
-                            <p>EmploymentMode:</p>
+                            <p>Date of Employment: {{employeedata.date_of_start}}</p>
+                            <p>CurrentStatus: {{ employeedata.currentStatus}}</p>
+<p>EmploymentMode:{{employeedata.employment_mode}}</p>
                     </div>
                 </div>
                 <br>
@@ -383,10 +482,10 @@ width: 100%;
                             data-toggle="modal" data-target="#emergencyinformation">edit</button>
                     </div>
                     <div class="card-body">
-                        <p><i class="fa fa-user"></i> Firstname: {{ employeedata.emergency }}</p>
-                        <p><i class="fa fa-user"></i> Lastname: {{ employeedata.emergency }}</p>
-                        <p><i class="fa fa-home"></i>Address:</p>
-                        <p><i class="fa fa-phone"></i>Telephone:</p>
+                        <p><i class="fa fa-user"></i> Fullname: {{ employeedata.emergency_contact_name }}</p>
+<p><i class="fa fa-home"></i> Address:{{employeedata.emergency_contact_address}}</p>
+<p><i class="fas fa-phone"></i> Telephone:{{employeedata.emergency_contact_phone}}</p>
+<p><i class="fas fa-users"></i>Relationship:{{employeedata.emergency_contact_relationship}}</p>
                     </div>
                 </div>
                 <br>
@@ -396,10 +495,10 @@ width: 100%;
                             style="float:right" data-target="#refreeinformation">edit</button>
                     </div>
                     <div class="card-body">
-                        <p> <i class="fa fa-user"></i>Firstname: {{ employeedata.refree }}</p>
-                        <p> <i class="fa fa-user"></i>Lastname: {{ employeedata.refree }}</p>
-                        <p> <i class="fa fa-home"></i>Address:</p>
-                        <p> <i class="fa fa-phone"></i> Telephone:</p>
+                        <p> <i class="fa fa-user"></i> Fullname: {{ employeedata.refree_contact_name }}</p>
+<p> <i class="fa fa-home"></i> Address: {{ employeedata.refree_contact_address }}</p>
+<p> <i class="fa fa-phone"></i> Telephone:{{ employeedata.refree_contact_phone }}</p>
+<p><i class="fas fa-users"></i> Relationship:{{ employeedata.refree_contact_relationship }}</p>
                     </div>
                 </div>
 

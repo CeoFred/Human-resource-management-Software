@@ -16,22 +16,145 @@ use App\Models\UserCv;
 
 use App\Controllers\Controller;
 
+use App\Models\department;
+
 use Respect\Validation\Validator as v;
 
 class AuthController extends Controller
  {
+
+
+        public function searchDept($req, $res)
+    {
+        $name = $req->getParam('query');
+        $department = department::where('department', $name)->get();
+if($department){
+        foreach ($department as $department) {
+            echo "<p onclick='showMembers($department->id)'>";
+            echo '<i class="fas fa-home"></i>' . ' ' . $department->department;
+            echo '</p>';
+                echo '</br>';
+        }
+    }
+
+    }
+
+public function addNewDepartment($req,$res){
+
+       $addNewDept = department::create([
+            'department' => $req->getParam('dept')
+        ]);
+        if($addNewDept){
+            return 'success';
+        }else{
+            return 'Failed';
+        }
+
+}
+
+public function getDepartments($req, $res){
+    $this->view->render($res,'departments.twig');
+}
+
+// search for employess
+public function searchEmployee($req,$res){
+    $name = $req->getParam('query');
+ $einfo =   einfo::where('givenname',$name)->get();
+
+    foreach($einfo as $employee){
+       echo "<a href='/public/auth/admin/employee?id={$employee->company_id}' style='color:#000'>";
+echo  '<i class="fas fa-user"></i>'.' ' .$employee->familyname.' '.$employee->givenname;
+echo '</a>';
+echo '<br/>';
+    }
+
+}
+
+
+// upadte emoloye refree infor
+ public function updateEmployeeRefreenInformation($req,$res){
+        $employeeid = $req->getParam('company_id');
+
+        $update = einfo::where('company_id', $employeeid)->update([
+
+            'refree_contact_name' => $req->getParam('fullname'),
+            'refree_contact_address' => $req->getParam('address'),
+            'refree_contact_phone' => $req->getParam('phone'),
+            'refree_contact_relationship' => $req->getParam('relationship'),
+
+        ]);
+
+        if ($update) {
+            return 'success';
+
+        } else {
+
+            return 'failed';
+        }
+
+ }
+
+
+// upadate employee emergency contact info
+
+ public function updateEmployeeEmergencyInfo($req,$res){
+  $employeeid =  $req->getParam('company_id');
+
+        $update = einfo::where('company_id', $employeeid)->update([
+
+            'emergency_contact_name' => $req->getParam('fullname'),
+            'emergency_contact_address' => $req->getParam('address'),
+            'emergency_contact_phone' => $req->getParam('phone'),
+            'emergency_contact_relationship' => $req->getParam('relationship'),
+
+            ]);
+
+        if ($update) {
+            return 'success';
+
+        } else {
+
+            return 'failed';
+        }
+
+}
+// update employee company info
+public function updateEmployeeWorkInfo($req,$res) {
+
+
+$employeeid = $req->getParam('employee_id');
+            $update = einfo::where('company_id', $employeeid)->update([
+
+            'position' => $req->getParam('position'),
+                'date_of_start' => $req->getParam('dateOfEmployment'),
+                'department' => $req->getParam('department'),
+                'currentStatus' => $req->getParam('currenStatus'),
+                'employment_mode' => $req->getParam('employmentMode'),
+              ]);
+
+            if ($update) {
+                return 'success';
+
+            } else {
+
+                return 'failed';
+            }
+
+}
+
+
      public function viewEmployee($req,$res){
     //  var_dump($req->getParam('id'));
         $userid = $req->getParam('id');
 $userprofile = einfo::where('company_id',$userid)->first();
 $this->view->getEnvironment()->addGlobal('employeedata', $userprofile);
-$_SESSION['currentemployeeid'] = employeedata.company_id;
+// $_SESSION['currentemployeeid'] = employeedata.company_id;
 return $this->view->render($res,'employeedata.twig');
 
     }
 
 
-     public function update_img($req,$res){
+     public function uploadEmployeePassport($req,$res){
 
         $directory = $this->upload_directory_employees;
         $uploadedFiles = $req->getUploadedFiles();
@@ -42,12 +165,12 @@ return $this->view->render($res,'employeedata.twig');
             $filename = sprintf('%s.%0.8s', $basename, $extension);
             $uploadedFile->moveTo($directory . DIRECTORY_SEPARATOR . $filename);
 
-        $update = einfo::where('uploaded_by', $this->auth->user()->id)->update([
+        $update = einfo::where('company_id', $req->getParam('company_id'))->update([
 'image' => $filename
 
         ]);
         if($update){
-            return 'update from controller';
+            return 'updated from controller';
         }else{
             return 'failed from controller';
         }
@@ -94,18 +217,13 @@ $employeeid = $req->getParam('employee_id');
                 'maritalstatus' => $req->getParam('maritalstatus')
             ]);
 
-    var_dump($req->getParams());
             if ($update) {
                 return 'success';
 
-            var_dump($req->getParams());
             } else {
 
-            var_dump($req->getParams());
                 return 'failed';
             }
-
-
 
 }
     // get all users in the admin panel
@@ -603,14 +721,7 @@ try {
 
 // creating a row in databse
 $company_id = 'OGWUGO' . str_shuffle('123456789');
-$user = User::create([
-'email' => $request->getParam('email'),
-'firstname' => $request->getParam('givenname'),
-'lastname' =>$request->getParam('familyname'),
-'department' =>$request->getParam('department'),
-'gender' =>$request->getParam('gender'),
-'company_id' => $company_id
-]);
+
             $workdataupload = einfo::create([
 
                 'email' => $request->getParam('email'),

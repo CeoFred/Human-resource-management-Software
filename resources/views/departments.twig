@@ -1,0 +1,169 @@
+{% extends "admindashboard.twig" %}
+{% block content %}
+<div class="modal fade" id="addDept" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+
+  <div class="alert alert-success" id="alert4" style="display:none;float:left">
+
+  </div>
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Add New Department</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+
+<form method="POST" id="addNewDept" action="{{path_for('addDept')}}">
+                    <div class="mb-4">
+                        <div class="md-form">
+                            <input class="form-control" placeholder="Department" id="newDept">
+                            <button type="submit" class="btn btn-default btn-block">
+<img style="display:none;height:30px;width:30px;" src="{{base_url()}}/img/lg.rotating-balls-spinner.gif" id='gif8'>
+Add</button>
+
+</div>
+</div>
+</form>
+            </div>
+            </div>
+            </div>
+            </div>
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+<span onclick="show('departmentList')"
+ style="border-bottom:3px solid lightblue;margin:10px;cursor:context-menu" id="dept">Departments</span>
+<span style="cursor:context-menu" onclick="show('departmentAndMembers')" id="directory">Directory</span>
+            </div>
+        </div>
+
+    </div>
+    <!-- list department  -->
+    <div class="col-12" id="departmentList" style="display:block">
+        <div class="card" style="padding:1px;background:silver;">
+            <div class="card-body" style="margin-bottom:-30px;">
+                <div class="row">
+
+                    <div class="col-md-3" style="border-right:2px solid #000">
+                        <span>Department View</span>
+                    </div>
+
+                    <div class="col-md-9">
+<span style="float:right"><button type="button" data-toggle="modal" data-target="#addDept" class="btn btn-primary btn-sm"><i
+            class="fas fa-plus"></i>
+                                Add Record</button></span>
+                    </div>
+
+                </div>
+
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-md-12" style="margin-left:10px;">
+
+                    {% for department in auth.getDepartments%}
+
+<b value="{{department.department}}">{{department.department}}</b>
+<br>
+                    {% endfor %}
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!-- end list department -->
+
+<!-- depertment and members -->
+
+    <div class="col-md-12" id="departmentAndMembers" style="display:none">
+        <!-- search department -->
+        <div class="card">
+            <div class="card-body">
+<form class="form-inline" id="employeeSearch2" method="GET" action="{{path_for('searchDept')}}?query=">
+    <div class="md-form my-0">
+        <input onblur="closediv2()" class="form-control mr-sm-2" onkeyup="showHint2(this.value)" style="z-index:1;position:relative"
+            type="text" placeholder="Search department" aria-label="Search">
+        <div class="card" id="txtHint2" style="display:none;z-index:2;color:#000;position:absolute;background:rgba(244,244,244,0.9);font-size:19px;padding:20px;display:none;">
+            <img style="display:none;height:30px;width:30px;" src="{{base_url()}}/img/lg.rotating-balls-spinner.gif" id='gif5'>
+
+            <div>
+                <div id="txtHintContent2" class="card-body">
+                </div>
+            </div>
+        </div>
+    </div>
+
+</form>
+
+<div class="row" style="border-top:2px solid #000;border-bottom:2px solid #000;margin-bottom:-15px">
+<div class="col-md-3" style="padding:10px;">
+<b>Department</b>
+    </div>
+<div class="col-md-9" style="padding:10px;">
+    <b id="showing">All</b>
+</div>
+
+</div>
+</div>
+<div class="row">
+    <div class="col-md-3" style="border-right:1px solid #000">
+<div class="card">
+{% for department in auth.getDepartments%}
+<div class="card-body">
+<button class="btn btn-default btn-block" onclick="showMembers('{{department.id}}')">
+    <b>{{department.department}}</b></button>
+</div>
+
+{% endfor %}
+        </div>
+    </div>
+    <div class="col-md-9">
+<!-- get software members -->
+<div id="softguys">
+{% for softwaredepartment in auth.getSoftwareMembers %}
+<div id="{{softwaredepartment.department}}">
+<div class="card">
+    <div class="card-body">
+<img src="{{base_url()}}/img/workdataimg/{{softwaredepartment.image}}" height="50" width="50" style="border-radius:50%">
+<a href="/public/auth/admin/employee?id={{softwaredepartment.company_id}}" style="color:#000">{{softwaredepartment.givenname}}
+    {{softwaredepartment.familyname}}</a>
+
+        </div>
+</div>
+</div>
+{% endfor %}
+</div>
+
+<!-- end get software members -->
+
+<!-- list of marketes -->
+<div id="marketingguys">
+{% for marketingDepartment in auth.getMarketingDepartment %}
+<div id="{{marketingDepartment.department}}">
+    <div class="card">
+        <div class="card-body">
+<img src="{{base_url()}}/img/workdataimg/{{marketingDepartment.image}}" height="50" width="50" style="border-radius:50%">
+
+<a href="/public/auth/admin/employee?id={{marketingDepartment.company_id}}" style="color:#000">{{marketingDepartment.givenname}}
+{{marketingDepartment.familyname}}</a>
+        </div>
+    </div>
+</div>
+{% endfor %}
+</div>
+<!-- end list for marketers -->
+    </div>
+</div>
+        </div>
+        <!-- end search department -->
+    </div>
+<!-- end department and members -->
+</div>
+
+
+{% endblock %}

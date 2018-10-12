@@ -19,6 +19,7 @@ protected $fillable = [
  'phonenumber',
  'gender',
  'state',
+ 'currentStatus',
  'lga',
  'image',
  'address',

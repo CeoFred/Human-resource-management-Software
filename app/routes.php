@@ -25,7 +25,10 @@ $app->post('/auth/admin/login','AuthController:postAdminSignIn');
 // if anyone access any of this routes,Authmiddelware checks if you are logged in and refiects you to the signin page if you a
 // are not logged in yet, so all th routes passes through the authcontroller
 $app->group('',function(){
-
+    $this->post('/auth/admin/addNewDepartment','AuthController:addNewDepartment')->setName('addDept');
+  $this->get('/auth/admin/departments','AuthController:getDepartments')->setName('department');
+    $this->post('/auth/admin/formdata/refreeinfo', 'AuthController:updateEmployeeRefreenInformation')->setName('updateEmployeeRefreenInformation');
+    $this->post('/auth/admin/formdata/workinfo', 'AuthController:updateEmployeeWorkInfo')->setName('updateEmployeeWorkInfo');
     $this->get('/auth/admin/logout', 'AuthController:adminLogout')->setName('admin.logout');
     $this->get('/auth/admin/', 'AuthController:RenderAdminPanel')->setName('ControlPanel');
     $this->get('/auth/admin/signup', 'AuthController:getAdminSignUp')->setName('auth.admin.signup');
@@ -49,8 +52,12 @@ $this->post('/auth/user/formdata/edit','AuthController:postFormdataEdit');
 $this->get('/auth/user/formdata/view','AuthController:getFormdataView')->setName('user.view.workdata');
 $this->post('/auth/user/formdata/winfo','AuthController:update_winfo')->setName('update.workinfo');
 $this->post('/auth/user/formdata', 'AuthController:update_pinfo')->setName('form');
-$this->post('/auth/user/formdata/iinfo','AuthController:update_img')->setName('uploadimg');
+$this->post('/auth/user/formdata/iinfo', 'AuthController:uploadEmployeePassport')->setName('uploadEmployeePassport');
+$this->post('/auth/admin/formdata/updateEmergencyInfo', 'AuthController:updateEmployeeEmergencyInfo')->setName('updateEmployeeEmergencyInfo');
 $this->get('/', 'HomeController:index')->setName('home');
+$this->get('/auth/admin/employees/search', 'AuthController:searchEmployee')->setName('searchEmployee');
+    $this->get('/auth/admin/employees/searchDept', 'AuthController:searchDept')->setName('searchDept');
+
 })->add(new AdminMiddleWare($container));
 
 // using twig view

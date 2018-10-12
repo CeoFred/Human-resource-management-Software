@@ -48,11 +48,11 @@
 <div class="form-group">
     <label for="name">Department</label>
 <select name="department" id="department" class="{{errors.department ? 'has-error ': '' }} form-control">
-    <option selected>
-    --DEPARTMENT--
-</option>
-<option value="it">Software</option>
-<option value="delivery">Delivery</option>
+{% for department in auth.getDepartments%}
+
+<option value="{{department.department}}">{{department.department}}</option>
+
+{% endfor %}
 </select>
     {% if errors.department %}
 <span class="help-block has-error-p">{{ errors.department | first}}</span>

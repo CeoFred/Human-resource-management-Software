@@ -13,7 +13,7 @@
 <div class="card-body menu-body">
 
     No birthday Buddies Found
-<div align="center" style="padding:auto;margin-top:10px;">
+<div align="center" style="padding:auto;margin-top:1px;">
 
     <img src="{{ base_url() }}/img/ogwugo.png" height="50" width="120" style="border-radius:50%" alt="ogwugo">
 
@@ -30,12 +30,24 @@
         <h5>New Hires</h5>
     </div>
     <div class="card-body menu-body">
+{% if auth.getNewHires %}
+{% for newPeople in auth.getNewHires %}
+<div class="card" style="margin-top:-19px;">
+<div class="card-body" style="padding:25px;">
+<i class="far fa-user"></i> {{
+newPeople.familyname }} {{newPeople.givenname}}
+</div>
+</div>
+{% endfor %}
+
+{% else %}
 No New Joinees Found
 <div align="center" style="padding:auto;margin-top:10px;">
 
     <img src="{{ base_url() }}/img/ogwugo.png" height="50" width="120" style="border-radius:50%" alt="ogwugo">
 
 </div>
+{% endif %}
     </div>
 </div>
 
@@ -91,12 +103,19 @@ No Favourites Found
             <h5>Department Members</h5>
         </div>
         <div class="card-body menu-body">
-            No soul Found
-            <div align="center" style="padding:auto;margin-top:10px;">
-
-                <img src="{{ base_url() }}/img/ogwugo.png" height="50" width="120" style="border-radius:50%" alt="ogwugo">
+            <div>
+<h5 style="float:left">Software</h5><span class="badge amber darken-2" style="float:right">{{auth.countSoftwareMemebers}}</span>
+            </div>
+            <br>
+            <br>
+            <div>
+<h5 style="float:left">Marketing </h5><span class=" badge amber darken-2" style="float:right">{{auth.countMarketingDepartment}}</span>
 
             </div>
+<!-- <div align="center" style="padding:auto;margin-top:10px;">
+                <img src="{{ base_url() }}/img/ogwugo.png" height="50" width="120" style="border-radius:50%" alt="ogwugo">
+
+            </div> -->
         </div>
     </div>
 
@@ -169,10 +188,11 @@ No Favourites Found
             <h5>Attendance</h5>
         </div>
         <div class="card-body menu-body">
-            Nobody has arrived
+<div class="ct-chart ct-perfect-fourth"></div>
+            <!-- Nobody has arrived
             <div align="center" style="padding:auto;margin-top:10px;">
 
-                <img src="{{ base_url() }}/img/ogwugo.png" height="50" width="120" style="border-radius:50%" alt="ogwugo">
+                <img src="{{ base_url() }}/img/ogwugo.png" height="50" width="120" style="border-radius:50%" alt="ogwugo"> -->
 
             </div>
         </div>

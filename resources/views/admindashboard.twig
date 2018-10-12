@@ -5,6 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+<link rel="stylesheet" href="//cdn.jsdelivr.net/chartist.js/latest/chartist.min.css">
+<script src="//cdn.jsdelivr.net/chartist.js/latest/chartist.min.js"></script>
     <!-- Bootstrap core CSS -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet">
     <!-- Material Design Bootstrap -->
@@ -17,6 +19,13 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU"
         crossorigin="anonymous">
     <style>
+
+@media only screen and (max-width: 784px) {
+i.imobi {
+display:block;
+font-size:30px
+}
+}
 .menu-body{
     padding:50px;
     text-align: center;
@@ -24,17 +33,20 @@
 }
         .nav-list{
 width: 100%;
-background-color: #990066;
+background-color: #07575b;
+}
+i{
+    color:#c4dfe6;
 }
 ul{
     list-style: none;
     margin: 20px;
 }li{
     padding: 20px;
-margin-left: -33px;
+margin-left: -43px;
 }
 a{
-    color: #fff;
+    color:#fff;
 }
 a:hover{
     color: cadetblue;
@@ -44,12 +56,13 @@ a:hover{
     float: right;
 }
 .spanlist{
-    border-left:2px solid #990066;
+border-left:4px solid #c4dfe6;
     padding:7px;
 }
 .card-header{
-background-color: #996666;
-color:aliceblue;
+background-color: #003b46;
+color:#c4dfe6;
+font-size: 20px;
 }
 
 </style>
@@ -57,7 +70,7 @@ color:aliceblue;
 
 <body>
     <!--Navbar-->
-    <nav class="navbar navbar-expand-lg navbar-dark" style="background-color:#990066">
+<nav class="navbar navbar-expand-lg navbar-dark" style="background-color:#003b46;">
         <!-- Navbar brand -->
         <a class="navbar-brand" href="#">
             Ogwugo People
@@ -87,11 +100,21 @@ color:aliceblue;
             </ul>
             <!-- Links -->
 
-            <form class="form-inline">
+<form class="form-inline" id="employeeSearch"  method="GET" action="{{path_for('searchEmployee')}}?query=">
                 <div class="md-form my-0">
-                    <input class="form-control mr-sm-2" type="text" placeholder="Search Employee" aria-label="Search">
-                    <a href="{{path_for('admin.logout')}}"><button class="btn btn-outline-warning btn-sm">Logout</button></a>
+<input onblur="closediv()" class="form-control mr-sm-2" onkeyup="showHint(this.value)" style="z-index:1;position:relative" type="text" placeholder="Search Employee"
+    aria-label="Search">
+<div class="card" id="txtHint" style="display:none;z-index:2;color:#000;position:absolute;background:rgba(244,244,244,0.9);font-size:19px;padding:20px;display:none;">
+ <img style="display:none;height:30px;width:30px;"
+              src="{{base_url()}}/img/lg.rotating-balls-spinner.gif" id='gif5'>
+
+<div>
+<div id="txtHintContent" class="card-body">
+    </div>
+</div></div>
+<a href="{{path_for('admin.logout')}}" class="btn btn-outline-warning btn-sm">Logout</a>
                 </div>
+
             </form>
         </div>
         <!-- Collapsible content -->
@@ -103,7 +126,7 @@ color:aliceblue;
         <div class="row">
 
 
-            <div class="col-md-2" style="color:azure;background-color:#996666;padding:0;">
+<div class="col-md-2" style="color:azure;background-color:#07575b;padding:0;">
 
                 <div align="center" style="padding:auto;margin-top:10px;">
 
@@ -113,27 +136,27 @@ color:aliceblue;
                 <div class="nav-list">
                     <ul>
                         <li class="nav-item">
-                            <a href="">
-                                <i class="fa fa-home"></i>
-
-                                Home</a>
-                        </li>
-                        <li class="nav-item"> <a href=""> <i class='fas fa-gear'></i> Self Service</a></li>
-                        <li class="nav-item"><a href="">Leave Tracker</a></li>
-                        <li class="nav-item"><a href="">Time tracker</a></li>
-                        <li class="nav-item"><a href="">Time tracker</a></li>
+<a href="{{path_for('ControlPanel')}}">
+                                <i class="fa fa-home"></i>Home</a>
+                       </li>
+<!--   <li class="nav-item"> <a href=""> <i class='fas fa-wrench'></i> Self Service</a></li>
+                        <li class="nav-item"><a href=""><i class="fab fa-servicestack"></i> Leave Tracker</a></li>
+                        <li class="nav-item"><a href=""><i class="far fa-clock"></i> Time tracker</a></li> -->
+<i class="fa fa-users imobi" style="display:none"></i>
+<i class="fas fa-landmark imobi" style="display:none"></i>
                         <li class="nav-item"><a href="{{path_for('all.employees')}}"> <i class="fa fa-users"></i>  Employees</a></li>
-                        <li class="nav-item"><a href="">Department</a></li>
+                        <li class="nav-item"><a href="{{path_for('department')}}"><i class="fas fa-landmark"></i> Department</a></li>
+                        <!-- <li class="nav-item"><a><i class="far fa-file"></i> Company Files</a></li> -->
                     </ul>
                 </div>
             </div>
             <div class="col-md-10">
                 <div class="card">
                     <div class="card-body">
-                        <span class="spanlist">Welcome Admin</span>
+<span class="spanlist"><i class="fas fa-key"></i> Welcome Admin </span>
                         <span class="top">
-                            <a class="spanlist">Leave</a>
-                            <a class="spanlist" href="{{path_for('add.employee')}}" style="color:black">Employee</a>
+                            <!-- <a class="spanlist"><i class="far fa-plus-square"></i> Leave</a> -->
+                            <a class="spanlist" href="{{path_for('add.employee')}}" style="color:black"><i class="fas fa-user-plus"></i> Employee</a>
                         </span>
                     </div>
                 </div>
@@ -153,7 +176,6 @@ color:aliceblue;
 <script src="{{base_url() }}/js/lga.js"></script>
 <script src="{{ base_url()}}/js/global.js"></script>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-
     <!-- JQuery -->
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <!-- Bootstrap tooltips -->

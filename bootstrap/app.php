@@ -9,7 +9,7 @@ require  __DIR__ . '\..\vendor\autoload.php';
 $app = new \Slim\App([
     'setting' => [
 
-        'displayErrorDetails'=>false,
+        'displayErrorDetails'=>true,
         // database connection
         'db' => [
             'driver' => 'mysql',
@@ -63,19 +63,26 @@ $view = new \Slim\Views\Twig(__DIR__ . '/../resources/views',[
 
         // checks if a session is stored
         // on our view templates, it  basically returns true or false, nothing serious
-'check' => $container->auth->check(),
+// 'check' => $container->auth->check(),
         // querying the database once and setting it to check global view variable too be used on
         // our views template,to access it in our twig templates, use auth.user.{row}
-'user' => $container->auth->user(),
+// 'user' => $container->auth->user(),
 'date' => date('Y'),
 'admincheck' => $container->auth->admincheck(),
 'admindetails' => $container->auth->admindetails(),
-'Allusers' => $container->auth->Allusers(),
-'cv' => $container->auth->cv(),
+ 'Allusers' => $container->auth->Allusers(),
+// 'cv' => $container->auth->cv(),
 'Allcvs' => $container->auth->Allcvs(),
-'counteinfo' => $container->auth->counteinfo(),
-'countrealworkdata' => $container->auth->countrealworkdata(),
+// 'counteinfo' => $container->auth->counteinfo(),
+// 'countrealworkdata' => $container->auth->countrealworkdata(),
 'adminusers' => $container->auth->adminusers(),
+'getNewHires' => $container->auth->getNewHires(),
+        'countSoftwareMemebers' => $container->auth->countSoftwareMemebers(),
+        'countMarketingDepartment' => $container->auth->countMarketingDepartment(),
+        'getDepartments' => $container->auth->getDepartments(),
+        'getMarketingDepartment'=>$container->auth->getMarketingDepartment(),
+        'getSoftwareMembers' => $container->auth->getSoftwareMembers(),
+
 // 'welcome' => 'Welcome Back dummy! the time is',
 // 'time' => '17:20pm'
 

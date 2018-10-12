@@ -20,14 +20,14 @@
             <td> {% if user.image == '' %}
       <img src="{{base_url()}}/img/ogwugo.png" height="60" width="60" style="border-radius:50%">
     {% else %}
-<img src="{{base_url()}}/img/userprofileimg/{{user.image}}" height="60" width="60" style="border-radius:50%">
+<img src="{{base_url()}}/img/workdataimg/{{user.image}}" height="60" width="60" style="border-radius:50%">
 {% endif %}
 
 </td>
 
-      <td>{{ user.firstname }}</td>
-<td>{{ user.lastname }}</td>
-<td><a href="{{path_for('view.employee')}}?id={{user.company_id}}"><button class="btn btn-warning">View</button></a></td>
+      <td>{{ user.givenname }}</td>
+<td>{{ user.familyname }}</td>
+<td><a href="{{path_for('view.employee')}}?id={{user.company_id}}"><button class="btn btn-warning btn-sm">View</button></a></td>
 <td>{{ user.department }}</td>
         {% else %}
 <td>Empty</td>
