@@ -363,11 +363,13 @@ function close() {
         var email = $('#email').val();
         var department = $('#department').val();
         var gender = $('#gender').val();
+        var dateOfBirth = $('#dateOfBirth').val();
         const url = $('#eform').attr('action');
 
         $.ajax({
             method: "POST",
             data: {
+                dateOfBirth:dateOfBirth,
                 email: email,
                 givenname: givenname,
                 familyname: familyname,
@@ -450,48 +452,7 @@ function close() {
 
     });
 
-
-    // //update work information
-    // $('#wsubmit').click(function (e) {
-    //     e.preventDefault();
-    //     var employmenMode = $('#empm').val();
-    //     var dateOfEmployment = $('#dos').val();
-    //     var position = $('#position').val();
-    //     var department = $('#department').val();
-    //     var actionurl = $('#wform').attr('action');
-    //     $.ajax({
-    //         type: "POST",
-    //         url: actionurl,
-    //         data: {
-    //             department: department,
-    //             dateOfEmployment: dateOfEmployment,
-    //             position: position,
-    //             employmenMode: employmenMode
-    //         },
-    //         beforeSend: function () {
-    //             $('#gif2').show();
-    //             document.getElementById('alert2').style.display = 'none';
-    //         },
-    //         complete: function () {
-    //             $('#gif2').hide();
-    //         },
-    //         success: function (data, textStatus, jqXHR) {
-    //             console.log(data);
-
-    //             document.getElementById('alert2').style.display = 'block';
-
-    //             //data - response from server
-    //         },
-    //         error: function (jqXHR, textStatus, errorThrown) {
-    //             console.log(errorThrown)
-    //             console.log(jqXHR)
-    //             console.log(textStatus)
-    //         }
-
-    //     });
-
-    // });
-
+// update personal info
     $("#pform").on('submit', function (event) {
         event.preventDefault();
         document.getElementById('alert').style.display = 'none';

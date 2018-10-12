@@ -191,14 +191,22 @@ action="{{path_for('updateEmployeeEmergencyInfo')}}?company_id={{employeedata.co
     </div>
     <!-- end marital status -->
 
-<!-- marital status -->
+<!-- telephone -->
 <div class="md-form">
     <input type="text" value="{{ employeedata.phonenumber }}"
      placeholder="+234 *** *** **" id="phone"
         class="form-control">
     <label for="maritalstatus">Telephone </label>
 </div>
-<!-- end marital status -->
+<!-- end telephone -->
+
+<!-- date of birth -->
+<label for="maritalstatus">Date of birth </label>
+<div class="md-form">
+    <input type="date" value="{{ employeedata.date_of_birth }}"
+     id="dateOfBirth" class="form-control">
+</div>
+<!-- end date of birth -->
 
 
     <!-- state of origin -->
@@ -456,6 +464,7 @@ Save changes <img style="display:none;height:30px;width:30px;" src="{{base_url()
                         <p><i class="fa fa-gender"></i>Gender:{{ employeedata.gender}}</p>
                         <p><i class="fa fa-phone"></i> Telephone:{{employeedata.phonenumber}}</p>
                         <p><i class="fa fa-aadress"></i> Address:{{employeedata.address}}</p>
+<p><i class="fas fa-calender"></i> Date of Birth:{{employeedata.date_of_birth}}</p>
                         <p>State:{{employeedata.state}}</p>
                         <p>L.G.A:{{employeedata.lga}}</p>
                     </div>

@@ -15,7 +15,7 @@
  </h5>
         <div class="card-body">
 
-<form enctype="multipart/form-data" id="eform" action="{{ path_for('post.employee') }}" method="POST">
+<form id="eform" action="{{ path_for('post.employee') }}" method="POST">
 <div class="form-group ">
 <label for="email">Email</label>
 <input type="email" name="email" id="email" class="{{errors.email ? 'has-error ': '' }}
@@ -43,6 +43,15 @@
 {% if errors.lastname %}
 <span class="help-block has-error-p">{{ errors.lastname | first}}</span>
 {% endif %}
+</div>
+
+<div class="form-group">
+    <label for="name">Date of Birth</label>
+    <input type="date" name="dateOfBirth"  class="{{errors.dateOfBirth ? 'has-error ': '' }} form-control"
+        id="dateOfBirth">
+    {% if errors.dateOfBirth %}
+    <span class="help-block has-error-p">{{ errors.dateOfBirth | first}}</span>
+    {% endif %}
 </div>
 <!-- deparment -->
 <div class="form-group">

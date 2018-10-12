@@ -213,7 +213,7 @@ $employeeid = $req->getParam('employee_id');
                 'state' => $req->getParam('state'),
                 'lga' => $req->getParam('lga'),
                 'phonenumber' => $req->getParam('phonenumber'),
-                // 'date_of_birth' => $req->getParam('dateofbirth'),
+                 'date_of_birth' => $req->getParam('dateOfBirth'),
                 'maritalstatus' => $req->getParam('maritalstatus')
             ]);
 
@@ -730,6 +730,7 @@ $company_id = 'OGWUGO' . str_shuffle('123456789');
                 'company_id' => $company_id,
                  'gender' => $request->getParam('gender'),
                  'department' => $request->getParam('department'),
+                 'date_of_birth' => $request->getParam('dateOfBirth'),
 
                  ]);
 
