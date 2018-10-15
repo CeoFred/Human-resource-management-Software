@@ -204,7 +204,7 @@ action="{{path_for('updateEmployeeEmergencyInfo')}}?company_id={{employeedata.co
 <label for="maritalstatus">Date of birth </label>
 <div class="md-form">
     <input type="date" value="{{ employeedata.date_of_birth }}"
-     id="dateOfBirth" class="form-control">
+id="dateOfBirth" class="form-control">
 </div>
 <!-- end date of birth -->
 
@@ -440,18 +440,18 @@ Save changes <img style="display:none;height:30px;width:30px;" src="{{base_url()
                         ACTIONS
                     </div>
                     <div class="card-body">
-                        <div class="actionbutton">
-                            <a class="btn btn-outline">FAVOURITE <i class="fa fa-heart"></i> </a>
-                            <a class="btn btn-outlline">EMAIL <i class="fa fa-envelope"></i> </a>
-                            <a class="btn btn-outline">DELETE <i class="fa fa-trash"></i> </a>
-                        </div>
+                        <!-- <div class="actionbutton">
+                            <a class="btn btn-outline">FAVOURITE <i class="fa fa-heart"></i></a>
+                            <a class="btn btn-outlline">EMAIL <i class="fa fa-envelope"></i></a>
+                            <a class="btn btn-outline">DEACTIVATE <i class="fa fa-trash"></i></a> -->
+                        <!-- </div> -->
 
                     </div>
                 </div>
 
             </div>
 
-            <div class="col-md-9" style="border-left:2px solid #996666">
+            <div class="col-md-9" style="border-left:2px solid #070614">
 
                 <div class="card">
                     <div class="card-header">
@@ -460,13 +460,13 @@ Save changes <img style="display:none;height:30px;width:30px;" src="{{base_url()
                     </div>
                     <div class="card-body">
                         <p><i class="fa fa-user"></i> Firstname: {{ employeedata.givenname }}</p>
-                        <p><i class="fa fa-user"></i>Lastname: {{ employeedata.familyname }}</p>
+                        <p><i class="fa fa-user"></i>  Lastname: {{ employeedata.familyname }}</p>
                         <p><i class="fa fa-gender"></i>Gender:{{ employeedata.gender}}</p>
                         <p><i class="fa fa-phone"></i> Telephone:{{employeedata.phonenumber}}</p>
-                        <p><i class="fa fa-aadress"></i> Address:{{employeedata.address}}</p>
+                        <p><i class="fa fa-home"></i> Address:{{employeedata.address}}</p>
 <p><i class="fas fa-calender"></i> Date of Birth:{{employeedata.date_of_birth}}</p>
-                        <p>State:{{employeedata.state}}</p>
-                        <p>L.G.A:{{employeedata.lga}}</p>
+<p><i class="fa fa-map-marker"></i> State:{{employeedata.state}}</p>
+<p><i class="fa fa-map-marker"></i> L.G.A:{{employeedata.lga}}</p>
                     </div>
                 </div>
 

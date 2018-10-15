@@ -1,3 +1,53 @@
+function sendWish(event) {
+event.preventDefault();
+
+    const url = $('#wishform').attr('action');
+    var xhttp;
+    xhttp = new XMLHttpRequest();
+var email =   document.getElementById('celebrantsEmail').value;
+var message = document.getElementById('birthdayWish').value;
+console.log(email,message);
+xhttp.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+
+            document.getElementById("response").style.display = 'block';
+            document.getElementById("response").innerHTML = this.responseText;
+            // document.getElementById('gif10').style.display = 'none';
+setTimeout(close,7000);
+setTimeout(stop,1000)
+
+        }
+        if (this.readyState == 2 || this.readyState == 3 || this.readState == 1) {
+
+            document.getElementById('gif10').style.display = 'block'
+        }
+    };
+    var parameters = "email=" + email + "&message=" + message;
+    xhttp.open("POST", url, true);
+    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded")
+    xhttp.send(parameters);
+function close(){
+
+    document.getElementById("response").style.display = 'none';
+}
+function stop(){
+    document.getElementById('gif10').style.display = 'none'
+
+}
+}
+
+
+function showBirhdayWishes() {
+    let wishlist = document.getElementById('wishelist')
+    if(wishlist.style.display == 'none'){
+    document.getElementById('wishelist').style.display = 'block';
+    }else{
+        document.getElementById('wishelist').style.display = 'none';
+
+    }
+// document.getElementById('wishesLog')
+}
+
 new Chartist.Bar('.ct-chart', {
     labels: ['Mon', 'Tue', 'Wed', 'Thurs', 'Fri', 'Sat', 'Sun'],
     series: [20, 60, 120, 200, 180, 20, 10]
@@ -116,6 +166,8 @@ function showHint(val) {
 }
 
 $(document).ready(function () {
+
+
 
 
 
@@ -462,11 +514,12 @@ function close() {
         var lastname = $('#lname').val();
         var address = $('#address').val();
         var state = $('#state').val();
+        var dateOfBirth =  $('#dateOfBirth').val();
         var lga = $('#lga').val();
         var phonenumber = $('#phone').val();
         var maritalstatus = $('#maritalstatus').val();
         //   var dateofbirth = $('#cal');
-        console.log(email, actionurl, firstname, lastname, address, state, lga, phonenumber, maritalstatus)
+        console.log(email, actionurl, firstname, lastname, address, state, lga, phonenumber, maritalstatus,dateOfBirth)
 
         $.ajax({
             type: "POST",
@@ -475,6 +528,7 @@ function close() {
                 email: email,
                 state: state,
                 lga: lga,
+                dateOfBirth:dateOfBirth,
                 address: address,
                 familyname: lastname,
                 givenname: firstname,

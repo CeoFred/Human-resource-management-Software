@@ -7,11 +7,26 @@ use App\Models\Admin;
 use App\Models\einfo;
 use App\Models\UserCv;
 use App\Models\department;
+use App\Models\wishes;
 
 class Auth {
     public $userid;
     public $id;
      public $adminName;
+
+// get birthday wishes
+public function getWishes(){
+   return wishes::where('id','>',0)->get();
+}
+
+    //  get upcoming birthdays
+    public function getUpcomingBirthdays(){
+         $today = date('Y') . '-' . date('m').'-'.date('d') ;
+
+   return  einfo::where('date_of_birth',$today)->get();
+
+
+    }
 // get departments
 public function getDepartments(){
 

@@ -57,6 +57,9 @@ $this->post('/auth/admin/formdata/updateEmergencyInfo', 'AuthController:updateEm
 $this->get('/', 'HomeController:index')->setName('home');
 $this->get('/auth/admin/employees/search', 'AuthController:searchEmployee')->setName('searchEmployee');
     $this->get('/auth/admin/employees/searchDept', 'AuthController:searchDept')->setName('searchDept');
+    $this->get('/auth/admin/birthdays/sendWishes','AuthController:sendBirthdayWishes')->setName('sendBirthdayWishes');
+$this->post('/auth/admin/birthday/send','AuthController:sendWish')->setName('post.wish');
+
 
 })->add(new AdminMiddleWare($container));
 

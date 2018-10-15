@@ -22,8 +22,53 @@ use Respect\Validation\Validator as v;
 
 class AuthController extends Controller
  {
+     public function sendWish($req,$res){
+        $mail = new PHPMailer(true);                              // Passing `true` enables exceptions
+        try {
+            $mail->SMTPDebug = 0;                                 // Enable verbose debug output
+    $mail->isSMTP();                                      // Set mailer to use SMTP
+    $mail->Host = 'sweetpea.hostnownow.com';  // Specify main and backup SMTP servers
+    $mail->SMTPAuth = true;                               // Enable SMTP authentication
+    $mail->Username = 'activate@yourhomefuto.com.ng';                 // SMTP username
+    $mail->Password = 'messilo18_';                           // SMTP password
+    $mail->SMTPSecure = 'ssl';
+    $mail->SMTPAutoTLS = true;
+    // Enable TLS encryption, `ssl` also accepted
+    $mail->Port = 465;                                    // TCP port to connect to
+    //Recipients
 
+    $mail->SMTPOptions = array(
+    'ssl' => array(
+        'verify_peer' => false,
+        'verify_peer_name' => false,
+        'allow_self_signed' => true
+    )
+);
 
+    $mail->setFrom('family@ogwugo.com', 'Ogwugo.com');
+    $mail->addAddress($req->getParam('email'));     // Add a recipient
+    // $mail->addAddress('ellen@example.com');               // Name is optional
+    $mail->addReplyTo('celebrations@ogwugo.com', 'PartyTime');
+    $mail->isHTML(true);                                  // Set email format to HTML
+    $mail->Subject = 'Happy Birthday!!';
+    $mail->Body    = $req->getParam('message');
+    // $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
+
+    if($mail->send()){
+        return 'Hurray!!Wishes were successfully sent';
+    }
+    } catch (Exception $e) {
+        return 'Message could not be sent. Mailer Error:' . $mail->ErrorInfo;
+        }
+     }
+
+public function sendBirthdayWishes($req,$res){
+$id = $req->getParam('id');
+$details = einfo::where('company_id',$id)->first();
+        $this->view->getEnvironment()->addGlobal('celebrantsId', $details);
+ return   $this->view->render($res,'sendBirthdayWishes.twig');
+
+}
         public function searchDept($req, $res)
     {
         $name = $req->getParam('query');
@@ -59,7 +104,9 @@ public function getDepartments($req, $res){
 // search for employess
 public function searchEmployee($req,$res){
     $name = $req->getParam('query');
- $einfo =   einfo::where('givenname',$name)->get();
+ $einfo =   einfo::where('givenname',$name)
+ ->orWhere('familyname', $name)
+ ->get();
 
     foreach($einfo as $employee){
        echo "<a href='/public/auth/admin/employee?id={$employee->company_id}' style='color:#000'>";

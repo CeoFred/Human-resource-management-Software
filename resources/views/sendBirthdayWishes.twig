@@ -1,0 +1,48 @@
+{% extends "admindashboard.twig" %}
+
+{% block content %}
+<div class="card">
+    <div class="card-header">
+Send {{celebrantsId.givenname}} your birthday Wishes.
+<a href="{{path_for('view.employee')}}?id={{celebrantsId.company_id}}" style="float:right">View</a>
+    </div>
+    <div class="card-body">
+
+<div class="row">
+    <div id="response" style="display:none" class="col-md-12 alert alert-info">
+
+    </div>
+<div class="col-md-4">
+<form id="wishform" onsubmit="sendWish(event)" action=
+"{{ path_for('post.wish') }}" method="POST">
+    <div class="form-group ">
+        <label for="email">Email</label>
+<input type="email" name="email" id="celebrantsEmail" disabled class="form-control" id="celebrantsEmail" value={{ celebrantsId.email }}>
+    </div>
+<div class="form-group">
+<textarea name="message" class="form-control" id="birthdayWish" cols="30" rows="10">
+    Your wishes here
+</textarea>
+</div>
+<button class="btn btn-default btn-block" type="submit">
+Send Wishes</button>
+
+
+</form>
+
+</div>
+<div class="col-md-8">
+<button class="btn btn-primary" onclick="showBirhdayWishes()">Copy predefined Wishes</button>
+<img style="display:none;height:40px;width:40px;" src="{{base_url()}}/img/lg.rotating-balls-spinner.gif" id='gif10'>
+<div class="card-body" id="wishelist" style="display:none;">
+<p>{% for wishes in auth.getWishes %} </p>
+{{wishes.wish}}
+{%endfor%}
+</div>
+</div>
+</div>
+    </div>
+    <div class="card-footer">
+    </div>
+</div>
+{% endblock %}

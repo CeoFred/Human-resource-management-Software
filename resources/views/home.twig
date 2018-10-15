@@ -1,6 +1,7 @@
 {% extends "admindashboard.twig" %}
 
 {% block content %}
+
 <div class="card">
 <div class="card-body">
     <div class="row">
@@ -12,12 +13,26 @@
     </div>
 <div class="card-body menu-body">
 
-    No birthday Buddies Found
+{% if auth.getUpcomingBirthdays%}
+{% for birthdayBuddies in auth.getUpcomingBirthdays %}
+<div style="border-left:2px solid orange">
+<p class="animated bounceIn infinty">
+    {{birthdayBuddies.familyname}} {{birthdayBuddies.givenname}} is celebrating today!</p>
+<a style="color:#000" href="{{path_for('sendBirthdayWishes')}}?id={{birthdayBuddies.company_id}}">Send your wishes.</a>
+</div>
+<br>
+{% endfor %}
+{% else %}
+No birthday Buddies Found
 <div align="center" style="padding:auto;margin-top:1px;">
 
     <img src="{{ base_url() }}/img/ogwugo.png" height="50" width="120" style="border-radius:50%" alt="ogwugo">
 
 </div>
+{% endif %}
+
+    <!-- No birthday Buddies Found -->
+
     </div>
 </div>
 <!-- end birthday alert -->
@@ -34,8 +49,7 @@
 {% for newPeople in auth.getNewHires %}
 <div class="card" style="margin-top:-19px;">
 <div class="card-body" style="padding:25px;">
-<i class="far fa-user"></i> {{
-newPeople.familyname }} {{newPeople.givenname}}
+<i class="far fa-user"></i> {{ newPeople.familyname }} {{newPeople.givenname}}
 </div>
 </div>
 {% endfor %}
