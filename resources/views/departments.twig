@@ -116,7 +116,7 @@ Add</button>
 {% for department in auth.getDepartments%}
 <div class="card-body">
 <button class="btn btn-default btn-block" onclick="showMembers('{{department.id}}')">
-    <b>{{department.department}}</b></button>
+    <b>{{department.department}}({{department.Members}})</b></button>
 </div>
 
 {% endfor %}

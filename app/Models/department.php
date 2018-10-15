@@ -10,9 +10,11 @@ class department extends Model
 // ELOQUENT TAKES THE SINGULAR OF THE CLASSAME AND SEARCHES FOR THE PLURAL VERSION OF YOUR CLASSAME
 {
 
+
 // set this to alter the database
     protected $fillable = [
 'department',
+'Members'
     ];
 
 

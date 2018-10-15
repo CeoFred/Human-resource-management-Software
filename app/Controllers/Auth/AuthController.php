@@ -780,7 +780,10 @@ $company_id = 'OGWUGO' . str_shuffle('123456789');
                  'date_of_birth' => $request->getParam('dateOfBirth'),
 
                  ]);
+      $new =  department::where('department', $request->getParam('department'))->first();
+      $new += $new->Members++;
 
+            department::where('department',$request->getParam('department'))->update(['Members' => $new]);
 return 'created';
 
 }

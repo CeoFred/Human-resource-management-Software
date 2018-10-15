@@ -19,6 +19,8 @@ public function getWishes(){
    return wishes::where('id','>',0)->get();
 }
 
+//
+
     //  get upcoming birthdays
     public function getUpcomingBirthdays(){
          $today = date('Y') . '-' . date('m').'-'.date('d') ;
@@ -39,8 +41,8 @@ public function countSoftwareMemebers(){
 
     public function getSoftwareMembers()
     {
-        return einfo::where('department', 'Software')->orderBy('id', 'aesc')
-            ->distinct()->get();
+        return einfo::where('department', 'Software')->orderBy('id', 'asc')
+            ->get();
     }
 
 
@@ -52,8 +54,8 @@ public function countSoftwareMemebers(){
 
     public function getMarketingDepartment()
     {
-        return einfo::where('department', 'Marketing')->orderBy('id', 'aesc')
-            ->distinct()->get();
+        return einfo::where('department', 'Marketing')->orderBy('id', 'asc')
+            ->get();
     }
 
 
@@ -67,8 +69,7 @@ public function countSoftwareMemebers(){
 public function adminusers(){
 
   return $users =   einfo::where('id','>', '0')
-               ->orderBy('id', 'aesc')
-               ->take(10)
+               ->orderBy('id', 'asc')
                ->distinct()
                ->get();
 

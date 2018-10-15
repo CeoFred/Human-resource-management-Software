@@ -117,15 +117,14 @@ No Favourites Found
             <h5>Department Members</h5>
         </div>
         <div class="card-body menu-body">
+{%for Department in auth.getDepartments %}
             <div>
-<h5 style="float:left">Software</h5><span class="badge amber darken-2" style="float:right">{{auth.countSoftwareMemebers}}</span>
+<h5 style="float:left">{{Department.department}}</h5><span class="badge amber darken-2"
+ style="float:right">{{Department.Members}}</span>
             </div>
             <br>
             <br>
-            <div>
-<h5 style="float:left">Marketing </h5><span class=" badge amber darken-2" style="float:right">{{auth.countMarketingDepartment}}</span>
-
-            </div>
+            {% endfor %}
 <!-- <div align="center" style="padding:auto;margin-top:10px;">
                 <img src="{{ base_url() }}/img/ogwugo.png" height="50" width="120" style="border-radius:50%" alt="ogwugo">
 
