@@ -1,16 +1,9 @@
 <?php
 
-use App\Middleware\AuthMiddleware;
-use App\Middleware\GuestMiddleware;
+// use App\Middleware\AuthMiddleware;
+// use App\Middleware\GuestMiddleware;
 use App\Middleware\AdminMiddleWare;
 use App\Middleware\TobeAdminMiddelWare;
-
-
-
-
-
-
-
 
 
 

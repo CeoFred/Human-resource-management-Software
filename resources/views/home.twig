@@ -13,7 +13,9 @@
     </div>
 <div class="card-body menu-body">
 
+
 {% if auth.getUpcomingBirthdays%}
+
 {% for birthdayBuddies in auth.getUpcomingBirthdays %}
 <div style="border-left:2px solid orange">
 <p class="animated bounceIn infinty">
@@ -22,13 +24,20 @@
 </div>
 <br>
 {% endfor %}
+
 {% else %}
+
+<div>
 No birthday Buddies Found
 <div align="center" style="padding:auto;margin-top:1px;">
 
     <img src="{{ base_url() }}/img/ogwugo.png" height="50" width="120" style="border-radius:50%" alt="ogwugo">
 
 </div>
+    
+</div>
+
+
 {% endif %}
 
     <!-- No birthday Buddies Found -->

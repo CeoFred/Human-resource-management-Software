@@ -12,8 +12,6 @@ use App\Models\User;
 
 use App\Models\Admin;
 
-use App\Models\UserCv;
-
 use App\Controllers\Controller;
 
 use App\Models\department;

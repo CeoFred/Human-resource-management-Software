@@ -5,7 +5,6 @@ namespace App\Auth;
 // use App\Models\User;
 use App\Models\Admin;
 use App\Models\einfo;
-use App\Models\UserCv;
 use App\Models\department;
 use App\Models\wishes;
 
@@ -111,9 +110,7 @@ public function countrealworkdata(){
         public function Allusers(){
             return count(einfo::where('id','>','0')->get());
         }
-        public function Allcvs(){
-            return count(UserCv::where('id','>','0')->get());
-        }
+        
 
 //     public function check(){
 
