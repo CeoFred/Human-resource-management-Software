@@ -16,7 +16,7 @@ font-size:21px;
 <!-- modal for passport upload -->
 <!-- image modal -->
 <div class="modal fade" id="image" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="alert alert-success animated jello" id="alert3" style="display:none;float:right;position:fixed">
+    <div class="alert alert-success animated jello" id="alert3" style="display:none;float:right;position:fixed;z-index:99">
         Update was successfull!
     </div>
     <div class="modal-dialog" role="document">
@@ -360,8 +360,10 @@ action="{{path_for('updateEmployeeWorkInfo')}}?employee_id={{employeedata.compan
 {# modal for refree information #}
 <div class="modal fade" id="refreeinformation" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
     aria-hidden="true">
-<div class="alert alert-success animated jello" id="alertforRefreeInfo" style="display:none;float:right;position:fixed">
+<div class="alert alert-success animated jello" id="alertforRefreeInfo" style="display:none;float:right;position:fixed;z-index:99">
         Update was successfull!
+    </div>
+    <div class="alert alert-danger animated jello" style="display:none;float:right:position:fixed:z-index:99" id="erroralert" >
     </div>
 
     <div class="modal-dialog" role="document">

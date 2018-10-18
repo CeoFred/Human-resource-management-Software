@@ -116,26 +116,42 @@ echo '<br/>';
 }
 
 
-// upadte emoloye refree infor
+// update emoloyee refree information
  public function updateEmployeeRefreenInformation($req,$res){
-        $employeeid = $req->getParam('company_id');
+      
+    $Validation = $this->validator->validate($req,[
 
-        $update = einfo::where('company_id', $employeeid)->update([
-
-            'refree_contact_name' => $req->getParam('fullname'),
-            'refree_contact_address' => $req->getParam('address'),
-            'refree_contact_phone' => $req->getParam('phone'),
-            'refree_contact_relationship' => $req->getParam('relationship'),
-
+        'fullname' => v::notEmpty()->alpha()
+    
+    
         ]);
 
-        if ($update) {
-            return 'success';
+        if(!$Validation->failed()){
+         
+    $employeeid = $req->getParam('company_id');
 
-        } else {
+    $update = einfo::where('company_id', $employeeid)->update([
 
-            return 'failed';
+        'refree_contact_name' => $req->getParam('fullname'),
+        'refree_contact_address' => $req->getParam('address'),
+        'refree_contact_phone' => $req->getParam('phone'),
+        'refree_contact_relationship' => $req->getParam('relationship'),
+
+    ]);
+
+    if ($update) {
+        return 'success';
+
+    } else {
+
+        return 'failed';
+    }
         }
+            else{
+
+                return json_encode($_SESSION['errors']);
+                
+            }
 
  }
 
@@ -201,6 +217,15 @@ return $this->view->render($res,'employeedata.twig');
 
      public function uploadEmployeePassport($req,$res){
 
+        $Validation = $this->validator->validate($req,[
+
+            $req->getUploadedFiles() => v::image()
+
+            ]);
+    
+            if(!$Validation->failed()){
+    
+
         $directory = $this->upload_directory_employees;
         $uploadedFiles = $req->getUploadedFiles();
         $uploadedFile = $uploadedFiles['passport'];
@@ -215,12 +240,21 @@ return $this->view->render($res,'employeedata.twig');
 
         ]);
         if($update){
-            return 'updated from controller';
+            return 'success';
         }else{
-            return 'failed from controller';
+            return 'failed';
         }
 
+     }else{
+         return $uploadedFile->getError();
      }
+
+    }else{
+
+ return json_encode($_SESSION['errors']);
+
+    }
+
     }
 
     // UPDATE USER WORK INFO

@@ -219,7 +219,7 @@ dept:dept
 // change employee passport
     $('#employeePassport').on('submit', function(e) {
         e.preventDefault();
-        console.log('first step');
+        // console.log('first step');
         var formData = new FormData(this);
         const url = $('#employeePassport').attr('action');
         $.ajax({
@@ -230,8 +230,11 @@ dept:dept
             contentType: false,
             processData: false,
             success: function(data, textStatus, jqXHR) {
-                console.log(data);
+                // console.log(data);                
+                data =  JSON.parse(data)
+                document.getElementById('alert3').innerHTML = data;
                 document.getElementById('alert3').style.display = 'block';
+            
             },
             error: function(jqXHR, textStatus, errorThrown) {
                 console.log(errorThrown)
@@ -244,7 +247,7 @@ dept:dept
             },
             complete: function() {
                 $('#gif5').hide();
-                location.reload(true);
+                // location.reload(true);
                 // setTimeout(close, 3000);
 
             }
@@ -287,9 +290,27 @@ dept:dept
                 $('#gif4').hide();
             },
             success: function(data, textStatus, jqXHR) {
-                console.log(textStatus, data);
+            
+                console.log(textStatus);
+                console.log(data);
+                // setTimeout(close, 5000);
+                if(data !== 'success'){
+                    object =    JSON.parse(data)
+                    console.log(object);
+                let value =    Object.values(object);
+                console.log(value);
+
+                    document.getElementById('erroralert').innerHTML = value;
+                    
+                document.getElementById('erroralert').style.display = 'block';
+                
+            }else{
+                    
                 document.getElementById('alertforRefreeInfo').style.display = 'block';
-                setTimeout(close, 5000);
+                
+                document.getElementById('alertforRefreeInfo').innerHTML = data;
+                }
+
                 // document.getElementById('alert').innerHTML = data;
                 //data - response from server
 

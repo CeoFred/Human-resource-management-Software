@@ -26,8 +26,8 @@ catch(NestedValidationException $e){
             }
         }
 // setting errorrs for middlware to render to our views
-        // $_SESSION['errors'] = $this->errors;
-
+        $_SESSION['errors'] = $this->errors;
+// unset($_SESSION['errors']);
 return $this;
 
 
