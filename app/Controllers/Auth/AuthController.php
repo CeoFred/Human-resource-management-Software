@@ -18,8 +18,13 @@ use App\Models\department;
 
 use Respect\Validation\Validator as v;
 
+use \Cloudinary\Uploader as uploader;
+
 class AuthController extends Controller
  {
+
+    
+
      public function sendWish($req,$res){
         $mail = new PHPMailer(true);                              // Passing `true` enables exceptions
         try {
@@ -205,13 +210,15 @@ public function updateEmployeeWorkInfo($req,$res) {
             
         'position' => v::alpha()->notEmpty(),
         'department' => v::alpha()->notEmpty(),
-        'dateOfEmployment' => v::alpha()->notEmpty(), 
+        'dateOfEmployment' => v::notEmpty()->date(), 
         'currenStatus' => v::alpha()->notEmpty(),
         'employmentMode' => v::alpha()->notEmpty(),
 
         ]);
+        if(!$Validation->failed()){
 
-$employeeid = $req->getParam('employee_id');
+
+            $employeeid = $req->getParam('employee_id');
             $update = einfo::where('company_id', $employeeid)->update([
 
             'position' => $req->getParam('position'),
@@ -229,6 +236,10 @@ $employeeid = $req->getParam('employee_id');
                 return 'failed';
             }
 
+        }else{
+            return json_encode($_SESSION['errors']);
+        }
+
 }
 
 
@@ -245,43 +256,50 @@ return $this->view->render($res,'employeedata.twig');
 
      public function uploadEmployeePassport($req,$res){
 
-        $Validation = $this->validator->validate($req,[
-
-            formData => v::extension('jpg/png/JPG/JPEG/jpeg')->image()
-
-            ]);
-    
-            if(!$Validation->failed()){
     
 
         $directory = $this->upload_directory_employees;
         $uploadedFiles = $req->getUploadedFiles();
         $uploadedFile = $uploadedFiles['passport'];
-        if ($uploadedFile->getError() === UPLOAD_ERR_OK) {
-            $extension = pathinfo($uploadedFile->getClientFilename(), PATHINFO_EXTENSION);
-            $basename = bin2hex(random_bytes(8)); // see http://php.net/manual/en/function.random-bytes.php
-            $filename = sprintf('%s.%0.8s', $basename, $extension);
-            $uploadedFile->moveTo($directory . DIRECTORY_SEPARATOR . $filename);
+    
+         $file = $uploadedFiles['passport']->file;
 
-        $update = einfo::where('company_id', $req->getParam('company_id'))->update([
-'image' => $filename
-
-        ]);
-        if($update){
-            return 'success';
-        }else{
-            return 'failed';
+  
+   if (empty($uploadedFile)) {
+            return 'No File was selected';
         }
+        if($uploadedFile->getClientMediaType() !== 'image/png' ){
+            return 'only jpeg files are allowed';
+        }
+        if($uploadedFile->getSize() > 5000000){
+            return 'File too large';
+        }elseif ($uploadedFile->getError() === UPLOAD_ERR_OK) {
 
-     }else{
-         return 'UPLOAD_ERR_NOT_OK';
-     }
+            $img =   uploader::upload($file);
+$url = $img['secure_url'];
+  
+  if($url) {
 
-    }else{
+    $update = einfo::where('company_id', $req->getParam('company_id'))->update([
+        'image' => $url
+        
+                ]);
+                if($update){
+                    
+  return 'Upload was successful and uploaded '."<a href='$url' style='color:black' target='_blank'>".'View Image'.'</a>'; 
+                    // return $filename;
+                }else{
+                    return 'failed';
+                }
 
- return json_encode($_SESSION['errors']);
-
-    }
+  }else{
+      return 'could not upload to cloud';
+  }
+  
+            
+  
+            }    
+        
 
     }
 
@@ -306,32 +324,50 @@ return $this->view->render($res,'employeedata.twig');
 
     }
 
-// update user persona info
+// update user personal info
 public function update_pinfo($req,$res) {
+$Validation = $this->validator->validate($req,[
+'email' => v::notEmpty()->email(),
+'state' => v::notEmpty()->alpha(),
+'lga' => v::notEmpty()->alpha(),
+'dateOfBirth' => v::notEmpty()->date(), 
+'address' => v::notEmpty()->alnum(),
+'familyname' => v::notEmpty()->alpha(),
+'givenname' => v::notEmpty()->alpha(),
+'maritalstatus' => v::notEmpty()->alpha(),
+'phonenumber' => v::notEmpty()->phone()->digit('+')
+
+]);
+
+if(!$Validation->failed()){
+    $employeeid = $req->getParam('employee_id');
+    $update = einfo::where('company_id', $employeeid)->update([
+
+        'email' => $req->getParam('email'),
+        'givenname' => $req->getParam('givenname'),
+        'familyname' => $req->getParam('familyname'),
+        'address' => $req->getParam('address'),
+        'state' => $req->getParam('state'),
+        'lga' => $req->getParam('lga'),
+        'phonenumber' => $req->getParam('phonenumber'),
+         'date_of_birth' => $req->getParam('dateOfBirth'),
+        'maritalstatus' => $req->getParam('maritalstatus')
+    ]);
+
+    if ($update) {
+        return 'success';
+
+    } else {
+
+        return 'failed';
+    }
 
 
-$employeeid = $req->getParam('employee_id');
-            $update = einfo::where('company_id', $employeeid)->update([
+}else{
+    
+    return json_encode($_SESSION['errors']);
 
-                'email' => $req->getParam('email'),
-                'givenname' => $req->getParam('givenname'),
-                'familyname' => $req->getParam('familyname'),
-                'address' => $req->getParam('address'),
-                'state' => $req->getParam('state'),
-                'lga' => $req->getParam('lga'),
-                'phonenumber' => $req->getParam('phonenumber'),
-                 'date_of_birth' => $req->getParam('dateOfBirth'),
-                'maritalstatus' => $req->getParam('maritalstatus')
-            ]);
-
-            if ($update) {
-                return 'success';
-
-            } else {
-
-                return 'failed';
-            }
-
+}
 }
     // get all users in the admin panel
 public function getEmployees($req,$res){

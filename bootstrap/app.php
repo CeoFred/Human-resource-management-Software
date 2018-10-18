@@ -5,6 +5,12 @@ session_start();
 
 require  __DIR__ . '\..\vendor\autoload.php';
 
+\Cloudinary::config(array( 
+    "cloud_name" => "ogwugo-people", 
+    "api_key" => "884434965257465", 
+    "api_secret" => "dk_QJWS3eBrzBWNo_xjN1RHz1AI" 
+  ));
+
 // create new app with changaes to configuration settings
 $app = new \Slim\App([
     'setting' => [
@@ -27,10 +33,13 @@ $app = new \Slim\App([
 // creating a container to fetch dependencies
 $container = $app->getContainer();
 
+
+
 // adding flashmessages
 $container['flash'] = function () {
     return new \Slim\Flash\Messages();
 };
+
 $container['upload_directory'] = __DIR__ . '\..\public\usercvimage';
 $container['user_upload_directory'] = __DIR__ . '\..\public\img\userprofileimg';
 $container['upload_directory_employees'] = __DIR__ . '\..\public\img\workdataimg';
@@ -61,12 +70,6 @@ $view = new \Slim\Views\Twig(__DIR__ . '/../resources/views',[
 // an accessible view variable in our views templates
     $view->getEnvironment()->addGlobal('auth',[
 
-        // checks if a session is stored
-        // on our view templates, it  basically returns true or false, nothing serious
-// 'check' => $container->auth->check(),
-        // querying the database once and setting it to check global view variable too be used on
-        // our views template,to access it in our twig templates, use auth.user.{row}
-// 'user' => $container->auth->user(),
 'date' => date('Y'),
 'admincheck' => $container->auth->admincheck(),
 'admindetails' => $container->auth->admindetails(),

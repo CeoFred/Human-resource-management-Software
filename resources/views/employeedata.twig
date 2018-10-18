@@ -142,8 +142,9 @@ action="{{path_for('updateEmployeeEmergencyInfo')}}?company_id={{employeedata.co
 {# modal for personal information update #}
 <div class="modal fade" id="personalinformation" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
     aria-hidden="true">
-    <div class="alert alert-success animated jello" id="alert" style="display:none;float:right;position:fixed">
-        Update was successfull!
+    <div class="alert alert-success animated jello" 
+    id="alert" style="display:none;float:right;position:fixed;z-index:99">
+    
     </div>
 
     <div class="modal-dialog" role="document">
@@ -278,13 +279,14 @@ id="dateOfBirth" class="form-control">
 {# modal for companyinformation #}
 <div class="modal fade" id="companyinformation" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
     aria-hidden="true">
-<div class="alert alert-success animated jello" id="alertforcompany" style="display:none;float:right;position:fixed">
+      <div class="alert alert-success animated jello" id="alertforcompany" style="display:none;float:right;position:fixed;z-index:99">
         Update was successfull!
     </div>
-<div class="alert alert-success animated jello" id="alertforerror" style="display:none;float:right;position:fixed">
+<div class="alert alert-danger animated jello" id="alertforerror" style="display:none;float:right;position:fixed;z-index:99">
     Something went wrong,check console!
 </div>
     <div class="modal-dialog" role="document">
+      
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">Update company Information</h5>
@@ -294,6 +296,7 @@ id="dateOfBirth" class="form-control">
             </div>
 
             <div class="modal-body">
+      
 <form id="companyFormUpdate"
 action="{{path_for('updateEmployeeWorkInfo')}}?employee_id={{employeedata.company_id}}" method="POST">
     <!-- department -->

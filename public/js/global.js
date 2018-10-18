@@ -230,19 +230,19 @@ dept:dept
             contentType: false,
             processData: false,
             success: function(data, textStatus, jqXHR) {
-               if(data == 'success'){
-                document.getElementById('alert3').innerHTML = data;
-                document.getElementById('alert3').style.display = 'block';
-               }else if(data == 'failed'){
+            //    if(data == 'success'){
+            //     document.getElementById('alert3').innerHTML = data;
+            //     document.getElementById('alert3').style.display = 'block';
+            //    }else if(data == 'failed'){
 
-                document.getElementById('alert3').innerHTML = data;
-                document.getElementById('alert3').style.display = 'block';
-               }else{
+            //     document.getElementById('alert3').innerHTML = data;
+            //     document.getElementById('alert3').style.display = 'block';
+            //    }else{
 
 console.log(data)
                 document.getElementById('alert3').innerHTML = data;
                 document.getElementById('alert3').style.display = 'block';
-               }
+            //    }
             
             },
             error: function(jqXHR, textStatus, errorThrown) {
@@ -429,10 +429,26 @@ function close() {
              $('#gif2').hide();
          },
          success: function (data, textStatus, jqXHR) {
-             console.log(textStatus);
-             document.getElementById('alertforcompany').style.display = 'block';
-             // document.getElementById('alert').innerHTML = data;
-             //data - response from server
+             if(data !== 'success'){
+                console.log(textStatus);
+                let object = JSON.parse(data)
+              data =  Object.values(object)
+              
+              document.getElementById('alertforerror').innerHTML = data;
+                  document.getElementById('alertforerror').style.display = 'block';
+                
+            setInterval(close2,4000) 
+             }else if(data == 'failed'){
+                document.getElementById('alertforerror').innerHTML = data;
+                document.getElementById('alertforerror').style.display = 'block';
+                setInterval(close2,4000)
+            }
+  
+             else{
+                console.log(textStatus);
+                document.getElementById('alertforcompany').style.display = 'block';
+                setInterval(close,4000)
+             }
          },
          error: function (jqXHR, textStatus, errorThrown) {
              document.getElementById('alertforerror').style.display = 'block';
@@ -442,6 +458,13 @@ function close() {
          }
      })
 
+function close(){
+    getElementById('alertforcompany').style.display = 'none'
+}
+
+function close2(){
+    getElementById('alertforerror').style.display = 'none'
+}
  });
 
     // add an employee
@@ -581,10 +604,23 @@ function close() {
                 $('#gif').hide();
             },
             success: function (data, textStatus, jqXHR) {
+            
+            if(data !== 'success'){
+var data = JSON.parse(data)
+var fineData =Object.values(data)
+document.getElementById('alert').innerHTML = fineData
+document.getElementById('alert').style.display = 'block'
+
+}else if(data == 'failed'){
+
+    document.getElementById('alert').innerHTML = data
+    document.getElementById('alert').style.display = 'block'
+            }else{
                 console.log(textStatus);
                 document.getElementById('alert').style.display = 'block';
-                // document.getElementById('alert').innerHTML = data;
+                document.getElementById('alert').innerHTML = data;
                 //data - response from server
+            }
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 console.log(errorThrown)
