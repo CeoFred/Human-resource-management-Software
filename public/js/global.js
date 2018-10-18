@@ -230,10 +230,19 @@ dept:dept
             contentType: false,
             processData: false,
             success: function(data, textStatus, jqXHR) {
-                // console.log(data);                
-                data =  JSON.parse(data)
+               if(data == 'success'){
                 document.getElementById('alert3').innerHTML = data;
                 document.getElementById('alert3').style.display = 'block';
+               }else if(data == 'failed'){
+
+                document.getElementById('alert3').innerHTML = data;
+                document.getElementById('alert3').style.display = 'block';
+               }else{
+
+console.log(data)
+                document.getElementById('alert3').innerHTML = data;
+                document.getElementById('alert3').style.display = 'block';
+               }
             
             },
             error: function(jqXHR, textStatus, errorThrown) {
@@ -360,10 +369,19 @@ dept:dept
                 $('#gif3').hide();
             },
             success: function(data, textStatus, jqXHR) {
+                if(data !== 'success'){
+object = JSON.parse(data)
+data = Object.values(object)
+document.getElementById('alertforemmergency').innerHTML = data;
                 console.log(textStatus,data);
                 document.getElementById('alertforemmergency').style.display = 'block';
                 setTimeout(close, 5000);
-                // document.getElementById('alert').innerHTML = data;
+                }else{
+                    document.getElementById('alertforemmergency').innerHTML = data;
+                    console.log(textStatus,data);
+                    document.getElementById('alertforemmergency').style.display = 'block';
+                        
+                }
                 //data - response from server
 
         //    window.load(true)

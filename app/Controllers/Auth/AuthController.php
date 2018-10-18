@@ -121,7 +121,12 @@ echo '<br/>';
       
     $Validation = $this->validator->validate($req,[
 
-        'fullname' => v::notEmpty()->alpha()
+        'fullname' => v::notEmpty()->alpha(),
+        'address' => v::notEmpty()->alnum(),
+        'phone' => v::notEmpty()->digit('+'),
+        'relationship' => v::alpha()->notEmpty()
+
+
     
     
         ]);
@@ -159,7 +164,19 @@ echo '<br/>';
 // upadate employee emergency contact info
 
  public function updateEmployeeEmergencyInfo($req,$res){
-  $employeeid =  $req->getParam('company_id');
+
+
+
+ $Validation =   $this->validator->validate($req,[
+'fullname' => v::alpha(),
+'address' => v::notEmpty()->alpha(),
+'phone' => v::notEmpty(),
+'relationship' => v::notEmpty()->alpha()
+    ]);
+    if(!$Validation->failed()){
+
+
+        $employeeid =  $req->getParam('company_id');
 
         $update = einfo::where('company_id', $employeeid)->update([
 
@@ -178,10 +195,21 @@ echo '<br/>';
             return 'failed';
         }
 
+    }else{
+        return json_encode($_SESSION['errors']);
+    }
 }
 // update employee company info
 public function updateEmployeeWorkInfo($req,$res) {
+        $Validation = $this->validator->validate($req,[
+            
+        'position' => v::alpha()->notEmpty(),
+        'department' => v::alpha()->notEmpty(),
+        'dateOfEmployment' => v::alpha()->notEmpty(), 
+        'currenStatus' => v::alpha()->notEmpty(),
+        'employmentMode' => v::alpha()->notEmpty(),
 
+        ]);
 
 $employeeid = $req->getParam('employee_id');
             $update = einfo::where('company_id', $employeeid)->update([
@@ -219,7 +247,7 @@ return $this->view->render($res,'employeedata.twig');
 
         $Validation = $this->validator->validate($req,[
 
-            $req->getUploadedFiles() => v::image()
+            formData => v::extension('jpg/png/JPG/JPEG/jpeg')->image()
 
             ]);
     
@@ -246,7 +274,7 @@ return $this->view->render($res,'employeedata.twig');
         }
 
      }else{
-         return $uploadedFile->getError();
+         return 'UPLOAD_ERR_NOT_OK';
      }
 
     }else{
