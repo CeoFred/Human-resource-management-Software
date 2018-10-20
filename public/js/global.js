@@ -1,3 +1,32 @@
+
+function readURL(input) {
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+
+        reader.onload = function (e) {
+            $('#blah')
+                .attr('src', e.target.result);
+        };
+
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+function readURL(input) {
+
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+
+        reader.onload = function (e) {
+            $('#blah').attr('src', e.target.result);
+        }
+
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+
+$("#fileToUpload").change(function(){
+    readURL(this);
+});
 function sendWish(event) {
 event.preventDefault();
 
@@ -230,18 +259,11 @@ dept:dept
             contentType: false,
             processData: false,
             success: function(data, textStatus, jqXHR) {
-            //    if(data == 'success'){
-            //     document.getElementById('alert3').innerHTML = data;
-            //     document.getElementById('alert3').style.display = 'block';
-            //    }else if(data == 'failed'){
 
-            //     document.getElementById('alert3').innerHTML = data;
-            //     document.getElementById('alert3').style.display = 'block';
-            //    }else{
-
-console.log(data)
+              console.log(data)
                 document.getElementById('alert3').innerHTML = data;
                 document.getElementById('alert3').style.display = 'block';
+                
             //    }
             
             },
@@ -251,13 +273,32 @@ console.log(data)
                 console.log(textStatus)
             },
             beforeSend: function() {
-                $('#gif5').show();
+                
+$("#myBtn").LoadingOverlay("show");
+
+
                 document.getElementById('alert3').style.display = 'none';
+                button = document.getElementById("myBtn")
+                if(button.disabled)
+                {
+                    document.getElementById("myBtn").disabled = false;
+                }else{
+                    document.getElementById("myBtn").disabled = true;
+                } 
+                
             },
             complete: function() {
-                $('#gif5').hide();
+                
+$("#myBtn").LoadingOverlay("hide");
+                button = document.getElementById("myBtn")
+                if(button.disabled)
+                {
+                    document.getElementById("myBtn").disabled = false;
+                }else{
+                    document.getElementById("myBtn").disabled = true;
+                } 
                 // location.reload(true);
-                // setTimeout(close, 3000);
+                // setTimeout(close, 7000);
 
             }
 
@@ -492,29 +533,46 @@ function close2(){
             },
             url: url,
             success: function (data, textStatus, jqXHR) {
-                console.log(data)
-                console.log(textStatus)
-                console.log(jqXHR)
-                document.getElementById('alertfore').style.display = 'block';
+                
+                if(data == 'success'){
+                    
+                    document.getElementById('alertfore').innerHTML = newdata
+                    document.getElementById('alertfore').style.display = 'block';
+                    console.log(newdata);
+                    console.log(textStatus);
+                
+                }else{
+               
+                    // newdata = Object.values(JSON.parse(data))
+                    console.log(data);
+                    console.log(jqXHR);
+                    document.getElementById('alertfore').innerHTML = data;
+                    document.getElementById('alertfore').style.display = 'block';
+    
+                }
+
+            
             },
 
             error: function (jqXHR, textStatus, errorThrown) {
                 console.log(errorThrown)
                 console.log(jqXHR)
                 console.log(textStatus)
-
                 document.getElementById("alertforerror").style.display = "none";;
             },
 
             beforeSend: function () {
-                $('#gif').show();
+                document.getElementById('gif5').style.display = 'block';
+                document.getElementById('imageUploadButton').disabled = true;
                 document.getElementById("alertfore").style.display = "none";
                 document.getElementById("alertforerror").style.display = "none";
             },
 
             complete: function () {
-                $('#gif').hide();
-                setTimeout(close, 5000);
+                
+                document.getElementById('gif5').style.display = 'none';
+                document.getElementById('imageUploadButton').disabled  = false
+                setTimeout(close, 10000);
 
             }
 

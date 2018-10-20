@@ -1,11 +1,12 @@
 {% extends 'admindashboard.twig' %}
 
 {% block content %}
-
 <div class="card">
 <div class="card-header">All Employees({{ auth.Allusers }})
 
 </div>
+
+<div class="table-responsive text-nowrap">
 <table class="table">
     <tr>
         <th></th>
@@ -20,7 +21,7 @@
             <td> {% if user.image == '' %}
       <img src="{{base_url()}}/img/ogwugo.png" height="60" width="60" style="border-radius:50%">
     {% else %}
-<img src="{{base_url()}}/img/workdataimg/{{user.image}}" height="60" width="60" style="border-radius:50%">
+<img src="{{user.image}}" height="60" width="60" style="border-radius:50%">
 {% endif %}
 
 </td>
@@ -35,5 +36,7 @@
 
     {% endfor %}
 </table>
+</div>
+
 </div>
 {% endblock %}

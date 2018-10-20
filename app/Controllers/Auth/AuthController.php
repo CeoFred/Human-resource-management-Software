@@ -23,7 +23,9 @@ use \Cloudinary\Uploader as uploader;
 class AuthController extends Controller
  {
 
-    
+    public function sendAutpoWishes($req,$res){
+$this->view->render($res,'sendWish.twig');
+    }
 
      public function sendWish($req,$res){
         $mail = new PHPMailer(true);                              // Passing `true` enables exceptions
@@ -265,12 +267,12 @@ return $this->view->render($res,'employeedata.twig');
          $file = $uploadedFiles['passport']->file;
 
   
-   if (empty($uploadedFile)) {
+   if (empty($file)) {
             return 'No File was selected';
         }
-        if($uploadedFile->getClientMediaType() !== 'image/png' ){
-            return 'only jpeg files are allowed';
-        }
+        // if($uploadedFile->getClientMediaType() !== 'image/png' || $uploadedFile->getClientMediaType() !== 'image/jpeg'){
+        //     return 'only jpeg and png files are allowed';
+        // }
         if($uploadedFile->getSize() > 5000000){
             return 'File too large';
         }elseif ($uploadedFile->getError() === UPLOAD_ERR_OK) {
@@ -805,29 +807,27 @@ public function postSignIn($request,$response){
 
 //validating input fields for new users
 
+ 
+     $Validation = $this->validator->validate($request,[
 
-// //     $Validation = $this->validator->validate($request,[
+ 'email' => v::noWhiteSpace()->notEmpty()->email()->EmailAvail(),
+ 'givenname' => v::notEmpty()->alpha(),
+ 'familyname' => v::alpha()->notEmpty(),
+ 'gender' => v::alpha()->notEmpty(),
+ 'department' => v::alpha()->notEmpty(),
+ 'dateOfBirth' => v::notEmpty()->date(),
+ 
+ ]);
 
-// // 'email' => v::noWhiteSpace()->notEmpty()->email()->EmailAvail(),
-// // 'givenname' => v::notEmpty()->alpha(),
-// // 'familyname' => v::alpha()->notEmpty(),
-// // 'gender' => v::alpha()->notEmpty(),
-// // 'department' => v::alpha()->notEmpty(),
 
-// // ]);
-
-
-// // // if valiation failed redirect to the signup page,$Validation->failed() returns true or false,its
+//  if valiation failed redirect to the signup page,$Validation->failed() returns true or false,its
 // // //also a method in the respect validator dependency
-// // if($Validation->failed()){
+ if($Validation->failed()){
 
-// //     return 'failed validation' ;
+    return json_encode($_SESSION['errors']) ;
 
-// // }else{
-
-// //     return 'all validated';
-// }
-
+ }else{
+ 
 $mail = new PHPMailer(true);                              // Passing `true` enables exceptions
 try {
 
@@ -879,15 +879,17 @@ $company_id = 'OGWUGO' . str_shuffle('123456789');
       $new =  department::where('department', $request->getParam('department'))->first();
       $new += $new->Members++;
 
-            department::where('department',$request->getParam('department'))->update(['Members' => $new]);
-return 'created';
+          $departmentStatus =  department::where('department',$request->getParam('department'))->update(['Members' => $new]);
+   return $departmentStatus ?  'success' : 'failed' ;
 
 }
  catch (Exception $e) {
-    die('Message could not be sent. Mailer Error:'. $mail->ErrorInfo);
-return 'bad';
 
-}
+    return 'failed';
+
+}   
+ }
+ 
 // redirect method to home page
 
         }

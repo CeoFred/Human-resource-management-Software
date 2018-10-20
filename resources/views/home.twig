@@ -14,7 +14,7 @@
 <div class="card-body menu-body">
 
 
-{% if auth.getUpcomingBirthdays%}
+{% if auth.countUpcomingBirthdays > 0 %}
 
 {% for birthdayBuddies in auth.getUpcomingBirthdays %}
 <div style="border-left:2px solid orange">
@@ -28,7 +28,7 @@
 {% else %}
 
 <div>
-No birthday Buddies Found
+No birthday Buddies Today
 <div align="center" style="padding:auto;margin-top:1px;">
 
     <img src="{{ base_url() }}/img/ogwugo.png" height="50" width="120" style="border-radius:50%" alt="ogwugo">
@@ -77,49 +77,7 @@ No New Joinees Found
 </div>
 <!-- end new hires -->
 
-
-<!-- favourites -->
-<div class="col-md-4">
-<div class="card">
-    <div class="card-header">
-        <h5>Favourites</h5>
-    </div>
-<div class="card-body menu-body">
-No Favourites Found
-<div align="center" style="padding:auto;margin-top:10px;">
-
-    <img src="{{ base_url() }}/img/ogwugo.png" height="50" width="120" style="border-radius:50%" alt="ogwugo">
-
-</div>
-    </div>
-</div>
-
-</div>
-<!-- end favourites -->
-    </div>
-
-    <br>
-
-    <!-- second row -->
-    <div class="row">
-<div class="col-md-4">
-    <div class="card">
-        <div class="card-header">
-            <h5>Messages</h5>
-        </div>
-        <div class="card-body menu-body">
-            No Direct Message Found
-            <div align="center" style="padding:auto;margin-top:10px;">
-
-                <img src="{{ base_url() }}/img/ogwugo.png" height="50" width="120" style="border-radius:50%" alt="ogwugo">
-
-            </div>
-        </div>
-    </div>
-
-</div>
-
-
+{# department #}
 <div class="col-md-4">
     <div class="card">
         <div class="card-header">
@@ -142,10 +100,57 @@ No Favourites Found
     </div>
 
 </div>
+</div>
+{# end department #}
 
+
+<!-- favourites -->
+{# <div class="col-md-4">
+<div class="card">
+    <div class="card-header">
+        <h5>Favourites</h5>
+    </div>
+<div class="card-body menu-body">
+No Favourites Found
+<div align="center" style="padding:auto;margin-top:10px;">
+
+    <img src="{{ base_url() }}/img/ogwugo.png" height="50" width="120" style="border-radius:50%" alt="ogwugo">
+
+</div>
+    </div>
+</div>
+
+</div> #}
+<!-- end favourites -->
+    </div>
+
+    <br>
+
+    <!-- second row -->
+    <div class="row">
+
+{# <div class="col-md-4">
+    <div class="card">
+        <div class="card-header">
+            <h5>Messages</h5>
+        </div>
+        <div class="card-body menu-body">
+            No Direct Message Found
+            <div align="center" style="padding:auto;margin-top:10px;">
+
+                <img src="{{ base_url() }}/img/ogwugo.png" height="50" width="120" style="border-radius:50%" alt="ogwugo">
+
+            </div>
+        </div>
+    </div>
+
+</div> #}
+
+
+<div class="col-md-4">
 
 <!-- pending approvalas -->
-<div class="col-md-4">
+{# <div class="col-md-4">
     <div class="card">
         <div class="card-header">
             <h5>Request Pending Approval</h5>
@@ -160,7 +165,7 @@ No Favourites Found
         </div>
     </div>
 
-</div>
+</div> #}
 <!-- end pending approvals -->
     </div>
 
@@ -168,7 +173,7 @@ No Favourites Found
 
 <br>
     <!-- third row -->
-<div class="row">
+{# <div class="row">
 
 <div class="col-md-4">
     <div class="card">
@@ -199,6 +204,7 @@ No Favourites Found
                 <img src="{{ base_url() }}/img/ogwugo.png" height="50" width="120" style="border-radius:50%" alt="ogwugo">
 
             </div>
+
         </div>
     </div>
 
@@ -222,7 +228,7 @@ No Favourites Found
 
 </div>
 
-</div>
+</div> #}
     <!-- end thrid row -->
 </div>
 </div>
