@@ -12,6 +12,8 @@ use App\Models\User;
 
 use App\Models\Admin;
 
+use App\Models\birthdays;
+
 use App\Controllers\Controller;
 
 use App\Models\department;
@@ -22,6 +24,67 @@ use \Cloudinary\Uploader as uploader;
 
 class AuthController extends Controller
  {
+
+        // send automated wishes
+        public function sendBirthdayWishesAttempt(){
+
+            $today = date('Y-m-d') ;
+    
+            $check =  einfo::where('date_of_birth',$today)->get();
+             
+            if(count($check) > 0){
+            //  return count($check);
+            //     return $check;
+                $today = date('Y-m-d') ;
+    
+            for($i = 0;$i < count($check);$i++){
+
+                // echo $check[$i]->email;
+                // check if a row for the celebrant already exists in the birthdays table
+           $checkRow = birthdays::where('company_id',$check[$i]->company_id)
+           ->where('date_of_birth',$today)
+        //    ->where('phone',$check[$i]->phonenumber)
+           ->where('email',$check[$i]->email)
+        //    ->where('company_id',$check[$i]->company_id)
+        //    ->where('familyname',$check[$i]->familyname)
+        //    ->where('givenname',$check[$i]->givenname)
+           ->where('department',$check[$i]->department)
+           ->get();      
+    }
+
+    if(count($checkRow) > 0){
+        echo count($checkRow);
+   
+     }elseif(empty($checkRow) == 0){
+        //  return $checkRow;
+        $today = date('Y-m-d') ;
+    
+        $cr =  einfo::where('date_of_birth',$today)->get();
+    
+            for($i = 0;$i < count($cr);$i++){
+
+    $newRow =     birthdays::create([
+            'email' => $cr[$i]->email,
+            'department' => $cr[$i]->department,
+            'date_of_birth' => $cr[$i]->date_of_birth,
+            'company_id' => $cr[$i]->company_id,
+            'email_sent' => 0,
+            'sms_sent' => 0,
+            'phone' => $cr[$i]->phonenumber,
+            'givenname' => $cr[$i]->givenname,
+            'familyname' => $cr[$i]->familyname
+            ]);
+        
+            
+     }
+
+    }
+}
+    else{
+        echo 'no birthdays today';
+    }
+        }
+    
 
     public function sendAutpoWishes($req,$res){
 $this->view->render($res,'sendWish.twig');

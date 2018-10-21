@@ -4,6 +4,7 @@ namespace App\Auth;
 
 // use App\Models\User;
 use App\Models\Admin;
+
 use App\Models\einfo;
 use App\Models\department;
 use App\Models\wishes;
@@ -17,44 +18,6 @@ class Auth {
 
 
 
-    // send automated wishes
-    public function sendBirthdayWishes(){
-
-        $today = date('Y') . '-' . date('m').'-'.date('d') ;
-
-        $check =  einfo::where('date_of_birth',$today)->get();
-         
-        if($check){
-        
-            // return $check;
-        for($i = 0;$i < count($check);$i++){
-            
-            
-       $checkRow = birthdays::where('company_id',$check[$i]->company_id)->get();
-       if(count($checkRow) > 0){
-      $cele =   birthdays::where('company_id',$check[$i]->company_id)->get();
-        foreach($checkRow as $celebrants){
-         $id = $celebrants->company_id;
-     }   
-        //    echo 'found row';
-        
-        $checkSentWishes =  birthdays::where('email_sent',1)->andWhere('company_id',$id)->get();
-        if(count($checkSentWishes) > 0){
-
-        }
-
-       }else{
-
-           echo 'not found';
-
-        
-    }
-        }    
-
-          }else{
-              return 'none found';
-          }
-    }
 
 // get birthday wishes
 public function getWishes(){
