@@ -39,22 +39,75 @@ class AuthController extends Controller
     
             for($i = 0;$i < count($check);$i++){
 
-                // echo $check[$i]->email;
                 // check if a row for the celebrant already exists in the birthdays table
-           $checkRow = birthdays::where('company_id',$check[$i]->company_id)
-           ->where('date_of_birth',$today)
-        //    ->where('phone',$check[$i]->phonenumber)
-           ->where('email',$check[$i]->email)
-        //    ->where('company_id',$check[$i]->company_id)
-        //    ->where('familyname',$check[$i]->familyname)
-        //    ->where('givenname',$check[$i]->givenname)
-           ->where('department',$check[$i]->department)
-           ->get();      
+           $checkRow = birthdays::where('date_of_birth',$today)
+           
+           ->get();  
+        //    echo count($checkRow);    
     }
 
     if(count($checkRow) > 0){
-        echo count($checkRow);
-   
+
+        // print count($checkRow);
+        
+         for($i = 0;$i < count($checkRow);$i++){
+
+            $check = $checkRow[$i]->email_sent;
+            if($check == 0){
+                
+               echo 'email not sent for '.$checkRow[$i]->givenname.'<br>';
+               
+$mail = new PHPMailer(true);   
+                           // Passing `true` enables exceptions
+try {
+    $mail->SMTPDebug = 0;                                 // Enable verbose debug output
+$mail->isSMTP();                                      // Set mailer to use SMTP
+$mail->Host = 'sweetpea.hostnownow.com';  // Specify main and backup SMTP servers
+$mail->SMTPAuth = true;                               // Enable SMTP authentication
+$mail->Username = 'activate@yourhomefuto.com.ng';                 // SMTP username
+$mail->Password = 'messilo18_';                           // SMTP password
+$mail->SMTPSecure = 'ssl';
+$mail->SMTPAutoTLS = true;
+// Enable TLS encryption, `ssl` also accepted
+$mail->Port = 465;                                    // TCP port to connect to
+//Recipients
+
+$mail->SMTPOptions = array(
+'ssl' => array(
+'verify_peer' => false,
+'verify_peer_name' => false,
+'allow_self_signed' => true
+)
+);
+
+            $mail->setFrom('family@ogwugo.com', 'Ogwugo.com');
+            $mail->addAddress($checkRow[$i]->email);     // Add a recipient
+            // $mail->addAddress('ellen@example.com');               // Name is optional
+            $mail->addReplyTo('celebrations@ogwugo.com', 'PartyTime');
+            $mail->isHTML(true);                                  // Set email format to HTML
+            $mail->Subject = 'Happy Birthday!!';
+            $mail->Body    = 'From ogwugo we wish you a happy birthday';
+            // $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
+
+            if($mail->send()){
+            echo 'Hurray!!Wishes were successfully sent to '.$checkRow[$i]->email;
+            birthdays::where('company_id',$checkRow[$i]->company_id)->update([
+'email_sent' => 1
+            ]);
+            }
+
+            }
+            catch (Exception $e) {
+            return 'Message could not be sent. Mailer Error:' . $mail->ErrorInfo;
+            }
+
+                       }else{
+                           echo 'email alredy sent to '.$checkRow[$i]->givenname.'<br>';
+                       }
+
+         }
+        
+
      }elseif(empty($checkRow) == 0){
         //  return $checkRow;
         $today = date('Y-m-d') ;
