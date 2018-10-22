@@ -47,9 +47,10 @@ public function getDepartments(){
     return department::where('id','>','0')->get();
 }
 
-public function countSoftwareMemebers(){
-    return count(einfo::where('department','Software')->get());
-}
+        public function countSoftwareMemebers()
+        {
+            return count(einfo::where('department','Software')->get());
+        }
 
     public function getSoftwareMembers()
     {

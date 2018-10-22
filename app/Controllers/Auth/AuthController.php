@@ -53,9 +53,10 @@ class AuthController extends Controller
          for($i = 0;$i < count($checkRow);$i++){
 
             $check = $checkRow[$i]->email_sent;
+            // check if email is not sent
             if($check == 0){
                 
-               echo 'email not sent for '.$checkRow[$i]->givenname.'<br>';
+               echo 'email has not been sent for '.$checkRow[$i]->givenname.'<br>';
                
 $mail = new PHPMailer(true);   
                            // Passing `true` enables exceptions
@@ -102,7 +103,7 @@ $mail->SMTPOptions = array(
             }
 
                        }else{
-                           echo 'email alredy sent to '.$checkRow[$i]->givenname.'<br>';
+                           echo '<p style="display:none">'.'birthday email alredy sent to '.$checkRow[$i]->givenname.'</p>'.'<br>';
                        }
 
          }
@@ -134,7 +135,7 @@ $mail->SMTPOptions = array(
     }
 }
     else{
-        echo 'no birthdays today';
+        echo '<p style="display:none">'.'no birthdays today'.'</p>';
     }
         }
     
@@ -389,12 +390,13 @@ return $this->view->render($res,'employeedata.twig');
         // if($uploadedFile->getClientMediaType() !== 'image/png' || $uploadedFile->getClientMediaType() !== 'image/jpeg'){
         //     return 'only jpeg and png files are allowed';
         // }
-        if($uploadedFile->getSize() > 5000000){
+        if($uploadedFile->getSize() > 100000000){
             return 'File too large';
         }elseif ($uploadedFile->getError() === UPLOAD_ERR_OK) {
 
-            $img =   uploader::upload($file);
-$url = $img['secure_url'];
+            $img =   uploader::upload($file, array("width"=>200, "height"=>200, "folder" => "employeePassports","crop"=>"pad","quality"=>"auto:low"));
+            
+$url = $img['secure_url'];gi
   
   if($url) {
 
