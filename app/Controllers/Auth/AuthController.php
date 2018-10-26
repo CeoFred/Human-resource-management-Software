@@ -61,6 +61,7 @@ class AuthController extends Controller
 $mail = new PHPMailer(true);   
                            // Passing `true` enables exceptions
 try {
+    
     $mail->SMTPDebug = 0;                                 // Enable verbose debug output
 $mail->isSMTP();                                      // Set mailer to use SMTP
 $mail->Host = 'sweetpea.hostnownow.com';  // Specify main and backup SMTP servers
@@ -396,7 +397,7 @@ return $this->view->render($res,'employeedata.twig');
 
             $img =   uploader::upload($file, array("width"=>200, "height"=>200, "folder" => "employeePassports","crop"=>"pad","quality"=>"auto:low"));
             
-$url = $img['secure_url'];gi
+$url = $img['secure_url'];
   
   if($url) {
 
