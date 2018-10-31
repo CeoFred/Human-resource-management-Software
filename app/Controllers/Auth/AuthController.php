@@ -88,7 +88,7 @@ $mail->SMTPOptions = array(
             $mail->addReplyTo('celebrations@ogwugo.com', 'PartyTime');
             $mail->isHTML(true);                                  // Set email format to HTML
             $mail->Subject = 'Happy Birthday!!';
-            $mail->Body    = 'From ogwugo we wish you a happy birthday';
+            $mail->Body    = 'From ogwugo we wish you a happy birthday!Do enjoy your day.';
             // $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
 
             if($mail->send()){
@@ -294,7 +294,7 @@ echo '<br/>';
 
  $Validation =   $this->validator->validate($req,[
 'fullname' => v::alpha(),
-'address' => v::notEmpty()->alpha(),
+'address' => v::notEmpty()->alnum(),
 'phone' => v::notEmpty(),
 'relationship' => v::notEmpty()->alpha()
     ]);
@@ -529,7 +529,7 @@ $this->view->render($res,'editworkdata.twig');
                 'emergency_contact_relationship' => v::alpha()->notEmpty(),
                  'refree_contact_phone' => v::numeric()->notEmpty(),
                 'refree_contact_name' => v::alpha()->notEmpty(),
-                'emergency_contact_address'=> v::notEmpty()->alpha(),
+                'emergency_contact_address'=> v::notEmpty()->alnum(),
                 'refree_contact_address' => v::notEmpty()->alpha(),
                 'refree_contact_relationship' => v::notEmpty()->alpha(),
 
@@ -950,36 +950,36 @@ public function postSignIn($request,$response){
 $mail = new PHPMailer(true);                              // Passing `true` enables exceptions
 try {
 
-    //Server settings
-//     $mail->SMTPDebug = 0;                                 // Enable verbose debug output
-//     $mail->isSMTP();                                      // Set mailer to use SMTP
-//     $mail->Host = 'sweetpea.hostnownow.com';  // Specify main and backup SMTP servers
-//     $mail->SMTPAuth = true;                               // Enable SMTP authentication
-//     $mail->Username = 'activate@yourhomefuto.com.ng';                 // SMTP username
-//     $mail->Password = 'messilo18_';                           // SMTP password
-//     $mail->SMTPSecure = 'ssl';
-//     $mail->SMTPAutoTLS = true;
-//     // Enable TLS encryption, `ssl` also accepted
-//     $mail->Port = 465;                                    // TCP port to connect to
-//     //Recipients
+                                                            // Server settings
+    $mail->SMTPDebug = 0;                                 // Enable verbose debug output
+    $mail->isSMTP();                                      // Set mailer to use SMTP
+    $mail->Host = 'sweetpea.hostnownow.com';  // Specify main and backup SMTP servers
+    $mail->SMTPAuth = true;                               // Enable SMTP authentication
+    $mail->Username = 'activate@yourhomefuto.com.ng';                 // SMTP username
+    $mail->Password = 'messilo18_';                           // SMTP password
+    $mail->SMTPSecure = 'ssl';
+    $mail->SMTPAutoTLS = true;
+    // Enable TLS encryption, `ssl` also accepted
+    $mail->Port = 465;                                    // TCP port to connect to
+    //Recipients
 
-//     $mail->SMTPOptions = array(
-//     'ssl' => array(
-//         'verify_peer' => false,
-//         'verify_peer_name' => false,
-//         'allow_self_signed' => true
-//     )
-// );
+    $mail->SMTPOptions = array(
+    'ssl' => array(
+        'verify_peer' => false,
+        'verify_peer_name' => false,
+        'allow_self_signed' => true
+    )
+);
 
-//     $mail->setFrom('fredd@ogwugo.com', 'Ogwugo.com');
-//     $mail->addAddress($request->getParam('email'), $request->getParam('firstname'));     // Add a recipient
-//     // $mail->addAddress('ellen@example.com');               // Name is optional
-//     $mail->addReplyTo('ogwugopeople@ogwugo.com', 'Information');
-//     $mail->isHTML(true);                                  // Set email format to HTML
-//     $mail->Subject = 'Welcome';
-//     $mail->Body    = '  Welcome <b>in bold!</b>';
-//     $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
-//     $mail->send();
+    $mail->setFrom('fredd@ogwugo.com', 'Ogwugo.com');
+    $mail->addAddress($request->getParam('email'), $request->getParam('familyname'));     // Add a recipient
+    // $mail->addAddress('ellen@example.com');               // Name is optional
+    $mail->addReplyTo('ogwugopeople@ogwugo.com', 'Welcome!!');
+    $mail->isHTML(true);                                  // Set email format to HTML
+    $mail->Subject = 'Welcome';
+    $mail->Body    ="Hello,". $request->getParam('givenname').'<br>'."you have been successfully created your profile with us.'".'<br>'.'Fred.';
+    $mail->AltBody = 'Hello,you have been successfully created your profile with us.';
+    $mail->send();
 
 // creating a row in databse
 $company_id = 'OGWUGO' . str_shuffle('123456789');

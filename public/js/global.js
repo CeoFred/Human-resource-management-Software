@@ -344,22 +344,12 @@ $("#myBtn").LoadingOverlay("hide");
                 console.log(textStatus);
                 console.log(data);
                 // setTimeout(close, 5000);
-                if(data !== 'success'){
-                    object =    JSON.parse(data)
-                    console.log(object);
-                let value =    Object.values(object);
-                console.log(value);
-
-                    document.getElementById('erroralert').innerHTML = value;
-                    
-                document.getElementById('erroralert').style.display = 'block';
                 
-            }else{
                     
                 document.getElementById('alertforRefreeInfo').style.display = 'block';
                 
                 document.getElementById('alertforRefreeInfo').innerHTML = data;
-                }
+                
 
                 // document.getElementById('alert').innerHTML = data;
                 //data - response from server
@@ -410,19 +400,12 @@ $("#myBtn").LoadingOverlay("hide");
                 $('#gif3').hide();
             },
             success: function(data, textStatus, jqXHR) {
-                if(data !== 'success'){
-object = JSON.parse(data)
-data = Object.values(object)
-document.getElementById('alertforemmergency').innerHTML = data;
-                console.log(textStatus,data);
-                document.getElementById('alertforemmergency').style.display = 'block';
-                setTimeout(close, 5000);
-                }else{
+                
                     document.getElementById('alertforemmergency').innerHTML = data;
                     console.log(textStatus,data);
                     document.getElementById('alertforemmergency').style.display = 'block';
                         
-                }
+                
                 //data - response from server
 
         //    window.load(true)
@@ -470,26 +453,23 @@ function close() {
              $('#gif2').hide();
          },
          success: function (data, textStatus, jqXHR) {
-             if(data !== 'success'){
-                console.log(textStatus);
-                let object = JSON.parse(data)
-              data =  Object.values(object)
+            //  if(data !== 'success'){
+            //     console.log(textStatus);
+            //     let object = JSON.parse(data)
+            //   data =  Object.values(object)
               
-              document.getElementById('alertforerror').innerHTML = data;
-                  document.getElementById('alertforerror').style.display = 'block';
+            //   document.getElementById('alertforerror').innerHTML = data;
+            //       document.getElementById('alertforerror').style.display = 'block';
                 
-            setInterval(close2,4000) 
-             }else if(data == 'failed'){
-                document.getElementById('alertforerror').innerHTML = data;
-                document.getElementById('alertforerror').style.display = 'block';
-                setInterval(close2,4000)
-            }
-  
-             else{
+            // setInterval(close2,4000) 
+           
+             
                 console.log(textStatus);
+                document.getElementById('alertforcompany').innerHTML = data;
+             
                 document.getElementById('alertforcompany').style.display = 'block';
                 setInterval(close,4000)
-             }
+             
          },
          error: function (jqXHR, textStatus, errorThrown) {
              document.getElementById('alertforerror').style.display = 'block';
@@ -562,7 +542,6 @@ function close2(){
             },
 
             beforeSend: function () {
-                document.getElementById('gif5').style.display = 'block';
                 document.getElementById('imageUploadButton').disabled = true;
                 document.getElementById("alertfore").style.display = "none";
                 document.getElementById("alertforerror").style.display = "none";
@@ -570,7 +549,6 @@ function close2(){
 
             complete: function () {
                 
-                document.getElementById('gif5').style.display = 'none';
                 document.getElementById('imageUploadButton').disabled  = false
                 setTimeout(close, 10000);
 
@@ -663,22 +641,17 @@ function close2(){
             },
             success: function (data, textStatus, jqXHR) {
             
-            if(data !== 'success'){
-var data = JSON.parse(data)
-var fineData =Object.values(data)
-document.getElementById('alert').innerHTML = fineData
-document.getElementById('alert').style.display = 'block'
+// var data = JSON.parse(data)
+// var fineData =Object.values(data)
+// document.getElementById('alert').innerHTML = fineData
+// document.getElementById('alert').style.display = 'block'
 
-}else if(data == 'failed'){
 
-    document.getElementById('alert').innerHTML = data
-    document.getElementById('alert').style.display = 'block'
-            }else{
                 console.log(textStatus);
                 document.getElementById('alert').style.display = 'block';
                 document.getElementById('alert').innerHTML = data;
                 //data - response from server
-            }
+
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 console.log(errorThrown)
