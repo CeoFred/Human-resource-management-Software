@@ -244,16 +244,28 @@ if($department){
 
     }
 
-public function addNewDepartment($req,$res){
 
-       $addNewDept = department::create([
-            'department' => $req->getParam('dept')
+public function addNewDepartment($req,$res){
+    
+    $Validation = $this->validator->validate($req,[
+
+        'dept' => v::notEmpty()->alpha()
         ]);
-        if($addNewDept){
-            return 'success';
+
+        if(!$Validation->failed()){
+        
+       $addNewDept = department::create([
+        'department' => $req->getParam('dept')
+    ]);
+    if($addNewDept){
+        return 'successfully added a new department';
+    }else{
+        return 'Failed to created a new department';
+    }
         }else{
-            return 'Failed';
+            return json_encode($_SESSION['errors']);
         }
+
 
 }
 
@@ -264,8 +276,8 @@ public function getDepartments($req, $res){
 // search for employess
 public function searchEmployee($req,$res){
     $name = $req->getParam('query');
- $einfo =   einfo::where('givenname',$name)
- ->orWhere('familyname', $name)
+ $einfo =   einfo::where('givenname','like', "%$name%")
+ ->orWhere('familyname','like' ,"%$name%")
  ->get();
 
     foreach($einfo as $employee){

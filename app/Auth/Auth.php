@@ -57,7 +57,9 @@ public function getDepartments(){
         return einfo::where('department', 'Software')->orderBy('id', 'asc')
             ->get();
     }
-
+public function getAccountMembers(){
+    return einfo::where('department','Accounting')->orderBy('id','asc')->get();
+}
 
 
     public function countMarketingDepartment()
@@ -74,7 +76,7 @@ public function getDepartments(){
 
      public function getNewHires()
 {
-  return  einfo::where('id','>','0')->orderBy('id','desc')->take(3)->get();     // track new employess
+  return  einfo::where('id','>','0')->orderBy('id','desc')->take(4)->get();     // track new employess
 
 }
 

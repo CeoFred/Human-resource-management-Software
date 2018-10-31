@@ -19,7 +19,7 @@
 <form method="POST" id="addNewDept" action="{{path_for('addDept')}}">
                     <div class="mb-4">
                         <div class="md-form">
-                            <input class="form-control" placeholder="Department" id="newDept">
+                            <input class="form-control" placeholder="Department" id="newDept" name="dept">
                             <button type="submit" class="btn btn-default btn-block">
 <img style="display:none;height:30px;width:30px;" src="{{base_url()}}/img/lg.rotating-balls-spinner.gif" id='gif8'>
 Add</button>
@@ -141,6 +141,22 @@ Add</button>
 
 <!-- end get software members -->
 
+{# get accounting members #}
+<div id="accountguys">
+{% for accountDepartment in auth.getAccountMembers %}
+<div id="{{accountDepartment.department}}">
+<div class="card">
+    <div class="card-body">
+<img src="{{accountDepartment.image}}" height="50" width="50" style="border-radius:50%">
+<a href="/public/auth/admin/employee?id={{accountDepartment.company_id}}" style="color:#000">{{accountDepartment.givenname}}
+    {{accountDepartment.familyname}}</a>
+
+        </div>
+</div>
+</div>
+{% endfor %}
+</div>
+{# end get acconting membera #}
 <!-- list of marketes -->
 <div id="marketingguys">
 {% for marketingDepartment in auth.getMarketingDepartment %}

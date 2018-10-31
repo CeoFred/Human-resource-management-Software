@@ -148,14 +148,23 @@ function showMembers(department){
         document.getElementById('softguys').style.display = 'block';
         document.getElementById('marketingguys').style.display = 'none';
         document.getElementById('showing').innerHTML = 'Software Department';
+    document.getElementById('accountguys').style.display = 'none';
+
 
     }else if(department == 2){
 document.getElementById('softguys').style.display = 'none';
 document.getElementById('marketingguys').style.display = 'block';
+    document.getElementById('accountguys').style.display = 'block';
 document.getElementById('showing').innerHTML = 'Marketing Department';
+document.getElementById('accountguys').style.display = 'none';
+
         // document.getElementById('Marketing').style.display = 'inline';
+}else {
 
-
+    document.getElementById('accountguys').style.display = 'block';
+    document.getElementById('softguys').style.display = 'none';
+    document.getElementById('marketingguys').style.display = 'none';
+    document.getElementById('showing').innerHTML = 'Accounting Department';
 
 }
 }
@@ -201,11 +210,12 @@ function showHint(val) {
             document.getElementById("txtHintContent").innerHTML = this.responseText;
             document.getElementById("txtHint").style.display = 'block';
 
-         document.getElementById('gif5').style.display = 'none'
+            $('txtHintContent').LoadingOverlay('show');
         }
         if (this.readyState == 2 || this.readyState == 3 || this.readState == 1) {
 
-            document.getElementById('gif5').style.display = 'block'
+            // document.getElementById('gif5').style.display = 'block'
+            $('txtHintContent').LoadingOverlay('show');
         }
     };
     xhttp.open("GET", url + value, true);
@@ -270,17 +280,38 @@ function close(){
 dept:dept
             },
             beforeSend: function () {
-                $('#gif8').show();
+                // $('#gif8').show();
+                $('#addDept').LoadingOverlay('show');
             },
             complete: function () {
-                $('#gif8').hide();
+                // $('#gif8').hide();
+                $('#addDept').LoadingOverlay('hide');
+
             },
             success: function (data, textStatus, jqXHR) {
-                console.log(textStatus, data);
+if(data == 'successfully added a new department'){
+    document.getElementById('alert4').innerHTML = data;
+    console.log(textStatus, data);
+    document.getElementById('alert4').style.display = 'block';
+    setTimeout(close, 5000);
+    
+}else if(data == 'Failed to created a new department'){
+    document.getElementById('alert4').innerHTML = data;
+
+    console.log(textStatus, data);
+    document.getElementById('alert4').style.display = 'block';
+    setTimeout(close, 5000);
+
+
+}else{
+let parsedJson = JSON.parse(data);
+let newdata = Object.values(parsedJson);
+
+document.getElementById('alert4').innerHTML = newdata;
+    console.log(textStatus, newdata);
                 document.getElementById('alert4').style.display = 'block';
                 setTimeout(close, 5000);
-                document.getElementById('alert4').innerHTML = data;
-
+}
                 //    window.load(true)
             },
             error: function (jqXHR, textStatus, errorThrown) {
