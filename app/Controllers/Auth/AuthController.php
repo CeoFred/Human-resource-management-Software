@@ -380,7 +380,7 @@ public function updateEmployeeWorkInfo($req,$res) {
         'position' => v::alpha()->notEmpty(),
         'department' => v::alpha()->notEmpty(),
         'dateOfEmployment' => v::notEmpty()->date(), 
-        'currenStatus' => v::alpha()->notEmpty(),
+        'currenStatus' => v::digit()->notEmpty(),
         'employmentMode' => v::alpha()->notEmpty(),
 
         ]);
@@ -1026,7 +1026,7 @@ try {
     $mail->addReplyTo('ogwugopeople@ogwugo.com', 'Welcome!!');
     $mail->isHTML(true);                                  // Set email format to HTML
     $mail->Subject = 'Welcome';
-    $mail->Body    ="Hello,". $request->getParam('givenname').'<br>'."you have been successfully created your profile with us.'".'<br>'.'Fred.';
+    $mail->Body    ="Hello,". $request->getParam('givenname').'<br>'."you have been successfully created your profile with us.".'<br>'.'Fred.';
     $mail->AltBody = 'Hello,you have been successfully created your profile with us.';
     $mail->send();
 

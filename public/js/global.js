@@ -630,7 +630,7 @@ function close2(){
                 
                 if(data == 'success'){
                     
-                    document.getElementById('alertfore').innerHTML = newdata
+                    document.getElementById('alertfore').innerHTML = data
                     document.getElementById('alertfore').style.display = 'block';
                     console.log(newdata);
                     console.log(textStatus);
@@ -645,14 +645,15 @@ function close2(){
                     setInterval(close,6000)
     
                 
-                }else{
+                }
+                   
                     let parsedJSON =   JSON.parse(data)
                     let cleanData =  Object.values(parsedJSON); 
-                                        document.getElementById('alertfore').innerHTML = cleanData;
+                     document.getElementById('alertfore').innerHTML = cleanData;
                         document.getElementById('alertfore').style.display = 'block';
                         setInterval(close,6000)
         
-                }
+                
 
             
             },
@@ -758,13 +759,13 @@ function close2(){
             },
             beforeSend: function () {
                
-$("#pinfo").LoadingOverlay("show");
-                $('#gif').show();
+         $("#pinfo").LoadingOverlay("show");
+                // $('#gif').show();
             },
             complete: function () {
-                $('#gif').hide();
-                      
-$("#pinfo").LoadingOverlay("hide");
+
+     $("#pinfo").LoadingOverlay("hide");
+
          
             },
             success: function (data, textStatus, jqXHR) {
@@ -773,11 +774,32 @@ $("#pinfo").LoadingOverlay("hide");
 // var fineData =Object.values(data)
 // document.getElementById('alert').innerHTML = fineData
 // document.getElementById('alert').style.display = 'block'
+$("#pinfo").LoadingOverlay("hide");
+ 
+if(data == 'success'){
+                    
+    document.getElementById('alert').innerHTML = data
+    document.getElementById('alert').style.display = 'block';
+    console.log(newdata);
+    console.log(textStatus);
+    setInterval(close,6000)
+
+}else if(data == 'failed'){
+
+    document.getElementById('alert').innerHTML = data
+    document.getElementById('alert').style.display = 'block';
+    console.log(data);
+    console.log(jqXHR);
+    setInterval(close,6000)
 
 
+}
+  let parsedData = JSON.parse(data)
+  let response = Object.values(parsedData);
                 console.log(textStatus);
+                document.getElementById('alert').innerHTML = response;
+
                 document.getElementById('alert').style.display = 'block';
-                document.getElementById('alert').innerHTML = data;
                 //data - response from server
 
             },

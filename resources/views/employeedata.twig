@@ -345,7 +345,7 @@ action="{{path_for('updateEmployeeWorkInfo')}}?employee_id={{employeedata.compan
 <!-- employment mode -->
 <div class="md-form">
     <label for="empm">CurrentStatus</label>
-    <input type="text" id="currenStatus" name="CurrentStatus" class="form-control" placeholder="Active"
+    <input type="text" id="currenStatus" name="CurrentStatus" class="form-control" placeholder="0 or 1"
      value="{% if employeedata.currentStatus == 1  %}
 Active
 {% else %}
