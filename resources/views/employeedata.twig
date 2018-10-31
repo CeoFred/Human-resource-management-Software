@@ -95,7 +95,7 @@ action="{{path_for('updateEmployeeEmergencyInfo')}}?company_id={{employeedata.co
     <div class="md-form">
         <label>Full name</label>
         <input type="text"  placeholder="Full name" name="emergency_contact_name"
-         class="form-control mb-4" id="emergencyFullnameEmployee" value="{{ employee.emergency_contact_name}}" />
+         class="form-control mb-4" id="emergencyFullnameEmployee" value="{{ employeedata.emergency_contact_name}}" />
     </div>
 
     <div class="md-form">
@@ -151,7 +151,7 @@ action="{{path_for('updateEmployeeEmergencyInfo')}}?company_id={{employeedata.co
     
     </div>
 
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog" role="document" id="pinfo">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">Update Personal Information</h5>
@@ -217,7 +217,7 @@ id="dateOfBirth" class="form-control">
     <!-- state of origin -->
     <div class="md-form">
         <select name="state" onchange="changelga(this.value)" id="state" class="form-control">
-            <option value="" selected="selected">SELECT STATE OF ORIGIN</option>
+            <option value="{{employeedata.state}}" selected="{{employeedata.state}}">{{employeedata.state}}</option>
             <option value='Abia'>Abia</option>
             <option value='Adamawa'>Adamawa</option>
             <option value='AkwaIbom'>AkwaIbom</option>
@@ -260,6 +260,7 @@ id="dateOfBirth" class="form-control">
     <div class="md-form">
         <label class="control-label" for="lga">LGA</label>
         <select name="lga" id="lga" class="form-control">
+        <option value="{{employeedata.lga}}">{{employeedata.lga}}</option>
         </select>
     </div>
     <!-- englga -->
@@ -336,7 +337,13 @@ action="{{path_for('updateEmployeeWorkInfo')}}?employee_id={{employeedata.compan
 <div class="md-form">
     <label for="empm">CurrentStatus</label>
     <input type="text" id="currenStatus" name="CurrentStatus" class="form-control" placeholder="Active"
-     value="{{employeedata.currentStatus}}" />
+     value="{% if employeedata.currentStatus == 1  %}
+Active
+{% else %}
+Not Active
+
+{% endif %}" />
+
 
 </div>
 <!-- end employmrnt mode -->
@@ -489,7 +496,11 @@ Save changes <img style="display:none;height:30px;width:30px;" src="{{base_url()
                         <p>Position: {{ employeedata.position }}</p>
                         <p>Department: {{ employeedata.department }}
                             <p>Date of Employment: {{employeedata.date_of_start}}</p>
-                            <p>CurrentStatus: {{ employeedata.currentStatus}}</p>
+                            <p>CurrentStatus: {% if employeedata.currentStatus == 1  %}
+                            <span>Active</span>
+{% else %}
+<span>Deactivated</span>
+{% endif %}</p>
 <p>EmploymentMode:{{employeedata.employment_mode}}</p>
                     </div>
                 </div>

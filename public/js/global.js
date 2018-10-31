@@ -278,13 +278,13 @@ $("#myBtn").LoadingOverlay("show");
 
 
                 document.getElementById('alert3').style.display = 'none';
-                button = document.getElementById("myBtn")
-                if(button.disabled)
-                {
-                    document.getElementById("myBtn").disabled = false;
-                }else{
-                    document.getElementById("myBtn").disabled = true;
-                } 
+                // button = document.getElementById("myBtn")
+                // if(button.disabled)
+                // {
+                //     document.getElementById("myBtn").disabled = false;
+                // }else{
+                //     document.getElementById("myBtn").disabled = true;
+                // } 
                 
             },
             complete: function() {
@@ -334,10 +334,16 @@ $("#myBtn").LoadingOverlay("hide");
                 relationship: relationship
             },
             beforeSend: function() {
-                $('#gif4').show();
+                                
+$("#refreeinformation").LoadingOverlay("show");
+
+
             },
             complete: function() {
-                $('#gif4').hide();
+                     
+$("#refreeinformation").LoadingOverlay("hide");
+
+
             },
             success: function(data, textStatus, jqXHR) {
             
@@ -394,10 +400,11 @@ $("#myBtn").LoadingOverlay("hide");
                 relationship: relationship
             },
             beforeSend: function() {
-                $('#gif3').show();
+                $('#emergencyinformation').LoadingOverlay('show');
             },
             complete: function() {
-                $('#gif3').hide();
+            
+                $('#emergencyinformation').LoadingOverlay('hide');
             },
             success: function(data, textStatus, jqXHR) {
                 
@@ -447,10 +454,11 @@ function close() {
              employmentMode: employmentMode,
          },
          beforeSend: function () {
-             $('#gif2').show();
+           $('#companyinformation').LoadingOverlay('show')
          },
          complete: function () {
-             $('#gif2').hide();
+             
+           $('#companyinformation').LoadingOverlay('hide')
          },
          success: function (data, textStatus, jqXHR) {
             //  if(data !== 'success'){
@@ -634,10 +642,15 @@ function close2(){
                 phonenumber: phonenumber
             },
             beforeSend: function () {
+               
+$("#pinfo").LoadingOverlay("show");
                 $('#gif').show();
             },
             complete: function () {
                 $('#gif').hide();
+                      
+$("#pinfo").LoadingOverlay("hide");
+         
             },
             success: function (data, textStatus, jqXHR) {
             
