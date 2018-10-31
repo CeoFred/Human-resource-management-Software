@@ -25,6 +25,43 @@ use \Cloudinary\Uploader as uploader;
 class AuthController extends Controller
  {
 
+public function uploadEmployeePassportViaUrl($req,$res){
+    $url = $req->getParam('imageUrl');
+    if (empty($url)) {
+        return 'Empty Url';
+    }
+    // if($uploadedFile->getClientMediaType() !== 'image/png' || $uploadedFile->getClientMediaType() !== 'image/jpeg'){
+    //     return 'only jpeg and png files are allowed';
+    // }
+    
+    // $response = uploader::upload($url);
+    
+// if($reponse) {
+    
+    // return $response;
+
+       
+    
+$img = uploader::upload($url,array("width"=>200, "height"=>200, "folder" => "employeePassports","crop"=>"pad","quality"=>"auto:low"));
+                 
+$url = $img['secure_url']; 
+//    return   $url;
+
+$update = einfo::where('company_id', $req->getParam('company_id'))->update([
+    'image' => $url
+    ]);
+            if($update){
+                
+return 'Upload was successful and uploaded '."<a href='$url' style='color:black' target='_blank'>".'View Image'.'</a>'; 
+                // return $filename;
+            }else{
+                return 'failed to upload to url';
+            }
+
+        }
+    
+
+
 //         // send automated wishes
 //         public function sendBirthdayWishesAttempt(){
 

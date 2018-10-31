@@ -17,7 +17,7 @@ font-size:21px;
 <!-- image modal -->
 <div class="modal fade" id="image" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="alert alert-success animated jello" id="alert3" style="display:none;float:right;position:fixed;z-index:99">
-        Update was successfull!
+    
     </div>
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -34,13 +34,13 @@ font-size:21px;
                 <h5><br></h5>
 
 
-                <form enctype="multipart/form-data"
+                <form enctype="multipart/form-data" class="animated slideInRight"
 name="image" action="{{path_for('uploadEmployeePassport')}}?company_id={{employeedata.company_id}}" id="employeePassport" method="post">
                  
                  
                         <div class="dropzone" style="margin:auto;width:100%;margin-bottom:20px">
                         
-<img id="blah" src="" alt="your image" width="100%" height="300"/>
+<img id="blah" src="" alt="Image Preview" width="100%" height="300"/>
                         </div>
 
                     <div class="input-group mb-3">
@@ -60,6 +60,15 @@ name="image" action="{{path_for('uploadEmployeePassport')}}?company_id={{employe
                             
                     Upload</button>
                 </form>
+                <span id="query1">Not an image?<a onclick="showurlForPassportUpload()">use url</a></span>
+                <span id="query2" style="display:none">Not a Url?<a onclick="showurlForPassportUpload()"> upload using image instead</a></span>
+
+                <form  action="{{path_for('uploadEmployeePassportViaUrl')}}?company_id={{employeedata.company_id}}"
+                 method="POST" id="showUrlInputPassportUpload" class="animated slideInDown" style="display:none">
+                <input tyle="url" placeholder="Paste url here" class="form-control" id="urlValue">
+                <button class="btn btn-sm btn-success" type="submit">Upload</button>
+                </form>
+
             </div>
         </div>
     </div>

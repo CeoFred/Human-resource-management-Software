@@ -18,6 +18,7 @@ $app->post('/auth/admin/login','AuthController:postAdminSignIn');
 // if anyone access any of this routes,Authmiddelware checks if you are logged in and refiects you to the signin page if you a
 // are not logged in yet, so all th routes passes through the authcontroller
 $app->group('',function(){
+    $this->post('/auth/admin/upload/image/via/url','AuthController:uploadEmployeePassportViaUrl')->setName('uploadEmployeePassportViaUrl');
     $this->get('/auth/admin/birthday/sendwishes','AuthController:sendAutpoWishes');
     $this->post('/auth/admin/addNewDepartment','AuthController:addNewDepartment')->setName('addDept');
   $this->get('/auth/admin/departments','AuthController:getDepartments')->setName('department');

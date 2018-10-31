@@ -1,3 +1,22 @@
+function showurlForPassportUpload(){
+
+    input =  document.getElementById('showUrlInputPassportUpload')
+    if(input.style.display == 'none' ){
+ document.getElementById('showUrlInputPassportUpload').style.display = 'block';
+ document.getElementById('employeePassport').style.display = 'none';
+ document.getElementById('query2').style.display = 'block';
+ document.getElementById('query1').style.display = 'none';
+
+}else{ 
+    document.getElementById('showUrlInputPassportUpload').style.display = 'none';
+ document.getElementById('employeePassport').style.display = 'block';
+ document.getElementById('query2').style.display = 'none';
+ document.getElementById('query1').style.display = 'block';
+
+
+}
+
+}
 
 function readURL(input) {
     if (input.files && input.files[0]) {
@@ -198,7 +217,43 @@ $(document).ready(function () {
 
 
 
+$('#showUrlInputPassportUpload').on('submit', function(event){
+event.preventDefault();
+const imageUrl = $('#urlValue').val();
+const actionUrl = $('#showUrlInputPassportUpload').attr('action');
+console.log(imageUrl);
 
+$.ajax({
+
+    method: "POST",
+    url: actionUrl,
+    data : { imageUrl: imageUrl },
+    beforeSend: function(){
+$('#showUrlInputPassportUpload').LoadingOverlay('show');
+    } ,
+    complete: function(){
+        $('#showUrlInputPassportUpload').LoadingOverlay('hide');
+    },success: function(data, textStatus, jqXHR){
+document.getElementById('alert3').innerHTML = data;
+document.getElementById('alert3').style.display = 'block';
+console.log(data);
+setInterval(close,5000);
+
+    },error: function(jqXHR, textStatus, errorThrown){
+        document.getElementById('alert3').innerHTML = textStatus;
+document.getElementById('alert3').style.display = 'block';
+setInterval(close,5000);
+
+
+    }
+
+});
+
+function close(){
+    document.getElementById('alert3').style.display = 'none';
+        }
+        
+});
 
     $("#addNewDept").on('submit', function (event) {
         event.preventDefault();
