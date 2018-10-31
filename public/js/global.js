@@ -407,14 +407,28 @@ $("#refreeinformation").LoadingOverlay("hide");
                 $('#emergencyinformation').LoadingOverlay('hide');
             },
             success: function(data, textStatus, jqXHR) {
-                
-                    document.getElementById('alertforemmergency').innerHTML = data;
-                    console.log(textStatus,data);
-                    document.getElementById('alertforemmergency').style.display = 'block';
+                       if(data == 'success'){
+                        document.getElementById('alertforemmergency').innerHTML = data;
                         
+                    document.getElementById('alertforemmergency').style.display = 'block';
+                    
+                       }else{
+                  let parsedData = JSON.parse(data)
+                newData = Object.values(parsedData);   
                 
-                //data - response from server
+                document.getElementById('alertforemmergency').innerHTML = newData;
+                
+                document.getElementById('alertforemmergency').style.display = 'block';
 
+                setInterval(close,6000);
+
+                }    function close(){
+                    
+                document.getElementById('alertforemmergency').style.display = 'none';
+
+                }          
+                    console.log(textStatus,data);
+                        
         //    window.load(true)
                    }  ,error: function(jqXHR, textStatus, errorThrown) {
                 document.getElementById('alertforerror2').style.display = 'block';
@@ -461,22 +475,28 @@ function close() {
            $('#companyinformation').LoadingOverlay('hide')
          },
          success: function (data, textStatus, jqXHR) {
-            //  if(data !== 'success'){
-            //     console.log(textStatus);
-            //     let object = JSON.parse(data)
-            //   data =  Object.values(object)
-              
-            //   document.getElementById('alertforerror').innerHTML = data;
-            //       document.getElementById('alertforerror').style.display = 'block';
-                
-            // setInterval(close2,4000) 
-           
-             
-                console.log(textStatus);
+            if(data == 'success'){
                 document.getElementById('alertforcompany').innerHTML = data;
-             
-                document.getElementById('alertforcompany').style.display = 'block';
-                setInterval(close,4000)
+                
+            document.getElementById('alertforcompany').style.display = 'block';
+            
+               }else{
+          let parsedData = JSON.parse(data)
+        newData = Object.values(parsedData);   
+        
+        document.getElementById('alertforcompany').innerHTML = newData;
+        
+        document.getElementById('alertforcompany').style.display = 'block';
+
+        setInterval(close,6000);
+
+        }    function close(){
+            
+        document.getElementById('alertforcompany').style.display = 'none';
+
+        }          
+            console.log(textStatus,data);
+         
              
          },
          error: function (jqXHR, textStatus, errorThrown) {
@@ -528,15 +548,24 @@ function close2(){
                     document.getElementById('alertfore').style.display = 'block';
                     console.log(newdata);
                     console.log(textStatus);
+                    setInterval(close,6000)
                 
-                }else{
+                }else if(data == 'failed'){
                
-                    // newdata = Object.values(JSON.parse(data))
+                    document.getElementById('alertfore').innerHTML = data
+                    document.getElementById('alertfore').style.display = 'block';
                     console.log(data);
                     console.log(jqXHR);
-                    document.getElementById('alertfore').innerHTML = data;
-                    document.getElementById('alertfore').style.display = 'block';
+                    setInterval(close,6000)
     
+                
+                }else{
+                    let parsedJSON =   JSON.parse(data)
+                    let cleanData =  Object.values(parsedJSON); 
+                                        document.getElementById('alertfore').innerHTML = cleanData;
+                        document.getElementById('alertfore').style.display = 'block';
+                        setInterval(close,6000)
+        
                 }
 
             
@@ -546,19 +575,19 @@ function close2(){
                 console.log(errorThrown)
                 console.log(jqXHR)
                 console.log(textStatus)
-                document.getElementById("alertforerror").style.display = "none";;
+                
+                document.getElementById("alertforerror").innerHTML = textStatus;
+                document.getElementById("alertforerror").style.display = "none";
+                setInterval(close,6000)
             },
 
             beforeSend: function () {
-                document.getElementById('imageUploadButton').disabled = true;
-                document.getElementById("alertfore").style.display = "none";
-                document.getElementById("alertforerror").style.display = "none";
+                $('#eform').LoadingOverlay('show');
             },
 
             complete: function () {
                 
-                document.getElementById('imageUploadButton').disabled  = false
-                setTimeout(close, 10000);
+                $('#eform').LoadingOverlay('hide');
 
             }
 

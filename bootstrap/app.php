@@ -78,7 +78,6 @@ $view = new \Slim\Views\Twig(__DIR__ . '/../resources/views',[
 // 'Allcvs' => $container->auth->Allcvs(),
 // 'counteinfo' => $container->auth->counteinfo(),
 // 'countrealworkdata' => $container->auth->countrealworkdata(),
-'sendBirthdayWishes' => $container->AuthController->sendBirthdayWishesAttempt(),
 'countUpcomingBirthdays'=> $container->auth->countUpcomingBirthdays(),
         'getUpcomingBirthdays' => $container->auth->getUpcomingBirthdays(),
         'getWishes' => $container->auth->getWishes(),

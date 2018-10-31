@@ -25,120 +25,120 @@ use \Cloudinary\Uploader as uploader;
 class AuthController extends Controller
  {
 
-        // send automated wishes
-        public function sendBirthdayWishesAttempt(){
+//         // send automated wishes
+//         public function sendBirthdayWishesAttempt(){
 
-            $today = date('Y-m-d') ;
+//             $today = date('Y-m-d') ;
     
-            $check =  einfo::where('date_of_birth',$today)->get();
+//             $check =  einfo::where('date_of_birth',$today)->get();
              
-            if(count($check) > 0){
-            //  return count($check);
-            //     return $check;
-                $today = date('Y-m-d') ;
+//             if(count($check) > 0){
+//             //  return count($check);
+//             //     return $check;
+//                 $today = date('Y-m-d') ;
     
-            for($i = 0;$i < count($check);$i++){
+//             for($i = 0;$i < count($check);$i++){
 
-                // check if a row for the celebrant already exists in the birthdays table
-           $checkRow = birthdays::where('date_of_birth',$today)
+//                 // check if a row for the celebrant already exists in the birthdays table
+//            $checkRow = birthdays::where('date_of_birth',$today)
            
-           ->get();  
-        //    echo count($checkRow);    
-    }
+//            ->get();  
+//         //    echo count($checkRow);    
+//     }
 
-    if(count($checkRow) > 0){
+//     if(count($checkRow) > 0){
 
-        // print count($checkRow);
+//         // print count($checkRow);
         
-         for($i = 0;$i < count($checkRow);$i++){
+//          for($i = 0;$i < count($checkRow);$i++){
 
-            $check = $checkRow[$i]->email_sent;
-            // check if email is not sent
-            if($check == 0){
+//             $check = $checkRow[$i]->email_sent;
+//             // check if email is not sent
+//             if($check == 0){
                 
-               echo 'email has not been sent for '.$checkRow[$i]->givenname.'<br>';
+//                echo 'email has not been sent for '.$checkRow[$i]->givenname.'<br>';
                
-$mail = new PHPMailer(true);   
-                           // Passing `true` enables exceptions
-try {
+// $mail = new PHPMailer(true);   
+//                            // Passing `true` enables exceptions
+// try {
     
-    $mail->SMTPDebug = 0;                                 // Enable verbose debug output
-$mail->isSMTP();                                      // Set mailer to use SMTP
-$mail->Host = 'sweetpea.hostnownow.com';  // Specify main and backup SMTP servers
-$mail->SMTPAuth = true;                               // Enable SMTP authentication
-$mail->Username = 'activate@yourhomefuto.com.ng';                 // SMTP username
-$mail->Password = 'messilo18_';                           // SMTP password
-$mail->SMTPSecure = 'ssl';
-$mail->SMTPAutoTLS = true;
-// Enable TLS encryption, `ssl` also accepted
-$mail->Port = 465;                                    // TCP port to connect to
-//Recipients
+//     $mail->SMTPDebug = 0;                                 // Enable verbose debug output
+// $mail->isSMTP();                                      // Set mailer to use SMTP
+// $mail->Host = 'sweetpea.hostnownow.com';  // Specify main and backup SMTP servers
+// $mail->SMTPAuth = true;                               // Enable SMTP authentication
+// $mail->Username = 'activate@yourhomefuto.com.ng';                 // SMTP username
+// $mail->Password = 'messilo18_';                           // SMTP password
+// $mail->SMTPSecure = 'ssl';
+// $mail->SMTPAutoTLS = true;
+// // Enable TLS encryption, `ssl` also accepted
+// $mail->Port = 465;                                    // TCP port to connect to
+// //Recipients
 
-$mail->SMTPOptions = array(
-'ssl' => array(
-'verify_peer' => false,
-'verify_peer_name' => false,
-'allow_self_signed' => true
-)
-);
+// $mail->SMTPOptions = array(
+// 'ssl' => array(
+// 'verify_peer' => false,
+// 'verify_peer_name' => false,
+// 'allow_self_signed' => true
+// )
+// );
 
-            $mail->setFrom('family@ogwugo.com', 'Ogwugo.com');
-            $mail->addAddress($checkRow[$i]->email);     // Add a recipient
-            // $mail->addAddress('ellen@example.com');               // Name is optional
-            $mail->addReplyTo('celebrations@ogwugo.com', 'PartyTime');
-            $mail->isHTML(true);                                  // Set email format to HTML
-            $mail->Subject = 'Happy Birthday!!';
-            $mail->Body    = 'From ogwugo we wish you a happy birthday!Do enjoy your day.';
-            // $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
+//             $mail->setFrom('family@ogwugo.com', 'Ogwugo.com');
+//             $mail->addAddress($checkRow[$i]->email);     // Add a recipient
+//             // $mail->addAddress('ellen@example.com');               // Name is optional
+//             $mail->addReplyTo('celebrations@ogwugo.com', 'PartyTime');
+//             $mail->isHTML(true);                                  // Set email format to HTML
+//             $mail->Subject = 'Happy Birthday!!';
+//             $mail->Body    = 'From ogwugo we wish you a happy birthday!Do enjoy your day.';
+//             // $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
 
-            if($mail->send()){
-            echo 'Hurray!!Wishes were successfully sent to '.$checkRow[$i]->email;
-            birthdays::where('company_id',$checkRow[$i]->company_id)->update([
-'email_sent' => 1
-            ]);
-            }
+//             if($mail->send()){
+//             echo 'Hurray!!Wishes were successfully sent to '.$checkRow[$i]->email;
+//             birthdays::where('company_id',$checkRow[$i]->company_id)->update([
+// 'email_sent' => 1
+//             ]);
+//             }
 
-            }
-            catch (Exception $e) {
-            return 'Message could not be sent. Mailer Error:' . $mail->ErrorInfo;
-            }
+//             }
+//             catch (Exception $e) {
+//             return 'Message could not be sent. Mailer Error:' . $mail->ErrorInfo;
+//             }
 
-                       }else{
-                           echo '<p style="display:none">'.'birthday email alredy sent to '.$checkRow[$i]->givenname.'</p>'.'<br>';
-                       }
+//                        }else{
+//                            echo '<p style="display:none">'.'birthday email alredy sent to '.$checkRow[$i]->givenname.'</p>'.'<br>';
+//                        }
 
-         }
+//          }
         
 
-     }elseif(empty($checkRow) == 0){
-        //  return $checkRow;
-        $today = date('Y-m-d') ;
+//      }elseif(empty($checkRow) == 0){
+//         //  return $checkRow;
+//         $today = date('Y-m-d') ;
     
-        $cr =  einfo::where('date_of_birth',$today)->get();
+//         $cr =  einfo::where('date_of_birth',$today)->get();
     
-            for($i = 0;$i < count($cr);$i++){
+//             for($i = 0;$i < count($cr);$i++){
 
-    $newRow =     birthdays::create([
-            'email' => $cr[$i]->email,
-            'department' => $cr[$i]->department,
-            'date_of_birth' => $cr[$i]->date_of_birth,
-            'company_id' => $cr[$i]->company_id,
-            'email_sent' => 0,
-            'sms_sent' => 0,
-            'phone' => $cr[$i]->phonenumber,
-            'givenname' => $cr[$i]->givenname,
-            'familyname' => $cr[$i]->familyname
-            ]);
+//     $newRow =     birthdays::create([
+//             'email' => $cr[$i]->email,
+//             'department' => $cr[$i]->department,
+//             'date_of_birth' => $cr[$i]->date_of_birth,
+//             'company_id' => $cr[$i]->company_id,
+//             'email_sent' => 0,
+//             'sms_sent' => 0,
+//             'phone' => $cr[$i]->phonenumber,
+//             'givenname' => $cr[$i]->givenname,
+//             'familyname' => $cr[$i]->familyname
+//             ]);
         
             
-     }
+//      }
 
-    }
-}
-    else{
-        echo '<p style="display:none">'.'no birthdays today'.'</p>';
-    }
-        }
+//     }
+// }
+//     else{
+//         echo '<p style="display:none">'.'no birthdays today'.'</p>';
+//     }
+//         }
     
 
     public function sendAutpoWishes($req,$res){
