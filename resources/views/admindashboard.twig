@@ -6,8 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="{{base_url()}}/css/app.css">
-<link rel="stylesheet" href="//cdn.jsdelivr.net/chartist.js/latest/chartist.min.css">
-<script src="//cdn.jsdelivr.net/chartist.js/latest/chartist.min.js"></script>
+{# <link rel="stylesheet" href="//cdn.jsdelivr.net/chartist.js/latest/chartist.min.css">
+<script src="//cdn.jsdelivr.net/chartist.js/latest/chartist.min.js"></script> #}
     <!-- Bootstrap core CSS -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet">
     <!-- Material Design Bootstrap -->
@@ -71,24 +71,23 @@ font-size: 20px;
 
 <body>
     <!--Navbar-->
-<nav class="navbar navbar-expand-lg navbar-dark" style="background-color:#003b46;">
+<nav class="navbar navbar-expand-lg navbar-dark animated slideInRight slow" style="background-color:#003b46;z-index:99">
         <!-- Navbar brand -->
-        <a class="navbar-brand" href="#">
-            Ogwugo People
+        <a class="navbar-brand" href="{{path_for('ControlPanel')}}">
+            Ugarsoft HRS
         </a>
         <!-- Collapse button -->
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#basicExampleNav"
-            aria-controls="basicExampleNav" aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler" id="navBar">
             <span class="navbar-toggler-icon"></span>
         </button>
 
         <!-- Collapsible content -->
-        <div class="collapse navbar-collapse" id="basicExampleNav">
+        <div style="display:none"  id="basicExampleNav" class="animated slideInDown">
 
             <!-- Links -->
-            <ul class="navbar-nav mr-auto">
+            <ul class="navbar-nav mr-auto d-md-none">
                 
-                <li class="nav-list d-none d-sm-block d-md-none dropdown">
+                <li class="nav-list  dropdown">
                     
           <a href="{{path_for('ControlPanel')}}" class="dropdown-item" >Home</a>
           <a class="dropdown-item" href="{{path_for('all.employees')}}">Employees</a>
@@ -97,6 +96,9 @@ font-size: 20px;
             </li> 
                       
             </ul>
+            
+<a href="{{path_for('admin.logout')}}" class="btn btn-outline-warning btn-sm">Logout</a>
+             </div>
             <!-- Links -->
 
 <form class="form-inline" id="employeeSearch"  method="GET" action="{{path_for('searchEmployee')}}?query=">
@@ -108,21 +110,23 @@ font-size: 20px;
               src="{{base_url()}}/img/lg.rotating-balls-spinner.gif" id='gif5'>
 
 <div>
+
 <div id="txtHintContent" class="card-body">
 
     </div>
-</div></div>
-<a href="{{path_for('admin.logout')}}" class="btn btn-outline-warning btn-sm">Logout</a>
+</div>
+</div>
                 </div>
 
             </form>
-        </div>
+       
+        
         <!-- Collapsible content -->
 
       
     </nav>
     <!--/.Navbar-->
-    <div class="container-fluid">
+    <div class="container-fluid animated slideInLeft slow">
 
         <div class="row" style="height:100%;">
 
@@ -131,7 +135,7 @@ font-size: 20px;
 
                 <div align="center" style="padding:auto;margin-top:10px;">
 
-                    <img src="{{ base_url() }}/img/ogwugo.png" height="50" width="120" style="border-radius:50%" alt="ogwugo">
+                    <img src="https://ugarsoft.com/wp-content/themes/ugarsoft/imgs/logo.png" height="50" width="120" style="border-radius:50%" alt="ogwugo">
 
                 </div>
                 <div class="nav-list">

@@ -823,54 +823,29 @@ $this->flash->addMessage('loggedout','Congratualtions! Resume was uploaded succe
     public function postAdminSignUp($request,$response){
 
         $Validation = $this->validator->validate($request,[
-'adminemail' => v::noWhiteSpace()->notEmpty()->email()->AdminEmailAvail(),
-'adminname' => v::notEmpty()->alpha(),
-'adminpassword' => v::noWhiteSpace()->notEmpty()
+'email' => v::noWhiteSpace()->notEmpty()->email()->AdminEmailAvail(),
+'fullname' => v::notEmpty()->alpha(),
+'password' => v::noWhiteSpace()->notEmpty()
         ]);
 
         // if validation failed ,redirect
         if($Validation->failed()){
-            return $response->withRedirect($this->router->pathFor('auth.admin.signup'));
+            return json_encode($_SESSION['errors']);
         }
-
+$id = 'UGARSOFT-'.str_shuffle(123456789);
 // creating a new row
        $Admin = Admin::create([
-'email' => $request->getParam('adminemail'),
-'name' => $request->getParam('adminname'),
-'password' => password_hash($request->getParam('adminpassword'), PASSWORD_DEFAULT)
+'email' => $request->getParam('email'),
+'name' => $request->getParam('fullname'),
+'password' => password_hash($request->getParam('password'), PASSWORD_DEFAULT),
+'UGARSOFT_ID'=> $id,
           ]);
 
 if($Admin){
-    $mail = new PHPMailer(true);                              // Passing `true` enables exceptions
-try {
-    //Server settings
-    $mail->SMTPDebug = 2;                                 // Enable verbose debug output
-    $mail->isSMTP();                                      // Set mailer to use SMTP
-    $mail->Host = 'smtp.gmail.com';  // Specify main and backup SMTP servers
-    $mail->SMTPAuth = true;                               // Enable SMTP authentication
-    $mail->Username = 'johnsonmessilo19@gmail.com';                 // SMTP username
-    $mail->Password = 'messilo18';                           // SMTP password
-    $mail->SMTPSecure = 'tls';                            // Enable TLS encryption, `ssl` also accepted
-    $mail->Port = 587;                                    // TCP port to connect to
+          return 'Admin account created,try logging in';
 
-    //Recipients
-    $mail->setFrom('fredd@ogwugo.com', 'Ogwugo.com');
-    $mail->addAddress($request->getParam('adminemail'), $request->getParam('adminname'));     // Add a recipient
-    // $mail->addAddress('ellen@example.com');               // Name is optional
-    $mail->addReplyTo('ogwugopeople@ogwugo.com', 'Information');
-    $mail->isHTML(true);                                  // Set email format to HTML
-    $mail->Subject = 'Welcome';
-    $mail->Body    = '  Welcome <b>in bold!</b>';
-    $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
-
-    $mail->send();
-
-          return $response->withRedirect($this->router->pathFor('ControlPanel'));
-
-} catch (Exception $e) {
-    die('Message could not be sent. Mailer Error:'. $mail->ErrorInfo);
-}
-
+ }else{
+     return 'Cound not create an admin account!';
  }
     }
 
@@ -925,7 +900,12 @@ public function adminLogout($req,$res){
 }
 
 public function postAdminSignIn($request,$response){
-
+if(empty($request->getParam('password'))){
+return 'Password field left empty';
+}
+if(empty($request->getParam('email'))){
+    return 'Email field left empty';
+    }
     $auth = $this->auth->averify(
     $request->getParam('email'),
 
@@ -933,13 +913,15 @@ public function postAdminSignIn($request,$response){
 
     if($auth){
 
-        $this->flash->addMessage('signedin',"Welcome Back!");
-    return $response->withRedirect($this->router->pathFor('ControlPanel'));
+    //     $this->flash->addMessage('signedin',"Welcome Back!");
+    // return $response->withRedirect($this->router->pathFor('ControlPanel'));
+    return 'Login credentials cofirmed. Redirecting...';
 }
   else{
 
-        $this->flash->addMessage('signinerror',"Opps! something went wrong");
-        return $response->withRedirect($this->router->pathFor('auth.admin.signin'));
+        // $this->flash->addMessage('signinerror',"Opps! something went wrong");
+        // return $response->withRedirect($this->router->pathFor('auth.admin.signin'));
+        return 'Invalid login credentials';
 
 }
 
@@ -1031,7 +1013,7 @@ try {
     $mail->send();
 
 // creating a row in databse
-$company_id = 'OGWUGO' . str_shuffle('123456789');
+$company_id = 'UGARSOFT_ID' . str_shuffle('123456789');
 
             $workdataupload = einfo::create([
 

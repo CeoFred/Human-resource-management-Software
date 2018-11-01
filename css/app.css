@@ -1,0 +1,86 @@
+.has-error{
+    border:2px solid red;
+}
+
+.has-error-p{
+    color: red;
+}
+body{
+    font-family: 'Roboto', sans-serif;
+}
+.dropzone {
+    width: 300px;
+    border: 2px dashed lightgray;
+    height: 300px;
+    line-height: 300px;
+    font-size: 20px;
+    text-align: center;
+    color: #ccc;
+}
+
+.dropzone.dragover {
+    border-color: #000;
+    color: #000;
+}
+input:focus{
+    border:2px solid #003b46;
+}
+
+@media only screen and (max-width: 784px) {
+    i.imobi {
+        display: block;
+        font-size: 30px
+    }
+}
+
+.menu-body {
+    padding: 50px;
+    text-align: center;
+    height: 250px;
+}
+
+.nav-list {
+    width: 100%;
+    background-color: #07575b;
+}
+
+i {
+    color: #c4dfe6;
+}
+
+ul {
+    list-style: none;
+    margin: 20px;
+}
+
+li {
+    padding: 20px;
+    margin-left: -43px;
+}
+
+a {
+    color: #fff;
+}
+
+a:hover {
+    color: cadetblue;
+    font-size: 20px;
+}
+
+.top {
+    float: right;
+}
+
+.spanlist {
+    border-left: 4px solid #c4dfe6;
+    padding: 7px;
+}
+
+.card-header {
+    background-color: #003b46;
+    color: #c4dfe6;
+    font-size: 20px;
+}
+
+
+

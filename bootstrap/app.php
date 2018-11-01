@@ -40,9 +40,9 @@ $container['flash'] = function () {
     return new \Slim\Flash\Messages();
 };
 
-$container['upload_directory'] = __DIR__ . '\..\public\usercvimage';
-$container['user_upload_directory'] = __DIR__ . '\..\public\img\userprofileimg';
-$container['upload_directory_employees'] = __DIR__ . '\..\public\img\workdataimg';
+// $container['upload_directory'] = __DIR__ . '\..\public\usercvimage';
+// $container['user_upload_directory'] = __DIR__ . '\..\public\img\userprofileimg';
+// $container['upload_directory_employees'] = __DIR__ . '\..\public\img\workdataimg';
 $container['auth'] = function($container){
     //pass view dependecy to Home controller constuctor function
     return new \App\Auth\Auth;
@@ -72,7 +72,7 @@ $view = new \Slim\Views\Twig(__DIR__ . '/../resources/views',[
 
 'date' => date('Y'),
 'admincheck' => $container->auth->admincheck(),
-'admindetails' => $container->auth->admindetails(),
+// 'admindetails' => $container->auth->admindetails(),
  'Allusers' => $container->auth->Allusers(),
 // // 'cv' => $container->auth->cv(),
 // 'Allcvs' => $container->auth->Allcvs(),

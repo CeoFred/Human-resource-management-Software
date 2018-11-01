@@ -15,43 +15,59 @@
 </head>
 <body>
 
-    <div class="container" align="center">
+    <div class="container">
 <div class="row">
-<div class="col-md-5 mt-4 ml-4">
+<div class="col-md-5 mt-4 ml-4 animated slideInLeft slow">
 <!-- Material form login -->
+
+<div id="alert" class="alert alert-success animated slideInUp" style="display:none">
+</div>
+
+<div id="alertError" class="alert alert-warning animated slideInUp" style="display:none">
+</div>
 <div class="card">
 
-    <h5 class="card-header danger-color white-text text-center py-4">
-        <strong>Admin Login</strong>
+    <h5 class="card-header mb-3 text-center py-4" id="logo" style="background-color:grey">
+<img src="https://ugarsoft.com/wp-content/themes/ugarsoft/imgs/logo.png"
+ height="50" width="120" style="border-radius:50%" alt="ogwugo" >
+
     </h5>
 
     <!--Card content-->
     <div class="card-body px-lg-5 pt-0">
 
         <!-- Form -->
-        <form class="text-center" method="POST" action="{{ path_for('auth.admin.signin') }}" style="color: #757575;">
+        <form class="m-1" id="adminLoginForm" 
+        method="POST" action="{{ path_for('auth.admin.signin') }}" style="color: #757575;">
 
             <!-- Email -->
-            <div class="md-form">
-                <input type="email" name="email" id="materialLoginFormEmail" class="form-control" value={{ old.email }}>
-                <label for="materialLoginFormEmail">E-mail</label>
-            </div>
+            
+             <label class="sr-only" for="inlineFormInputGroup">Email</label>
+      <div class="input-group mb-2">
+        <div class="input-group-prepend">
+          <div class="input-group-text">@</div>
+        </div>
+        <input type="email" id="email" name="email" class="form-control" value="{{ old.email }}" placeholder="Email">
+      </div>
+
+
 
             <!-- Password -->
-            <div class="md-form">
-                <input type="password" name="password" id="materialLoginFormPassword" class="form-control" value={{ old.password }}>
-                <label for="materialLoginFormPassword">Password</label>
-            </div>
-
+            
+             <label class="sr-only" for="inlineFormInputGroup">Password</label>
+      <div class="input-group mb-2">
+        <div class="input-group-prepend">
+          <div class="input-group-text"><i class="fa fa-lock"></i></div>
+        </div>
+        <input type="password" name="password" id="password"  class="form-control" placeholder="Password">
+      </div>
             <div class="d-flex justify-content-around">
                 <div>
                 </div>
             </div>
 
-            <button class="btn btn-outline-info btn-rounded btn-block my-4 waves-effect z-depth-0" type="submit">Sign
-                in</button>
+            <button class="btn btn-outline-success btn-block my-4 waves-effect z-depth-0" type="submit">confirm</button>
 
-{{ csrf.field | raw }}
         </form>
         <!-- Form -->
 
@@ -64,5 +80,80 @@
 </div>
     </div>
 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gasparesganga-jquery-loading-overlay@2.1.6/dist/loadingoverlay.min.js" type="text/javascript"></script>
+      
+<script>
+
+ $(document).ready(function () {
+
+
+
+$('#adminLoginForm').on('submit', function(event){
+
+event.preventDefault();
+const actionUrl = $('#adminLoginForm').attr('action');
+let email = $('#email').val();
+let password = $('#password').val();
+//console.log(actionUrl+email+password);
+        document.getElementById('alert').style.display = 'none';
+        document.getElementById('alertError').style.display = 'none';
+
+
+
+$.ajax({
+    method: "POST",
+    url: actionUrl,
+    data : {
+        email:email,
+        password: password
+    },
+    success: function(data, textStatus, jqXHR){
+
+        if(data == 'Password field left empty' || data == 'Email field left empty' || data == 'Invalid login credentials'){
+            
+        document.getElementById('alertError').innerHTML = data;
+        document.getElementById('alertError').style.display = 'block';
+
+        }else{
+
+        document.getElementById('alert').innerHTML = data;
+        document.getElementById('alert').style.display = 'block';
+        $('#logo').LoadingOverlay('show');
+
+        setInterval(redirect,2000)
+
+        
+
+        }
+        function redirect(){
+location.reload(true)
+        }
+
+console.log(data)
+    },
+    error: function(jqXHR, textStatus, errorThrown){
+        
+        document.getElementById('alert').innerHTML = textStatus;
+console.log(textStatus)
+
+    },
+    complete: function(){
+$('#adminLoginForm').LoadingOverlay('hide');
+
+    },beforeSend:function(){
+$('#adminLoginForm').LoadingOverlay('show');
+
+    }
+  
+  });
+
+});
+
+});
+
+</script>
 </body>
 </html>

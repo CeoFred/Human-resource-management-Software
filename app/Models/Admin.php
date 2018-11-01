@@ -13,10 +13,11 @@ namespace App\Models;
 
 // set this to alter the database
 protected $fillable = [
-
+    
     'email',
     'name',
     'password',
+    'UGARSOFT_ID'
 
 ];
 

@@ -1,51 +1,115 @@
-{% extends "app.twig" %}
+{% extends "admindashboard.twig" %}
 
 {% block content %}
 
 <div class="row">
     <div class="col-md-6 col-md-offset-3">
+    <div id="error" class="alert alert-danger animated lightSpeedIn" style="display:none">
+
+    </div>
+    <div id="alert" class="alert alert-success animated zoomIn" style="display:none">
+
+    </div>
         <div class="card">
             <h5 class="card-header">Admin Register</h5>
             <div class="card-body">
-<!-- {{ errors | json_encode }} -->
-                <form action="{{ path_for('auth.admin.signup') }}" method="POST">
+
+                <form action="{{ path_for('auth.admin.signup') }}" id="adminSignup" method="POST" >
                     <div class="form-group ">
                         <label for="email">Email</label>
                         <input type="email" name="adminemail" 
-                         class="{{ errors.adminemail ? 'has-error ' : '' }} form-control" id="email"
+                         class="form-control" id="email"
                             placeholder="you@domain.com" value={{ old.adminemail }}>
-                            {% if errors.adminemail %}
-                            <span class="has-error-p">{{ errors.adminemail | first }}</span>
-                            {% endif %}
+                            
 </div>
 
                     <div class="form-group">
                         <label for="name">Name</label>
-                        <input type="text" name="adminname"  class="{{ errors.adminname ? 'has-error ' : '' }} form-control" id="name"
+                        <input type="text" name="adminname"  class="form-control" id="name"
                             placeholder="Name" value={{ old.adminname }}>
-                            {% if errors.adminname %}
-                            <span class="has-error-p">{{ errors.adminname | first }}</span>
-                            {% endif %}
+                            
                    </div>
 
                     <div class="form-group">
                         <label for="pass">Password</label>
-                        <input type="password" name="adminpassword" class="{{ errors.adminpassword ? 'has-error ' : '' }} form-control"
-                            id="pass" placeholder="Password" value="">
-                            
-{% if errors.adminpassword %}
-                            <span class="has-error-p">{{ errors.adminpassword }}</span>
-                            {% endif %}
+                        <input type="password" name="adminpassword" class="form-control"
+                            id="password" placeholder="Password" value="">
 
                     </div>
 
                     <button type="submit" class="btn btn-success">Signup</button>
-{{ csrf.field | raw }}
 
                 </form>
             </div>
         </div>
     </div>
 </div>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gasparesganga-jquery-loading-overlay@2.1.6/dist/loadingoverlay.min.js" type="text/javascript"></script>
+      
+<script>
+$(document).ready(function () {
+
+
+
+$('#adminSignup').on('submit', function(event){
+event.preventDefault();
+var email = $('#email').val();
+var password = $('#password').val();
+var fullname = $('#name').val();
+var actionUrl = $('#adminSignup').attr('action');
+document.getElementById('error').style.display = 'none'
+document.getElementById('alert').style.display = 'none'
+
+$.ajax({
+    method: "POST",
+    url: actionUrl,
+    data : {
+        email:email,
+        password: password,
+        fullname: fullname
+    },
+    success: function(data, textStatus, jqXHR){
+        if(data == 'Cound not create an admin account!' ){
+document.getElementById('error').innerHTML =  data;
+document.getElementById('error').style.display = 'block';
+        }else if(data == 'Admin account created,try logging in'){
+document.getElementById('alert').innerHTML =  data;
+document.getElementById('alert').style.display =  'block';
+
+        }else{
+
+        console.log(Object.values(JSON.parse(data)));
+        document.getElementById('error').innerHTML =  Object.values(JSON.parse(data));
+document.getElementById('error').style.display = 'block';
+        }
+//console.log(data)
+    },
+    error: function(jqXHR, textStatus, errorThrown){
+        
+        document.getElementById('alert').innerHTML = textStatus;
+console.log(textStatus)
+
+    },
+    complete: function(){
+$('#adminSignup').LoadingOverlay('hide');
+
+    },beforeSend:function(){
+$('#adminSignup').LoadingOverlay('show');
+
+    }
+  
+
+});
+
+
+})
+
+});
+</script>
 
 {% endblock %}

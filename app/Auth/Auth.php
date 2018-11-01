@@ -114,9 +114,9 @@ public function countrealworkdata(){
 
 // }
 
-        public function admindetails(){
-            return Admin::find($_SESSION['admin']);
-        }
+        // public function admindetails(){
+        //     return Admin::find($_SESSION['admin']);
+        // }
 // returns a count of number of rows on the einfo table
         public function Allworkdata(){
             return count(workdata::where('id','>','0')->get());
