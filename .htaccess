@@ -2,9 +2,3 @@ RewriteEngine On
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^ index.php [QSA,L]
-
-<IfModule mod_rewrite.c>
-   RewriteEngine on
-   RewriteRule ^$ public/     [L]
-   RewriteRule (.*) hrs.ugarsoft.com/$1 [L]
-</IfModule>

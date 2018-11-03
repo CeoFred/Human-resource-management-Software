@@ -11,9 +11,8 @@
 <div class="alert alert-warning animated jello" id="alertforerror" style="display:none;">
     <b>Something went wrong</b>
 </div>
-<h5 class="card-header">Register New Employee<img style="display:none;height:30px;width:30px;" src="{{base_url()}}/img/lg.rotating-balls-spinner.gif"
-        id='gif'>
- </h5>
+<h5 class="card-header">Register New Employee</h5>
+       
         <div class="card-body">
 
 <form id="eform" action="{{ path_for('post.employee') }}" method="POST">
@@ -95,120 +94,9 @@
 <script src="https://cdn.jsdelivr.net/npm/gasparesganga-jquery-loading-overlay@2.1.6/dist/loadingoverlay.min.js" type="text/javascript"></script>
       
     <script>
+    
 $(document).ready(function(){
 
-
-      $('#eform').on('submit', function (e) {
-        e.preventDefault();
-        // console.log('in progress');
-
-        var givenname = $('#givenname').val();
-        var familyname = $('#familyname').val();
-        var email = $('#email').val();
-        var department = $('#department').val();
-        var gender = $('#gender').val();
-        var dateOfBirth = $('#dateOfBirth').val();
-        const url = $('#eform').attr('action');
-                        document.getElementById('alertforerror').style.display = 'none';
-                        document.getElementById('alertfore').style.display = 'none';
-
-        $.ajax({
-            method: "POST",
-            data: {
-                dateOfBirth:dateOfBirth,
-                email: email,
-                givenname: givenname,
-                familyname: familyname,
-                department: department,
-                gender: gender
-            },
-            url: url,
-          
-        beforeSend: function () {
-           
-        $("#eform").LoadingOverlay("show");
-
-        },
-        complete: function () {
-
-         $("#eform").LoadingOverlay("hide");
-
-     
-        },
-        success: function (data, textStatus, jqXHR) {
-        
-$("#eform").LoadingOverlay("hide");
-
-  if(data == 'success'){
-                    
-                    document.getElementById('alertfore').innerHTML = data
-                    document.getElementById('alertfore').style.display = 'block';
-                    console.log(data);
-                    console.log(textStatus);
-                    setInterval(close,6000);
-                $('#eform').LoadingOverlay('hide');
-
-                
-                }else if(data == 'failed'){
-               
-                    document.getElementById('alertforerror').innerHTML = data
-                    document.getElementById('alertforerror').style.display = 'block';
-                    console.log(data);
-                    console.log(jqXHR);
-                    setInterval(close,6000);
-                $('#eform').LoadingOverlay('hide');
-
-    
-                
-                }else if(data == 'Failed to send Email'){
-          
-                    document.getElementById('alertforerror').innerHTML = data
-                    document.getElementById('alertforerror').style.display = 'block';
-                    console.log(data);
-                    console.log(jqXHR);
-                    setInterval(close,7000)
-                $('#eform').LoadingOverlay('hide');
-
-    
-                }else{
-                    
-                   document.getElementById('alertforerror').innerHTML = Object.values(JSON.parse(data))
-                        document.getElementById('alertforerror').style.display = 'block';
-                        setInterval(closeE,000)
-                    console.log(textStatus);
-                    console.log(jqXHR);
-                $('#eform').LoadingOverlay('hide');
-               }
-
-                function close(){
-                        document.getElementById('alertforerror').style.display = 'none';
-                        document.getElementById('alertfore').style.display = 'none';
-
-                }
-
-                    
-
-        },
-        error: function (jqXHR, textStatus, errorThrown) {
-           console.log(errorThrown);
-                console.log(jqXHR);
-                console.log(textStatus);
-                
-                document.getElementById("alertforerror").innerHTML = textStatus;
-                document.getElementById("alertforerror").style.display = "none";
-                setInterval(closeE,6000)
-                $('#eform').LoadingOverlay('hide');
-
-                
-        function closeE(){
-                        document.getElementById('alertforerror').style.display = 'none';
-
-                }
-
-        }
-            });
-
-});
 
 });
     </script>

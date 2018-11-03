@@ -30,7 +30,7 @@ $app->group('',function(){
     $this->get('/allusers', 'AuthController:getEmployees')->setName('all.employees');
     $this->post('/signupAdmin', 'AuthController:postAdminSignUp');
     $this->get('/addEmployee', 'AuthController:addEmployee')->setName('add.employee');
-    $this->post('/admin/addEmployee', 'AuthController:postAddEmployee')->setName('post.employee');
+    $this->post('/addEmployee', 'AuthController:postAddEmployee')->setName('post.employee');
     $this->get('/admin/employee', 'AuthController:viewEmployee')->setName('view.employee');
     $this->get('/signin', 'AuthController:getSignIn')->setName('auth.signin');
     $this->post('/signin', 'AuthController:postSignIn');

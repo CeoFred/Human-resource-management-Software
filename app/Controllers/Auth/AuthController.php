@@ -965,8 +965,6 @@ public function postSignIn($request,$response){
  ]);
 
 
-//  if valiation failed redirect to the signup page,$Validation->failed() returns true or false,its
-// // //also a method in the respect validator dependency
  if($Validation->failed()){
 
     
@@ -977,38 +975,38 @@ public function postSignIn($request,$response){
 $mail = new PHPMailer(true);                              // Passing `true` enables exceptions
 try {
 
-//                                                             // Server settings
-//     $mail->SMTPDebug = 0;                                 // Enable verbose debug output
-//     $mail->isSMTP();                                      // Set mailer to use SMTP
-//     $mail->Host = 'sweetpea.hostnownow.com';  // Specify main and backup SMTP servers
-//     $mail->SMTPAuth = true;                               // Enable SMTP authentication
-//     $mail->Username = 'activate@yourhomefuto.com.ng';                 // SMTP username
-//     $mail->Password = 'messilo18_';                           // SMTP password
-//     $mail->SMTPSecure = 'ssl';
-//     $mail->SMTPAutoTLS = true;
-//     // Enable TLS encryption, `ssl` also accepted
-//     $mail->Port = 465;                                    // TCP port to connect to
-//     //Recipients
+                                                            // Server settings
+    $mail->SMTPDebug = 0;                                 // Enable verbose debug output
+    $mail->isSMTP();                                      // Set mailer to use SMTP
+    $mail->Host = 'sweetpea.hostnownow.com';  // Specify main and backup SMTP servers
+    $mail->SMTPAuth = true;                               // Enable SMTP authentication
+    $mail->Username = 'activate@yourhomefuto.com.ng';                 // SMTP username
+    $mail->Password = 'messilo18_';                           // SMTP password
+    $mail->SMTPSecure = 'ssl';
+    $mail->SMTPAutoTLS = true;
+    // Enable TLS encryption, `ssl` also accepted
+    $mail->Port = 465;                                    // TCP port to connect to
+    //Recipients
 
-//     $mail->SMTPOptions = array(
-//     'ssl' => array(
-//         'verify_peer' => false,
-//         'verify_peer_name' => false,
-//         'allow_self_signed' => true
-//     )
-// );
+    $mail->SMTPOptions = array(
+    'ssl' => array(
+        'verify_peer' => false,
+        'verify_peer_name' => false,
+        'allow_self_signed' => true
+    )
+);
 
-//     $mail->setFrom('fredd@ogwugo.com', 'Ogwugo.com');
-//     $mail->addAddress($request->getParam('email'), $request->getParam('familyname'));     // Add a recipient
-//     // $mail->addAddress('ellen@example.com');               // Name is optional
-//     $mail->addReplyTo('ogwugopeople@ogwugo.com', 'Welcome!!');
-//     $mail->isHTML(true);                                  // Set email format to HTML
-//     $mail->Subject = 'Welcome';
-//     $mail->Body    ="Hello,". $request->getParam('givenname').'<br>'."you have been successfully created your profile with us.".'<br>'.'Fred.';
-//     $mail->AltBody = 'Hello,you have been successfully created your profile with us.';
-//     $mail->send();
+    $mail->setFrom('fredd@ogwugo.com', 'Ogwugo.com');
+    $mail->addAddress($request->getParam('email'), $request->getParam('familyname'));     // Add a recipient
+    // $mail->addAddress('ellen@example.com');               // Name is optional
+    $mail->addReplyTo('ogwugopeople@ogwugo.com', 'Welcome!!');
+    $mail->isHTML(true);                                  // Set email format to HTML
+    $mail->Subject = 'Welcome';
+    $mail->Body    ="Hello,". $request->getParam('givenname').'<br>'."you have been successfully created your profile with us.".'<br>'.'Fred.';
+    $mail->AltBody = 'Hello,you have been successfully created your profile with us.';
+    $mail->send();
 
-// creating a row in databse
+// add employee
 $company_id = 'UGARSOFT_ID' . str_shuffle('123456789');
 
             $workdataupload = einfo::create([

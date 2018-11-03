@@ -132,13 +132,15 @@ public function countrealworkdata(){
 
 //  return isset($_SESSION['user']);
 // //  returns true or false
-//     }
+//     
+
 
     public function admincheck()
 
     {
+
 return isset($_SESSION['admin']);
-    }
+     }
 
 
     public function averify($email,$password){

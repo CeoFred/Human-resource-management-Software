@@ -102,8 +102,7 @@ font-size: 20px;
 <input onblur="closediv()" class="form-control mr-sm-2" onkeyup="showHint(this.value)" style="z-index:1;position:relative" type="text" placeholder="Search Employee"
     aria-label="Search">
 <div class="card" id="txtHint" style="display:none;z-index:2;color:#000;position:absolute;background:rgba(244,244,244,0.9);font-size:19px;padding:20px;display:none;">
- <img style="display:none;height:30px;width:30px;"
-              src="{{base_url()}}/img/lg.rotating-balls-spinner.gif" id='gif5'>
+
 
 <div>
 
@@ -189,6 +188,118 @@ $(document).ready(function () {
 
 
 
+
+      $('#eform').on('submit', function (e) {
+        e.preventDefault();
+    
+                                document.getElementById('alertforerror').style.display = 'none';
+                        document.getElementById('alertfore').style.display = 'none';
+
+
+        var givenname = $('#givenname').val();
+        var familyname = $('#familyname').val();
+        var email = $('#email').val();
+        var department = $('#department').val();
+        var gender = $('#gender').val();
+        var dateOfBirth = $('#dateOfBirth').val();
+        const url = $('#eform').attr('action');
+
+
+        $.ajax({
+            method: "POST",
+            data: {
+                dateOfBirth:dateOfBirth,
+                email: email,
+                givenname: givenname,
+                familyname: familyname,
+                department: department,
+                gender: gender
+            },
+            url: url,
+          
+        beforeSend: function () {
+           
+        $("#eform").LoadingOverlay("show");
+
+        },
+        complete: function () {
+
+         $("#eform").LoadingOverlay("hide");
+
+     
+        },
+        success: function (data, textStatus, jqXHR) {
+        
+$("#eform").LoadingOverlay("hide");
+
+  if(data == 'success'){
+                    
+                    document.getElementById('alertfore').innerHTML = data
+                    document.getElementById('alertfore').style.display = 'block';
+                    console.log(data);
+                    console.log(textStatus);
+                    setInterval(close,6000);
+
+                
+                }else if(data == 'failed'){
+               
+                    document.getElementById('alertforerror').innerHTML = data
+                    document.getElementById('alertforerror').style.display = 'block';
+                    console.log(data);
+                    console.log(jqXHR);
+                    setInterval(close,6000);
+
+    
+                
+                }else if(data == 'Failed to send Email'){
+          
+                    document.getElementById('alertforerror').innerHTML = data
+                    document.getElementById('alertforerror').style.display = 'block';
+                    console.log(data);
+                    console.log(jqXHR);
+                    setInterval(close,7000)
+    
+                }else{
+                    
+                   document.getElementById('alertforerror').innerHTML = Object.values(JSON.parse(data))
+                        document.getElementById('alertforerror').style.display = 'block';
+                        setInterval(close,5000)
+                    console.log(textStatus);
+                    console.log(jqXHR);
+                $('#eform').LoadingOverlay('hide');
+              
+               }
+
+                function close(){
+                        document.getElementById('alertforerror').style.display = 'none';
+                        document.getElementById('alertfore').style.display = 'none';
+
+                }
+
+                    
+
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+              
+                console.log(errorThrown);
+                console.log(jqXHR);
+                console.log(textStatus);
+                
+                document.getElementById("alertforerror").innerHTML = textStatus;
+                document.getElementById("alertforerror").style.display = "none";
+                setInterval(closeE,6000)
+                $('#eform').LoadingOverlay('hide');
+
+                
+        function closeE(){
+                        document.getElementById('alertforerror').style.display = 'none';
+
+                }
+
+        }
+            });
+
+});
 
     $("#addNewDept").on('submit', function (event) {
         event.preventDefault();
