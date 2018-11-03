@@ -19,13 +19,9 @@
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU"
         crossorigin="anonymous">
+    
     <style>
 
-@media screen and (max-width: 767px) {
-#sidenav{
-    display:none;
-}
-}
 }
 .menu-body{
     padding:50px;
@@ -126,7 +122,7 @@ font-size: 20px;
       
     </nav>
     <!--/.Navbar-->
-    <div class="container-fluid animated slideInLeft slow">
+    <div class="container-fluid">
 
         <div class="row" style="height:100%;">
 
@@ -169,13 +165,12 @@ font-size: 20px;
             </div>
         </div>
     </div>
-
+    
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
+
 <script src="{{base_url() }}/js/lga.js"></script>
-<script src="{{ base_url()}}/js/global.js"></script>
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
     <!-- JQuery -->
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <!-- Bootstrap tooltips -->
@@ -184,8 +179,747 @@ font-size: 20px;
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/js/bootstrap.min.js"></script>
     <!-- MDB core JavaScript -->
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.5.11/js/mdb.min.js"></script>
+
     <script src="https://cdn.jsdelivr.net/npm/gasparesganga-jquery-loading-overlay@2.1.6/dist/loadingoverlay.min.js" type="text/javascript"></script>
       
+<script>
+
+
+$(document).ready(function () {
+
+
+
+
+    $("#addNewDept").on('submit', function (event) {
+        event.preventDefault();
+        document.getElementById('alert4').style.display = 'none';
+        const dept = $('#newDept').val();
+        const actionurl = $('#addNewDept').attr('action');
+
+        console.log(dept)
+
+        $.ajax({
+            method : "POST",
+            url: actionurl,
+            data: {
+dept:dept
+            },
+            beforeSend: function () {
+                // $('#gif8').show();
+                $('#addDept').LoadingOverlay('show');
+            },
+            complete: function () {
+                // $('#gif8').hide();
+                $('#addDept').LoadingOverlay('hide');
+
+            },
+            success: function (data, textStatus, jqXHR) {
+if(data == 'successfully added a new department'){
+    document.getElementById('alert4').innerHTML = data;
+    console.log(textStatus, data);
+    document.getElementById('alert4').style.display = 'block';
+    setTimeout(close, 5000);
+    
+}else if(data == 'Failed to created a new department'){
+    document.getElementById('alert4').innerHTML = data;
+
+    console.log(textStatus, data);
+    document.getElementById('alert4').style.display = 'block';
+    setTimeout(close, 5000);
+
+}else{
+let parsedJson = JSON.parse(data);
+let newdata = Object.values(parsedJson);
+
+document.getElementById('alert4').innerHTML = newdata;
+    console.log(textStatus, newdata);
+                document.getElementById('alert4').style.display = 'block';
+                setTimeout(close, 5000);
+}
+                //    window.load(true)
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                console.log(errorThrown)
+                console.log(jqXHR)
+                console.log(textStatus)
+                                document.getElementById('alert4').innerHTML = data;
+
+            }
+        })
+
+        function close() {
+            document.getElementById("alert4").style.display = "none";
+        }
+    });
+
+
+
+
+// change employee passport
+    $('#employeePassport').on('submit', function(e) {
+        e.preventDefault();
+        // console.log('first step');
+        var formData = new FormData(this);
+        const url = $('#employeePassport').attr('action');
+        $.ajax({
+            method: "POST",
+            data: formData,
+            url: url,
+            cache: false,
+            contentType: false,
+            processData: false,
+            success: function(data, textStatus, jqXHR) {
+
+if(data == 'Upload was successful,refreshing....'){
+           console.log(data)
+                document.getElementById('alert3').innerHTML = data;
+                document.getElementById('alert3').style.display = 'block';
+                
+                 location.reload(true);
+    
+}           
+           console.log(data)
+                document.getElementById('alert3').innerHTML = data;
+                document.getElementById('alert3').style.display = 'block';
+            
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                console.log(errorThrown)
+                console.log(jqXHR)
+                console.log(textStatus)
+            },
+            beforeSend: function() {
+                
+$("#myBtn").LoadingOverlay("show");
+
+
+                document.getElementById('alert3').style.display = 'none';
+                 button = document.getElementById("myBtn")
+                 if(button.disabled)
+                 {
+                     document.getElementById("myBtn").disabled = false;
+                 }else{
+                     document.getElementById("myBtn").disabled = true;
+                 } 
+                
+            },
+            complete: function() {
+                
+$("#myBtn").LoadingOverlay("hide");
+                button = document.getElementById("myBtn")
+                if(button.disabled)
+                {
+                    document.getElementById("myBtn").disabled = false;
+                }else{
+                    document.getElementById("myBtn").disabled = true;
+                } 
+                // setTimeout(close, 7000);
+
+            }
+
+        });
+    });
+
+
+
+
+// update employee refree information
+    $("#employeeRefreeInformation").on('submit', function (event) {
+        event.preventDefault();
+        
+        //document.getElementById('alertforRefreeInfo').style.display = 'none';
+                document.getElementById('alertforRefreeInfoError').style.display = 'none';
+
+
+        const fullname = $('#employeeRefreeFullname').val();
+        const address = $('#empoyeeRefreeAddress').val();
+        const phone = $('#employeeRefreePhone').val();
+        const relationship = $('#employeeRefreeRelationship').val();
+        const actionurl = $('#employeeRefreeInformation').attr('action');
+
+        console.log(fullname, address,
+            phone, relationship)
+
+        $.ajax({
+            type: "POST",
+            url: actionurl,
+            data: {
+
+                fullname: fullname,
+                address: address,
+                phone: phone,
+                relationship: relationship
+            },
+            beforeSend: function() {
+         
+$("#refreeinformation").LoadingOverlay("show");
+
+
+            },
+            complete: function() {
+                     
+$("#refreeinformation").LoadingOverlay("hide");
+
+
+            },
+            success: function(data, textStatus, jqXHR) {
+            if(data == 'success'){
+                
+
+                console.log(textStatus);
+                console.log(data);
+                document.getElementById('alertforRefreeInfo').innerHTML = data;
+
+                document.getElementById('alertforRefreeInfo').style.display = 'block';
+                
+                 setTimeout(close, 5000);   
+
+            }else{
+
+                document.getElementById('alertforRefreeInfoError').innerHTML = Object.values(JSON.parse(data));
+                //document.getElementById("alertforRefreeInfo").style.display = "none";
+               
+                document.getElementById('alertforRefreeInfoError').style.display = 'block';
+
+            console.log(textStatus);
+                console.log(jqXHR);
+                 setTimeout(close, 5000);      
+                
+            }
+
+                 function close() {
+            document.getElementById("alertforRefreeInfo").style.display = "none";
+                document.getElementById('alertforRefreeInfoError').style.display = 'none';
+
+        }
+
+            }, error: function(jqXHR, textStatus, errorThrown) {
+                document.getElementById('alertforerror2').style.display = 'block';
+                console.log(errorThrown)
+                console.log(jqXHR)
+                console.log(textStatus)
+            }
+        })
+
+        
+    });
+
+
+// update employee emergency information
+    $("#emergencyInfo").on('submit', function (event) {
+        event.preventDefault();
+        document.getElementById('alertforemmergency').style.display = 'none';
+
+
+        const fullname = $('#emergencyFullnameEmployee').val();
+        const address = $('#emergencyAddressEmployee').val();
+        const phone = $('#emergencyTelelphoneEmployee').val();
+        const relationship = $('#emergencyRelationshipEmployee').val();
+        const actionurl = $('#emergencyInfo').attr('action');
+
+        console.log(fullname, address,
+            phone, relationship)
+
+        $.ajax({
+            type: "POST",
+            url: actionurl,
+            data: {
+
+                fullname: fullname,
+                address: address,
+                phone: phone,
+                relationship: relationship
+            },
+            beforeSend: function() {
+                $('#emergencyinformation').LoadingOverlay('show');
+            },
+            complete: function() {
+            
+                $('#emergencyinformation').LoadingOverlay('hide');
+            },
+            success: function(data, textStatus, jqXHR) {
+                       if(data == 'success'){
+                        document.getElementById('alertforemmergency').innerHTML = data;
+                        
+                    document.getElementById('alertforemmergency').style.display = 'block';
+                    
+                       }else{
+                  let parsedData = JSON.parse(data)
+                newData = Object.values(parsedData);   
+                
+                document.getElementById('alertforemmergencyError').innerHTML = newData;
+                
+                document.getElementById('alertforemmergencyError').style.display = 'block';
+
+                setInterval(close,6000);
+
+                }    function close(){
+                    
+                document.getElementById('alertforemmergency').style.display = 'none';
+
+                }          
+                    console.log(textStatus,data);
+                        
+        //    window.load(true)
+                   }  ,error: function(jqXHR, textStatus, errorThrown) {
+                document.getElementById('alertforerror2').style.display = 'block';
+                console.log(errorThrown)
+                console.log(jqXHR)
+                console.log(textStatus)
+            }
+        })
+function close() {
+    document.getElementById("alertforemmergency").style.display = "none";
+}
+    });
+
+
+
+    // update employee company information
+ $("#companyFormUpdate").on('submit', function (event) {
+     event.preventDefault();
+     document.getElementById('alertforcompany').style.display = 'none';
+     var department = $("#department").val();
+     var actionurl = $('#companyFormUpdate').attr('action');
+     var position = $('#position').val();
+     var dateOfEmployment = $('#dos').val();
+     var currenStatus = $('#currenStatus').val();
+     var employmentMode = $('#employmentMode').val();
+     console.log(employmentMode, currenStatus,
+         dateOfEmployment, position, actionurl, department)
+
+     $.ajax({
+         type: "POST",
+         url: actionurl,
+         data: {
+             position: position,
+             department: department,
+             dateOfEmployment: dateOfEmployment,
+             currenStatus: currenStatus,
+             employmentMode: employmentMode,
+         },
+         beforeSend: function () {
+           $('#companyinformation').LoadingOverlay('show')
+         },
+         complete: function () {
+             
+           $('#companyinformation').LoadingOverlay('hide')
+         },
+         success: function (data, textStatus, jqXHR) {
+            if(data == 'success'){
+                document.getElementById('alertforcompany').innerHTML = data;
+                
+            document.getElementById('alertforcompany').style.display = 'block';
+            
+               }else{
+          let parsedData = JSON.parse(data)
+        newData = Object.values(parsedData);   
+        
+        document.getElementById('alertforcompanyError').innerHTML = newData;
+        
+        document.getElementById('alertforcompanyError').style.display = 'block';
+
+        setInterval(close,6000);
+
+        }    function close(){
+        document.getElementById('alertforcompany').style.display = 'none';
+            
+        document.getElementById('alertforcompanyError').style.display = 'none';
+
+        }          
+            console.log(textStatus,data);
+         
+             
+         },
+         error: function (jqXHR, textStatus, errorThrown) {
+             document.getElementById('alertforerror').style.display = 'block';
+            console.log(errorThrown)
+             console.log(jqXHR)
+             console.log(textStatus)
+         }
+     })
+
+function close(){
+    getElementById('alertforcompany').style.display = 'none'
+}
+
+function close2(){
+    getElementById('alertforerror').style.display = 'none'
+}
+ });
+
+
+
+    $('#iform').on('submit', function (e) {
+        e.preventDefault();
+        console.log('first step');
+        var formData = new FormData(this);
+        const url = $('#iform').attr('action');
+        $.ajax({
+            method: "POST",
+            data: formData,
+            url: url,
+            cache: false,
+            contentType: false,
+            processData: false,
+            success: function (data, textStatus, jqXHR) {
+                console.log(data);
+                document.getElementById('alert3').style.display = 'block';
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                console.log(errorThrown)
+                console.log(jqXHR)
+                console.log(textStatus)
+            },
+            beforeSend: function () {
+                $('#gif3').show();
+                document.getElementById('alert3').style.display = 'none';
+            },
+            complete: function () {
+                $('#gif3').hide();
+                setTimeout(close, 3000);
+
+            }
+
+        });
+
+        function close() {
+            document.getElementsByClassName('alert-success').style.display = 'none';
+        }
+
+    });
+
+
+// update personal info
+
+
+$("#pform").on('submit', function (event) {
+    event.preventDefault();
+    document.getElementById('alert').style.display = 'none';
+document.getElementById('alertError').style.display = 'none';
+
+    var email = $("#email").val();
+    var actionurl = $('#pform').attr('action');
+    var firstname = $('#fname').val();
+    var lastname = $('#lname').val();
+    var address = $('#address').val();
+    var state = $('#state').val();
+    var dateOfBirth =  $('#dateOfBirth').val();
+    var lga = $('#lga').val();
+    var phonenumber = $('#phone').val();
+    var maritalstatus = $('#maritalstatus').val();
+    //   var dateofbirth = $('#cal');
+    console.log(email, actionurl, firstname, lastname, address, state, lga, phonenumber, maritalstatus,dateOfBirth)
+
+    $.ajax({
+        type: "POST",
+        url: actionurl,
+        data: {
+            email: email,
+            state: state,
+            lga: lga,
+            dateOfBirth:dateOfBirth,
+            address: address,
+            familyname: lastname,
+            givenname: firstname,
+            maritalstatus: maritalstatus,
+            phonenumber: phonenumber
+        },
+        beforeSend: function () {
+        
+
+     $("#pinfo").LoadingOverlay("show");
+            // $('#gif').show();
+        },
+        complete: function () {
+
+ $("#pinfo").LoadingOverlay("hide");
+
+     
+        },
+        success: function (data, textStatus, jqXHR) {
+ $("#pinfo").LoadingOverlay("hide");
+
+if(data == 'success'){
+                
+document.getElementById('alert').innerHTML = data
+document.getElementById('alert').style.display = 'block';
+console.log(newdata);
+console.log(textStatus);
+setInterval(close,5000)
+
+}else if(data == 'failed'){
+
+document.getElementById('alert').innerHTML = data
+document.getElementById('alert').style.display = 'block';
+console.log(data);
+console.log(jqXHR);
+setInterval(close,5000);
+
+function close(){
+document.getElementById('alertError').style.display = 'none';
+document.getElementById('alert').style.display = 'none';
+
+}
+}
+let parsedData = JSON.parse(data)
+let response = Object.values(parsedData);
+            console.log(textStatus);
+            document.getElementById('alertError').innerHTML = response;
+
+            document.getElementById('alertError').style.display = 'block';
+            //data - response from server
+            setInterval(close,5000)
+
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+ $("#pinfo").LoadingOverlay("hide");
+
+            console.log(errorThrown)
+            console.log(jqXHR)
+            console.log(textStatus)
+        }
+    })
+
+});
+
+
+
+});
+
+
+   let button =  document.getElementById('navBar')
+   button.addEventListener('click',function(){
+var target =document.getElementById('basicExampleNav')
+    if(target.style.display == 'block'){
+target.style.display = 'none';
+}else{
+    target.style.display = 'block';
+
+}
+   });
+
+
+function showurlForPassportUpload(){
+
+    input =  document.getElementById('showUrlInputPassportUpload')
+    if(input.style.display == 'none' ){
+ document.getElementById('showUrlInputPassportUpload').style.display = 'block';
+ document.getElementById('employeePassport').style.display = 'none';
+ document.getElementById('query2').style.display = 'block';
+ document.getElementById('query1').style.display = 'none';
+
+}else{ 
+    document.getElementById('showUrlInputPassportUpload').style.display = 'none';
+ document.getElementById('employeePassport').style.display = 'block';
+ document.getElementById('query2').style.display = 'none';
+ document.getElementById('query1').style.display = 'block';
+
+
+}
+
+}
+
+function readURL(input) {
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+
+        reader.onload = function (e) {
+            $('#blah')
+                .attr('src', e.target.result);
+        };
+
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+function readURL(input) {
+
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+
+        reader.onload = function (e) {
+            $('#blah').attr('src', e.target.result);
+        }
+
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+
+$("#fileToUpload").change(function(){
+    readURL(this);
+});
+function sendWish(event) {
+event.preventDefault();
+
+    const url = $('#wishform').attr('action');
+    var xhttp;
+    xhttp = new XMLHttpRequest();
+var email =   document.getElementById('celebrantsEmail').value;
+var message = document.getElementById('birthdayWish').value;
+console.log(email,message);
+xhttp.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+
+            document.getElementById("response").style.display = 'block';
+            document.getElementById("response").innerHTML = this.responseText;
+            // document.getElementById('gif10').style.display = 'none';
+setTimeout(close,7000);
+setTimeout(stop,1000)
+
+        }
+        if (this.readyState == 2 || this.readyState == 3 || this.readState == 1) {
+
+            document.getElementById('gif10').style.display = 'block'
+        }
+    };
+    var parameters = "email=" + email + "&message=" + message;
+    xhttp.open("POST", url, true);
+    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded")
+    xhttp.send(parameters);
+function close(){
+
+    document.getElementById("response").style.display = 'none';
+}
+function stop(){
+    document.getElementById('gif10').style.display = 'none'
+
+}
+}
+
+
+function showBirhdayWishes() {
+    let wishlist = document.getElementById('wishelist')
+    if(wishlist.style.display == 'none'){
+    document.getElementById('wishelist').style.display = 'block';
+    }else{
+        document.getElementById('wishelist').style.display = 'none';
+
+    }
+// document.getElementById('wishesLog')
+}
+
+// employee search
+function showHint2(val) {
+    const url = $('#employeeSearch2').attr('action');
+    let value = val;
+    var xhttp;
+    xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+if (this.responseText.length === '' ){
+            document.getElementById("txtHintContent2").innerHTML = 'not found';
+
+}
+            document.getElementById("txtHintContent2").innerHTML = this.responseText;
+            document.getElementById("txtHint2").style.display = 'block';
+
+            document.getElementById('gif5').style.display = 'none'
+        }
+        if (this.readyState == 2 || this.readyState == 3 || this.readState == 1) {
+
+            document.getElementById('gif5').style.display = 'block'
+        }
+    };
+    xhttp.open("GET", url + value, true);
+    xhttp.send();
+
+}
+function closediv2() {
+    setTimeout(closeup2, 10)
+
+}
+
+function closeup2() {
+    document.getElementById("txtHint2").style.display = 'none';
+}
+
+function showMembers(department){
+
+
+    if(department == 1){
+        //  document.getElementById('Software').style.display = 'inline';
+        document.getElementById('softguys').style.display = 'block';
+        document.getElementById('marketingguys').style.display = 'none';
+        document.getElementById('showing').innerHTML = 'Software Department';
+    document.getElementById('accountguys').style.display = 'none';
+
+
+    }else if(department == 2){
+document.getElementById('softguys').style.display = 'none';
+document.getElementById('marketingguys').style.display = 'block';
+    document.getElementById('accountguys').style.display = 'block';
+document.getElementById('showing').innerHTML = 'Marketing Department';
+document.getElementById('accountguys').style.display = 'none';
+
+        // document.getElementById('Marketing').style.display = 'inline';
+}else {
+
+    document.getElementById('accountguys').style.display = 'block';
+    document.getElementById('softguys').style.display = 'none';
+    document.getElementById('marketingguys').style.display = 'none';
+    document.getElementById('showing').innerHTML = 'Accounting Department';
+
+}
+}
+
+
+function show(value){
+
+    if (value == 'departmentAndMembers')
+    {
+        document.getElementById('directory').style.border = ''
+        document.getElementById('dept').style.border = ''
+
+        document.getElementById('departmentAndMembers').style.display = 'block';
+        document.getElementById('departmentList').style.display = 'none';
+        document.getElementById('directory').style.borderBottom = '3px solid lightblue'
+
+    } else if(value == 'departmentList'){
+
+        document.getElementById('directory').style.border = ''
+        document.getElementById('dept').style.border = ''
+
+        document.getElementById('departmentList').style.display = 'block';
+        document.getElementById('departmentAndMembers').style.display = 'none';
+
+        document.getElementById('dept').style.borderBottom = '3px solid lightblue'
+    }
+}
+function closediv(){
+    setTimeout(closeup,1000)
+
+}
+function closeup(){
+document.getElementById("txtHint").style.display = 'none';
+}
+// employee search
+function showHint(val) {
+    const url = $('#employeeSearch').attr('action');
+    let value = val;
+    var xhttp;
+    xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+            document.getElementById("txtHintContent").innerHTML = this.responseText;
+            document.getElementById("txtHint").style.display = 'block';
+
+            $('txtHintContent').LoadingOverlay('show');
+        }
+        if (this.readyState == 2 || this.readyState == 3 || this.readState == 1) {
+
+            // document.getElementById('gif5').style.display = 'block'
+            $('txtHintContent').LoadingOverlay('show');
+        }
+    };
+    xhttp.open("GET", url + value, true);
+    xhttp.send();
+
+}
+
+
+
+</script>
+
 </body>
 
 </html>

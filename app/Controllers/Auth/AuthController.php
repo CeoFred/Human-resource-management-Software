@@ -26,25 +26,18 @@ class AuthController extends Controller
  {
 
 public function uploadEmployeePassportViaUrl($req,$res){
-    $url = $req->getParam('imageUrl');
-    if (empty($url)) {
-        return 'Empty Url';
-    }
-    // if($uploadedFile->getClientMediaType() !== 'image/png' || $uploadedFile->getClientMediaType() !== 'image/jpeg'){
-    //     return 'only jpeg and png files are allowed';
-    // }
-    
-    // $response = uploader::upload($url);
-    
-// if($reponse) {
-    
-    // return $response;
 
-       
-    
-$img = uploader::upload($url,array("width"=>200, "height"=>200, "folder" => "employeePassports","crop"=>"pad","quality"=>"auto:low"));
+    $file = $req->getParam('Url');
+    if (empty($file)) {
+        return 'Empty Url';
+    }else{
+
+        $img = uploader::upload($file,array("width"=>200, "height"=>200,
+         "folder" => "employeePassports","crop"=>"pad","quality"=>"auto:low"));
+        $url = $img['secure_url']; 
+    }
+           
                  
-$url = $img['secure_url']; 
 //    return   $url;
 
 $update = einfo::where('company_id', $req->getParam('company_id'))->update([
@@ -52,7 +45,7 @@ $update = einfo::where('company_id', $req->getParam('company_id'))->update([
     ]);
             if($update){
                 
-return 'Upload was successful and uploaded '."<a href='$url' style='color:black' target='_blank'>".'View Image'.'</a>'; 
+return 'Upload was successful and uploaded,Reloading.....'; 
                 // return $filename;
             }else{
                 return 'failed to upload to url';
@@ -275,17 +268,20 @@ public function getDepartments($req, $res){
 
 // search for employess
 public function searchEmployee($req,$res){
+
     $name = $req->getParam('query');
  $einfo =   einfo::where('givenname','like', "%$name%")
  ->orWhere('familyname','like' ,"%$name%")
  ->get();
-
+if($einfo){
     foreach($einfo as $employee){
-       echo "<a href='/public/auth/admin/employee?id={$employee->company_id}' style='color:#000'>";
-echo  '<i class="fas fa-user"></i>'.' ' .$employee->familyname.' '.$employee->givenname;
-echo '</a>';
-echo '<br/>';
-    }
+        echo "<a href='/auth/admin/employee?id={$employee->company_id}' style='color:#000'>";
+ echo  '<i class="fas fa-user"></i>'.' ' .$employee->familyname.' '.$employee->givenname;
+ echo '</a>';
+ echo '<br/>';
+     }
+}
+    
 
 }
 
@@ -427,7 +423,6 @@ return $this->view->render($res,'employeedata.twig');
 
     
 
-        $directory = $this->upload_directory_employees;
         $uploadedFiles = $req->getUploadedFiles();
         $uploadedFile = $uploadedFiles['passport'];
     
@@ -456,7 +451,7 @@ $url = $img['secure_url'];
                 ]);
                 if($update){
                     
-  return 'Upload was successful and uploaded '."<a href='$url' style='color:black' target='_blank'>".'View Image'.'</a>'; 
+  return 'Upload was successful,refreshing....'; 
                     // return $filename;
                 }else{
                     return 'failed';
@@ -974,43 +969,44 @@ public function postSignIn($request,$response){
 // // //also a method in the respect validator dependency
  if($Validation->failed()){
 
-    return json_encode($_SESSION['errors']) ;
+    
+     return json_encode($_SESSION['errors']) ;
 
  }else{
  
 $mail = new PHPMailer(true);                              // Passing `true` enables exceptions
 try {
 
-                                                            // Server settings
-    $mail->SMTPDebug = 0;                                 // Enable verbose debug output
-    $mail->isSMTP();                                      // Set mailer to use SMTP
-    $mail->Host = 'sweetpea.hostnownow.com';  // Specify main and backup SMTP servers
-    $mail->SMTPAuth = true;                               // Enable SMTP authentication
-    $mail->Username = 'activate@yourhomefuto.com.ng';                 // SMTP username
-    $mail->Password = 'messilo18_';                           // SMTP password
-    $mail->SMTPSecure = 'ssl';
-    $mail->SMTPAutoTLS = true;
-    // Enable TLS encryption, `ssl` also accepted
-    $mail->Port = 465;                                    // TCP port to connect to
-    //Recipients
+//                                                             // Server settings
+//     $mail->SMTPDebug = 0;                                 // Enable verbose debug output
+//     $mail->isSMTP();                                      // Set mailer to use SMTP
+//     $mail->Host = 'sweetpea.hostnownow.com';  // Specify main and backup SMTP servers
+//     $mail->SMTPAuth = true;                               // Enable SMTP authentication
+//     $mail->Username = 'activate@yourhomefuto.com.ng';                 // SMTP username
+//     $mail->Password = 'messilo18_';                           // SMTP password
+//     $mail->SMTPSecure = 'ssl';
+//     $mail->SMTPAutoTLS = true;
+//     // Enable TLS encryption, `ssl` also accepted
+//     $mail->Port = 465;                                    // TCP port to connect to
+//     //Recipients
 
-    $mail->SMTPOptions = array(
-    'ssl' => array(
-        'verify_peer' => false,
-        'verify_peer_name' => false,
-        'allow_self_signed' => true
-    )
-);
+//     $mail->SMTPOptions = array(
+//     'ssl' => array(
+//         'verify_peer' => false,
+//         'verify_peer_name' => false,
+//         'allow_self_signed' => true
+//     )
+// );
 
-    $mail->setFrom('fredd@ogwugo.com', 'Ogwugo.com');
-    $mail->addAddress($request->getParam('email'), $request->getParam('familyname'));     // Add a recipient
-    // $mail->addAddress('ellen@example.com');               // Name is optional
-    $mail->addReplyTo('ogwugopeople@ogwugo.com', 'Welcome!!');
-    $mail->isHTML(true);                                  // Set email format to HTML
-    $mail->Subject = 'Welcome';
-    $mail->Body    ="Hello,". $request->getParam('givenname').'<br>'."you have been successfully created your profile with us.".'<br>'.'Fred.';
-    $mail->AltBody = 'Hello,you have been successfully created your profile with us.';
-    $mail->send();
+//     $mail->setFrom('fredd@ogwugo.com', 'Ogwugo.com');
+//     $mail->addAddress($request->getParam('email'), $request->getParam('familyname'));     // Add a recipient
+//     // $mail->addAddress('ellen@example.com');               // Name is optional
+//     $mail->addReplyTo('ogwugopeople@ogwugo.com', 'Welcome!!');
+//     $mail->isHTML(true);                                  // Set email format to HTML
+//     $mail->Subject = 'Welcome';
+//     $mail->Body    ="Hello,". $request->getParam('givenname').'<br>'."you have been successfully created your profile with us.".'<br>'.'Fred.';
+//     $mail->AltBody = 'Hello,you have been successfully created your profile with us.';
+//     $mail->send();
 
 // creating a row in databse
 $company_id = 'UGARSOFT_ID' . str_shuffle('123456789');
@@ -1026,19 +1022,19 @@ $company_id = 'UGARSOFT_ID' . str_shuffle('123456789');
                  'date_of_birth' => $request->getParam('dateOfBirth'),
 
                  ]);
-      $new =  department::where('department', $request->getParam('department'))->first();
-      $new += $new->Members++;
-
-          $departmentStatus =  department::where('department',$request->getParam('department'))->update(['Members' => $new]);
+      
+    $new =  department::where('department', $request->getParam('department'))->first();
+    $num =   $new->Members;
+   $newNum =  ++$num;
+          $departmentStatus =  department::where('department',$request->getParam('department'))->update(['Members' => $newNum]);
    return $departmentStatus ?  'success' : 'failed' ;
 
 }
  catch (Exception $e) {
-
-    return 'failed';
+    return 'Failed to send Email';
 
 }   
- }
+  }
  
 // redirect method to home page
 

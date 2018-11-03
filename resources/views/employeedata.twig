@@ -63,9 +63,11 @@ name="image" action="{{path_for('uploadEmployeePassport')}}?company_id={{employe
                 <span id="query1">Not an image?<a onclick="showurlForPassportUpload()">use url</a></span>
                 <span id="query2" style="display:none">Not a Url?<a onclick="showurlForPassportUpload()"> upload using image instead</a></span>
 
+
                 <form  action="{{path_for('uploadEmployeePassportViaUrl')}}?company_id={{employeedata.company_id}}"
                  method="POST" id="showUrlInputPassportUpload" class="animated slideInDown" style="display:none">
-                <input tyle="url" placeholder="Paste url here" class="form-control" id="urlValue">
+                <input tyle="text" placeholder="Paste url here" class="form-control" id="urlValue">
+
                 <button class="btn btn-sm btn-success" type="submit">Upload</button>
                 </form>
 
@@ -80,14 +82,14 @@ name="image" action="{{path_for('uploadEmployeePassport')}}?company_id={{employe
 <div class="modal fade" id="emergencyinformation" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
     aria-hidden="true">
 
-<div class="alert alert-warning animated jello" id="alertforerror2" style="display:none;float:right;position:fixed">
-        Opps! Something went wrong,check console.
-    </div>
-
     <div class="modal-dialog" role="document">
-        <div class="alert alert-success"
+        <div class="alert alert-success animated slideInLeft"
 style="display: none;float:right" id="alertforemmergency">
-            Update was successful!
+        
+        </div>
+        <div class="alert alert-warning animated slideInLeft"
+style="display: none;float:right" id="alertforemmergencyError">
+            
         </div>
         <div class="modal-content">
             <div class="modal-header">
@@ -155,8 +157,12 @@ action="{{path_for('updateEmployeeEmergencyInfo')}}?company_id={{employeedata.co
 {# modal for personal information update #}
 <div class="modal fade" id="personalinformation" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
     aria-hidden="true">
-    <div class="alert alert-success animated jello" 
+    <div class="alert alert-success animated slideInRight" 
     id="alert" style="display:none;float:right;position:fixed;z-index:99">
+    
+    </div>
+      <div class="alert alert-warning animated slideInLeft" 
+    id="alertError" style="display:none;float:right;position:fixed;z-index:99">
     
     </div>
 
@@ -293,8 +299,11 @@ id="dateOfBirth" class="form-control">
 {# modal for companyinformation #}
 <div class="modal fade" id="companyinformation" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
     aria-hidden="true">
-      <div class="alert alert-success animated jello" id="alertforcompany" style="display:none;float:right;position:fixed;z-index:99">
-        Update was successfull!
+      <div class="alert alert-success animated slideInLeft" id="alertforcompany" style="display:none;float:right;position:fixed;z-index:99">
+        
+    </div>
+    <div class="alert alert-warning animated slideInRight" id="alertforcompanyError" style="display:none;float:right;position:fixed;z-index:99">
+        
     </div>
 <div class="alert alert-danger animated jello" id="alertforerror" style="display:none;float:right;position:fixed;z-index:99">
     Something went wrong,check console!
@@ -383,10 +392,12 @@ Not Active
 {# modal for refree information #}
 <div class="modal fade" id="refreeinformation" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
     aria-hidden="true">
-<div class="alert alert-success animated jello" id="alertforRefreeInfo" style="display:none;float:right;position:fixed;z-index:99">
-        Update was successfull!
+<div class="alert alert-success animated slideInRight"
+ id="alertforRefreeInfo" style="display:none;float:right;position:fixed;z-index:99">
+    
     </div>
-    <div class="alert alert-danger animated jello" style="display:none;float:right:position:fixed:z-index:99" id="erroralert" >
+    <div class="alert alert-danger animated slideInLeft" id="alertforRefreeInfoError" 
+         style="display:none;float:right:position:fixed:z-index:99" >
     </div>
 
     <div class="modal-dialog" role="document">
@@ -545,4 +556,72 @@ Save changes <img style="display:none;height:30px;width:30px;" src="{{base_url()
         </div>
     </div>
 </div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gasparesganga-jquery-loading-overlay@2.1.6/dist/loadingoverlay.min.js" type="text/javascript"></script>
+      
+<script>
+$(document).ready(function (){
+
+//update personal
+    
+
+$('#showUrlInputPassportUpload').on('submit', function(event){
+    
+event.preventDefault();
+var imageUrl = $('#urlValue').val();
+const actionUrl = $('#showUrlInputPassportUpload').attr('action');
+console.log(imageUrl);
+console.log(actionUrl);
+
+$.ajax({
+
+    method: "POST",
+    url: actionUrl,
+    data : {
+         Url: imageUrl },
+    
+    beforeSend: function(){
+$('#showUrlInputPassportUpload').LoadingOverlay('show');
+    } ,
+    complete: function(){
+        $('#showUrlInputPassportUpload').LoadingOverlay('hide');
+    },success: function(data, textStatus, jqXHR){
+        if(data == 'Upload was successful and uploaded,Reloading.....'){
+
+document.getElementById('alert3').innerHTML = data;
+document.getElementById('alert3').style.display = 'block';
+console.log(data);
+setInterval(close,5000);
+location.load(true);
+        }else{
+            
+document.getElementById('alert3').innerHTML = data;
+document.getElementById('alert3').style.display = 'block';
+console.log(data);
+setInterval(close,5000);
+
+        }
+
+    },error: function(jqXHR, textStatus, errorThrown){
+        document.getElementById('alert3').innerHTML = textStatus;
+document.getElementById('alert3').style.display = 'block';
+setInterval(close,5000);
+
+
+    }
+
+});
+
+function close(){
+    document.getElementById('alert3').style.display = 'none';
+        }
+        
+});
+
+});
+</script>
+
 {% endblock %}

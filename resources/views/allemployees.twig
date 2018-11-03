@@ -10,10 +10,10 @@
 <table class="table">
     <tr>
         <th></th>
-        <th>First Name</th>
-        <th>Last Name</th>
-        <th>Actions</th>
-        <th>Department</th>
+        <th style="font-size:20px"><b>Full Name</b></th>
+        
+        
+        <th style="font-size:20px"><b>Department</b></th>
     </tr>
         {% for user in auth.adminusers  %}
 
@@ -26,10 +26,8 @@
 
 </td>
 
-      <td>{{ user.givenname }}</td>
-<td>{{ user.familyname }}</td>
-<td><a href="{{path_for('view.employee')}}?id={{user.company_id}}"><button class="btn btn-warning btn-sm">View</button></a></td>
-<td>{{ user.department }}</td>
+      <td><a style="font-size:20px" href="{{path_for('view.employee')}}?id={{user.company_id}}">{{ user.givenname }} {{ user.familyname }}</a></td>
+<td style="font-size:20px">{{ user.department }}</td>
         {% else %}
 <td>Empty</td>
     </tr>

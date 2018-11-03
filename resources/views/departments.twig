@@ -130,7 +130,7 @@ Add</button>
 <div class="card">
     <div class="card-body">
 <img src="{{softwaredepartment.image}}" height="50" width="50" style="border-radius:50%">
-<a href="/public/auth/admin/employee?id={{softwaredepartment.company_id}}" style="color:#000">{{softwaredepartment.givenname}}
+<a href="{{path_for('view.employee')}}?id={{softwaredepartment.company_id}}" style="color:#000">{{softwaredepartment.givenname}}
     {{softwaredepartment.familyname}}</a>
 
         </div>
@@ -148,7 +148,7 @@ Add</button>
 <div class="card">
     <div class="card-body">
 <img src="{{accountDepartment.image}}" height="50" width="50" style="border-radius:50%">
-<a href="/public/auth/admin/employee?id={{accountDepartment.company_id}}" style="color:#000">{{accountDepartment.givenname}}
+<a href="{{path_for('view.employee')}}?id={{accountDepartment.company_id}}" style="color:#000">{{accountDepartment.givenname}}
     {{accountDepartment.familyname}}</a>
 
         </div>
@@ -165,7 +165,7 @@ Add</button>
         <div class="card-body">
 <img src="{{marketingDepartment.image}}" height="50" width="50" style="border-radius:50%">
 
-<a href="/public/auth/admin/employee?id={{marketingDepartment.company_id}}" style="color:#000">{{marketingDepartment.givenname}}
+<a href="{{path_for('view.employee')}}?id={{marketingDepartment.company_id}}" style="color:#000">{{marketingDepartment.givenname}}
 {{marketingDepartment.familyname}}</a>
         </div>
     </div>

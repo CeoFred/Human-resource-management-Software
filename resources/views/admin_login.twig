@@ -38,7 +38,7 @@
 
         <!-- Form -->
         <form class="m-1" id="adminLoginForm" 
-        method="POST" action="{{ path_for('auth.admin.signin') }}" style="color: #757575;">
+        method="POST" action="{{ path_for('admin.signin') }}" style="color: #757575;">
 
             <!-- Email -->
             
@@ -136,8 +136,10 @@ console.log(data)
     },
     error: function(jqXHR, textStatus, errorThrown){
         
-        document.getElementById('alert').innerHTML = textStatus;
-console.log(textStatus)
+        document.getElementById('alertError').innerHTML = textStatus;
+       
+        document.getElementById('alertError').style.display = 'block';
+       console.log(textStatus,jqXHR,errorThrown)
 
     },
     complete: function(){
