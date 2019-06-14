@@ -491,6 +491,7 @@ $url = $img['secure_url'];
 
 // update user personal info
 public function update_pinfo($req,$res) {
+    
 $Validation = $this->validator->validate($req,[
 'email' => v::notEmpty()->email(),
 'state' => v::notEmpty()->alpha(),
@@ -955,7 +956,7 @@ public function postSignIn($request,$response){
  
      $Validation = $this->validator->validate($request,[
 
- 'email' => v::noWhiteSpace()->notEmpty()->email()->EmailAvail(),
+ 'email' => v::noWhiteSpace()->notEmpty()->email()->vail(),
  'givenname' => v::notEmpty()->alpha(),
  'familyname' => v::alpha()->notEmpty(),
  'gender' => v::alpha()->notEmpty(),
@@ -1024,7 +1025,8 @@ $company_id = 'UGARSOFT_ID' . str_shuffle('123456789');
     $new =  department::where('department', $request->getParam('department'))->first();
     $num =   $new->Members;
    $newNum =  ++$num;
-          $departmentStatus =  department::where('department',$request->getParam('department'))->update(['Members' => $newNum]);
+          $departmentStatus =  department::where('department',$request->getParam('department'))
+          ->update(['Members' => $newNum]);
    return $departmentStatus ?  'success' : 'failed' ;
 
 }
